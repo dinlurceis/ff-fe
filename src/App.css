@@ -1,11 +1,11 @@
-/******* Bootstrap Theming ********/
-/*!
+/**
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- * {
+
+* {
   box-sizing: border-box;
 }
 
@@ -909,9 +909,6 @@ pre code {
 
 .row {
   display: flex;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
 }
 
 .no-gutters {
@@ -10508,7 +10505,6 @@ h6,
   background-size: contain;
 } */
 
-
 .section-title h6::before {
   position: absolute;
   content: "";
@@ -14233,13 +14229,13 @@ my-account-cover-photo
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   margin-bottom: -10px;
 }
- .btn-block .btn {
+.btn-block .btn {
   background: #fff;
   color: #333;
   font-weight: 700;
@@ -14285,10 +14281,10 @@ my-account-cover-photo
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
- .btn-block .btn {
+.btn-block .btn {
   width: 250px;
   height: 53px;
   font-size: 15px;
@@ -14383,18 +14379,18 @@ my-account-cover-photo
   margin: 0 0 20px;
   padding: 25px !important;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .cart-table .table tbody tr td .coupon-block .coupon-text {
   -webkit-box-flex: 100%;
-      -ms-flex: 100%;
-          flex: 100%;
+  -ms-flex: 100%;
+  flex: 100%;
 }
 @media (min-width: 576px) {
   .cart-table .table tbody tr td .coupon-block .coupon-text {
     -webkit-box-flex: 50%;
-        -ms-flex: 50%;
-            flex: 50%;
+    -ms-flex: 50%;
+    flex: 50%;
     text-align: left;
   }
 }
@@ -14417,15 +14413,15 @@ my-account-cover-photo
 }
 .cart-table .table tbody tr td .coupon-block .coupon-btn {
   -webkit-box-flex: 100%;
-      -ms-flex: 100%;
-          flex: 100%;
+  -ms-flex: 100%;
+  flex: 100%;
   margin-top: 10px;
 }
 @media (min-width: 576px) {
   .cart-table .table tbody tr td .coupon-block .coupon-btn {
     -webkit-box-flex: 50%;
-        -ms-flex: 50%;
-            flex: 50%;
+    -ms-flex: 50%;
+    flex: 50%;
     margin-top: 0px;
     text-align: right;
   }
@@ -14459,7 +14455,7 @@ my-account-cover-photo
 }
 @media only screen and (max-width: 575px) {
   .cart-table th.pro-thumbnail a,
-.cart-table td.pro-thumbnail a {
+  .cart-table td.pro-thumbnail a {
     width: 160px;
   }
 }
@@ -14546,12 +14542,12 @@ my-account-cover-photo
       rgba(40, 120, 235, 0.05),
       rgba(40, 120, 235, 0.05)
     ),
-    url("./img/image.png");
+    url("../public/banner-product-checkout.jpg");
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 450px;
+  height: 300px;
   width: auto;
 }
 .bg-image-2 {
@@ -14559,13 +14555,230 @@ my-account-cover-photo
       rgba(40, 120, 235, 0.05),
       rgba(40, 120, 235, 0.05)
     ),
-    url("./img/home-3-slider-2.jpg");
-  height: 450px;
+    url("../public/banner-catalog1.jpg");
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  height: 300px;
   width: auto;
 }
 
+/* new */
+/* Main container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+/* Layout for main content area */
+.main-content-home {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+  width: 100%;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .main-content-home {
+    flex-direction: column;
+  }
+}
+
+/* Selection panel styling */
+.selection-panel {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  height: 100%;
+}
+
+/* Recipe panel styling */
+.recipe-panel {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  height: 100%;
+}
+
+/* Search input container */
+.search-container {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* Search input field */
+.search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+}
+
+/* Selected ingredients container */
+.selected-ingredients {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 160px;
+}
+
+/* Individual selected ingredient item */
+.selected-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.selected-item:last-child {
+  border-bottom: none;
+}
+
+/* Remove button for selected ingredients */
+.remove-btn {
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  color: #343a40;
+}
+
+/* Create recipe button */
+.create-button {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.create-button:hover {
+  background-color: #e9ecef;
+}
+
+/* Dishes container */
+.dishes-container {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 160px;
+}
+
+/* Individual dish item */
+.dish-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+/* Choose button for dishes */
+.choose-btn {
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.choose-btn:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Empty messages styling */
+.empty-message {
+  color: #6c757d;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Ingredients grid section */
+.ingredients-grid {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  width: 100%;
+  flex: 1;
+}
+
+/* Individual ingredient card */
+.ingredient-card {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Ingredient image container */
+.ingredient-image {
+  width: 64px;
+  height: 64px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ingredient-image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Ingredient name */
+.ingredient-name {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Add button for ingredients */
+.add-btn {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #f8f9fa;
+}
+
+/* No results message */
+.no-results {
+  grid-column: 1 / -1;
+  color: #6c757d;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.container-home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -24,12 +24,6 @@ export const Header = () => {
 
   //Custom hook usage
   const { role, loading: authLoading } = useAuthData();
-  // const {
-  //   // notifications,
-  //   // unreadCount,
-  //   // markAsRead,
-  //   // loading: notificationLoading,
-  // } = useNotification();
   const { avatar, loading: profileLoading } = useUserProfile();
   console.log({ role });
   //Kiểm tra trạng thái loading
@@ -63,10 +57,7 @@ export const Header = () => {
             style={{ cursor: "pointer" }}
           >
             <h1 className="m-0 text-uppercase text-primary rounded">
-              <img
-                src="https://shirley-demo.myshopify.com/cdn/shop/files/logoshirley_300x.png?v=1613554226"
-                alt="Ảnh đại diện"
-              />
+              <img src="../../../public/logo1.jpg" alt="Logo" />
             </h1>
           </NavLink>
 
@@ -88,12 +79,6 @@ export const Header = () => {
             />
 
             <div className="navbar-nav ml-auto d-flex align-items-center">
-              {/* <NotificationDropdown
-                role={role}
-                notifications={notifications}
-                unreadCount={unreadCount}
-                markAsRead={markAsRead}
-              /> */}
               <Cart role={role} />
               {/* <Favorites role={role} /> */}
               <ProfileDropdown

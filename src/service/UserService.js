@@ -14,7 +14,7 @@ import axios from "../utils/CustomizeAxios";
 
 export const createUser = async (fullName,email,password) => {
     try {
-        const response = await axios.post(`ApiWebManga/users/addUser`,{
+        const response = await axios.post(`api/v1/users/addUser`,{
             fullName:fullName,
             email:email,
             password:password
@@ -28,7 +28,7 @@ export const createUser = async (fullName,email,password) => {
 
 export const getUserById = async (userId) => {
     try {
-        const response = await axios.get(`ApiWebManga/users/${userId}`)
+        const response = await axios.get(`api/v1/users/${userId}`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);
@@ -38,7 +38,7 @@ export const getUserById = async (userId) => {
 
 export const banUser = async (userId) => {
     try {
-        const response = await axios.patch(`ApiWebManga/users/banUser/${userId}`)
+        const response = await axios.patch(`api/v1/users/banUser/${userId}`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);
@@ -48,7 +48,7 @@ export const banUser = async (userId) => {
 
 export const unBanUser = async (userId) => {
     try {
-        const response = await axios.patch(`ApiWebManga/users/unBanUser/${userId}`)
+        const response = await axios.patch(`api/v1/users/unBanUser/${userId}`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);
@@ -74,7 +74,7 @@ export const getAllUser = async (page,size,keyword,sorts) =>{
         console.log(params);
         console.log({page,size,keyword,sorts})
         
-        const response = await axios.get('ApiWebManga/users/list-with-sort-by-multiple-columns', {
+        const response = await axios.get('api/v1/users/list-with-sort-by-multiple-columns', {
             params: params
         });
         return response.data;
@@ -85,7 +85,7 @@ export const getAllUser = async (page,size,keyword,sorts) =>{
 
 export const updateRoleAuthor = async (userId) => {
     try {
-        const response = await axios.patch(`ApiWebManga/users/updateRoleAuthor/${userId}`)
+        const response = await axios.patch(`api/v1/users/updateRoleAuthor/${userId}`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);
@@ -95,7 +95,7 @@ export const updateRoleAuthor = async (userId) => {
 
 export const banAuthor = async (userId) => {
     try {
-        const response = await axios.patch(`ApiWebManga/users/banAuthor/${userId}`)
+        const response = await axios.patch(`api/v1/users/banAuthor/${userId}`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);
@@ -104,14 +104,14 @@ export const banAuthor = async (userId) => {
 }
 
 export const getProfileInfo = async () => {
-    const response = await axios.get(`ApiWebManga/users/myInfo`)
+    const response = await axios.get(`api/v1/users/myInfo`)
     return response.data;
 }
 
 
 export const updateProfile = async (profileData) => {
     try {
-        const response = await axios.patch(`ApiWebManga/users/update`, profileData);
+        const response = await axios.patch(`api/v1/users/update`, profileData);
         return response.data;
     } catch (error) {
         console.log('Fail to update profile', error)

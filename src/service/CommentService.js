@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 import axios from "../utils/CustomizeAxios";
 
-export const getCommentByBook = async(bookId,currentPage)=>{
+export const getCommentByIngredientBySupplier = async(supplierHasIngredientId,currentPage)=>{
     try{
-        const response= await axios.get(`ApiWebManga/comment/getCommentsByBook/${bookId}`,{
+        const response= await axios.get(`api/v1/comment/getCommentsByIngredientSupplier/${supplierHasIngredientId}`,{
             params:{
                 page: currentPage
             }
@@ -17,7 +17,7 @@ export const getCommentByBook = async(bookId,currentPage)=>{
 
 export const addComment = async(commentData) =>{
     try{
-        const response = await axios.post(`ApiWebManga/comment/insertComment`,commentData);
+        const response = await axios.post(`api/v1/comment/insertComment`,commentData);
         console.log(response);
         if(response.data.result){
             toast.success('Comment add successfully');
@@ -34,7 +34,7 @@ export const addComment = async(commentData) =>{
 
 export const replyComment = async(replyData) =>{
     try{
-        const response = await axios.post(`ApiWebManga/comment/insertComment`,replyData);
+        const response = await axios.post(`api/v1/comment/insertComment`,replyData);
         console.log(response);
         if(response.data.result){
             toast.success('Comment add successfully');
@@ -51,7 +51,7 @@ export const replyComment = async(replyData) =>{
 
 export const deleteComment = async (commentId) =>{
     try{
-        await axios.delete(`ApiWebManga/comment/deleteComment/${commentId}`);
+        await axios.delete(`api/v1/comment/deleteComment/${commentId}`);
     }catch (error){
         console.error(error);
         throw error;
@@ -60,7 +60,7 @@ export const deleteComment = async (commentId) =>{
 
 export const updateComment = async (commentId,updateContent)=>{
     try{
-        const response = await axios.put(`ApiWebManga/comment/updateComment/${commentId}`,
+        const response = await axios.put(`api/v1/comment/updateComment/${commentId}`,
             {content:updateContent}
         )
         if(response.data.result){

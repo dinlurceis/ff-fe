@@ -9,13 +9,13 @@ export const Footer = () => {
                         <div className="col-md-6 mb-5">
                             <Link to="/books" className="navbar-brand">
                                 <h1 className="mt-n2 text-uppercase text-white">
-                                    <i className="fa fa-book mr-3"></i> Shirley Book 
+                                    <i className="fa fa-book mr-3"></i> FridgeFeast
                                 </h1>
                             </Link>
                             <p className="m-0">
-                                Accusam nonumy clita sed rebum kasd eirmod elitr. Ipsum ea lorem
-                                at et diam est, tempor rebum ipsum sit ea tempor stet et
-                                consetetur dolores. Justo stet diam ipsum lorem vero clita diam
+                                Tìm kiếm công thức nấu ăn từ những nguyên liệu có sẵn trong tủ lạnh của bạn.
+                                <br/>Mua những nguyên liệu còn thiếu.
+                                <br/>Dễ dàng tra cứu công thức nấu ăn.
                             </p>
                         </div>
                         <div className="col-md-6 mb-5">
@@ -47,13 +47,13 @@ export const Footer = () => {
                             </div>
                         </div>
                         <div className="col-md-4 mb-5">
-                            <h3 className="text-white mb-4">Our Books</h3>
+                            <h3 className="text-white mb-4">Khám phá các nguyên liệu</h3>
                             <div className="d-flex flex-column">
-                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Trinh thám</Link>
-                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Kịch tính</Link>
-                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Ngôn tình</Link>
-                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Phiêu lưu</Link>
-                                <Link className="text-white-50" to="/"><i className="fa fa-angle-right mr-2"></i>Thanh xuân</Link>
+                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Thực phẩm từ sữa</Link>
+                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Thịt</Link>
+                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Rau củ quả</Link>
+                                <Link className="text-white-50 mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Bột</Link>
+                                <Link className="text-white-50" to="/"><i className="fa fa-angle-right mr-2"></i>Gia vị</Link>
                             </div>
                         </div>
                         <div className="col-md-4 mb-5">

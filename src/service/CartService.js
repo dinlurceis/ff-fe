@@ -1,9 +1,9 @@
 import axios from "../utils/CustomizeAxios";
 
-export const addItemCart = async (bookId,quantity=1) => {
+export const addItemCart = async (ingredientId,quantity=1) => {
     try {
-        const response = await axios.post(`ApiWebManga/cart/addOrUpdateItem`,{
-            bookId:bookId,
+        const response = await axios.post(`api/v1/cart/addOrUpdateItem`,{
+            ingredientId:ingredientId,
             quantity:quantity
         })
         return response.data;
@@ -13,9 +13,9 @@ export const addItemCart = async (bookId,quantity=1) => {
     }
 }
 
-export const deleteItemcart = async (bookId) => {
+export const deleteItemcart = async (ingredientId) => {
     try {
-        const response = await axios.delete(`ApiWebManga/cart/delete/${bookId}`)
+        const response = await axios.delete(`api/v1/cart/delete/${ingredientId}`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);
@@ -26,7 +26,7 @@ export const deleteItemcart = async (bookId) => {
 
 export const deleteAllItemcart = async () => {
     try {
-        const response = await axios.delete(`ApiWebManga/cart/deleteAll`)
+        const response = await axios.delete(`api/v1/cart/deleteAll`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);
@@ -37,7 +37,7 @@ export const deleteAllItemcart = async () => {
 
 export const detailcart = async () => {
     try {
-        const response = await axios.get(`ApiWebManga/cart/detailCart`)
+        const response = await axios.get(`api/v1/cart/detailCart`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);

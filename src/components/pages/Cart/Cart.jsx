@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { CartDetail } from './componnent/CartDetail';
 import { addItemCart, deleteAllItemcart, deleteItemcart, detailcart } from '../../../service/CartService';
-import { getAllBook } from '../../../service/BookService';
+import { getAllIngredient, listAllIngredient } from '../../../service/IngredientService';
+import { getAllIngredientBySupplier } from '../../../service/IngredientBySupplierService';
 // If you're using the Font Awesome 4.7 in your project, make sure you've imported it in your main CSS or index file
 
 const ShoppingCart = () => {
@@ -9,7 +10,7 @@ const ShoppingCart = () => {
     const accessToken = sessionStorage.getItem("accessToken");
     const [totalMoney,setTotalMoney] = useState(0);
     const [loading,setLoading] = useState(true);
-    const [listBook,setListBook]=useState([]);
+    const [listIngredient,setListIngredient]=useState([]);
     useEffect(()=>{
         document.title = "Cart";
     });
@@ -38,10 +39,10 @@ const ShoppingCart = () => {
         fetchCarts();
     },[accessToken]);
 
-    const updateCart = async(bookId, quantity) => {
+    const updateCart = async(ingredientId, quantity) => {
         setLoading(true);
         try {
-            const response = await addItemCart(bookId, quantity);
+            const response = await addItemCart(ingredientId, quantity);
             if(response.result && Array.isArray(response.result.items)) {
                 setTotalMoney(response.result.totalMoney)
                 setCarts(response.result.items);
@@ -58,12 +59,12 @@ const ShoppingCart = () => {
         }
     };
 
-    const handleDeleteBookcart = async (bookId) =>{
+    const handleDeleteIngredientcart = async (ingredientId) =>{
             try{
-                await deleteItemcart(bookId);
+                await deleteItemcart(ingredientId);
                 //xóa bản ghi trùng với favoriteId và cập nhập lại danh sách favorites
                 setCarts((prevCarts) =>
-                    prevCarts.filter((book) => book.bookId !== bookId)
+                    prevCarts.filter((ingredient) => ingredient.ingredientId !== ingredientId)
                 );                
             }catch(error){
                 console.error("Error delete favorite:",error);
@@ -79,33 +80,33 @@ const ShoppingCart = () => {
             }
         };
 
-     const fetchBooks = async ()=>{
+     const fetchIngredients = async ()=>{
             try{
                 console.log(1);
-                const result = await getAllBook(1,12);
+                const result = await getAllIngredientBySupplier(1,12);
                 console.log(result);
                 if(result && result.result){
-                    setListBook(result.result.items);
+                    setListIngredient(result.result.items);
                 }else{
-                    setListBook([]);
+                    setListIngredient([]);
                 }
             }catch (err){
                 console.log(err);
             }
     };
     useEffect(() => {
-        fetchBooks();
+        fetchIngredients();
     },[]);
 
         return (
               <div className='py-3'>
                 <CartDetail
-                  deleteItem={handleDeleteBookcart}
+                  deleteItem={handleDeleteIngredientcart}
                   updateItem={updateCart}
-                  books={carts}
+                  ingredients={carts}
                   clearCart={clearcart}
                   totalMoney={totalMoney}
-                  listBook={listBook}
+                  listingredient={listIngredient}
                 />
             </div>
         );

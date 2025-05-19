@@ -9,7 +9,7 @@ export const TopBar = () => {
             <div className="d-inline-flex align-items-center text-white">
               <small><i className="fa fa-phone mr-2"></i>+012 345 6789</small>
               <small className="px-3">|</small>
-              <small><i className="fa fa-envelope mr-2"></i>SherlyBook@gmail.com</small>
+              <small><i className="fa fa-envelope mr-2"></i>fridgefeast@gmail.com</small>
             </div>
           </div>
           <div className="col-lg-6 text-center text-lg-right">
