@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAllIngredient, getIngredientById } from "../../../service/IngredientService";
 import {
   addComment,
   deleteComment,
-  getCommentByIngredient,
+  getCommentByIngredientBySupplier,
   replyComment,
   updateComment,
 } from "../../../service/CommentService";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 import { addItemCart } from "../../../service/CartService";
 import { ReviewSection } from "./components/ReviewSection";
-import { IngredientFeatur } from "./components/IngredientFeatur";
 import { ViewIngredient } from "../IngredientPage/components/ViewIngredient";
-import { addFavorite } from "../../../service/FavoriteService";
+import {
+  getAllIngredientBySupplier,
+  getIngredientSupplierById,
+} from "../../../service/IngredientBySupplierService";
 
 export const IngredientDetail = () => {
   const accessToken = sessionStorage.getItem("accessToken");
@@ -32,7 +31,7 @@ export const IngredientDetail = () => {
   const fetchIngredients = async () => {
     setLoading(true);
     try {
-      const result = await getAllIngredient(1, 12);
+      const result = await getAllIngredientBySupplier(1, 12);
       if (result && result.result) {
         setIngredients(result.result.items);
       } else {
@@ -52,7 +51,7 @@ export const IngredientDetail = () => {
   });
 
   useEffect(() => {
-    getIngredientById(id)
+    getIngredientSupplierById(id)
       .then((data) => {
         setIngredient(data.result);
         setLoading(false);
@@ -64,7 +63,7 @@ export const IngredientDetail = () => {
   }, [id]);
   //thông tin comment
   useEffect(() => {
-    getCommentByIngredient(id)
+    getCommentByIngredientBySupplier(id)
       .then((data) => {
         const updatedComments = data.result.items.map((comment) => ({
           ...comment,
@@ -218,17 +217,6 @@ export const IngredientDetail = () => {
     }
   };
 
-  const addFavorites = async (IngredientId) => {
-    try {
-      const response = addFavorite(IngredientId);
-      if (response) {
-        console.log("Sản phẩm đã được thêm vào giỏ hàng");
-      }
-    } catch (error) {
-      console.log("thêm sản phẩm vào giỏ hàng thất bại");
-    }
-  };
-
   const handlePayment = () => {
     console.log(id);
     let orderItems = [];
@@ -241,7 +229,9 @@ export const IngredientDetail = () => {
     console.log({ id, IngredientList });
     console.log("danh sách sản phẩm được thanh toán:", orderItems);
     // ví dụ điều hướng sang trang thanh toán và truyền dữ liệu
-    navigate("/order", { state: { items: orderItems, listIngredients: IngredientList } });
+    navigate("/order", {
+      state: { items: orderItems, listIngredients: IngredientList },
+    });
   };
 
   return (
@@ -258,44 +248,45 @@ export const IngredientDetail = () => {
                 </div>
               </div>
               <div className="row">
-                {/* Cột ảnh */}
+                {/* Image Column */}
                 <div className="col-md-4 mb-4">
                   <img
                     className="img-fluid rounded w-100"
                     src={ingredient.thumbnail}
-                    alt="Ingredient"
+                    alt={ingredient.nameIngredient}
                   />
                 </div>
 
-                {/* Cột mô tả + thông tin */}
+                {/* Description + Info Column */}
                 <div className="col-md-8">
-                  <h4 className="mt-4">{ingredient.title}</h4>
+                  <h4 className="mt-4">{ingredient.nameIngredient}</h4>
                   <h6 className="mt-4">
-                    Tác giả: <strong>{ingredient.authorName}</strong>
+                    Đơn vị phân phối: <strong>{ingredient.supplierName}</strong>
                   </h6>
 
-                  <h5 className="mt-3">Mô tả truyện:</h5>
-                  <div dangerouslySetInnerHTML={{ __html: ingredient.description }} />
+                  <h5 className="mt-3">Mô tả:</h5>
+                  <div>{ingredient.description}</div>
 
-                  <h5 className="mt-3">Danh mục: {ingredient.category}</h5>
-
-                  <h6>
-                    Giá: <strong>{ingredient.price} VND</strong>
+                  <h6 className="mt-3">
+                    Giá:{" "}
+                    <strong>
+                      {ingredient.priceIngredient?.toLocaleString("vi-VN")} VND
+                    </strong>
                   </h6>
 
                   <div className="mt-4 btn-block">
-                    <div className="btn" onClick={() => addItemCarts(id, 1)}>
-                      <i className="fa fa-shopping-cart me-2"></i>Thêm vào giỏ
-                      hàng
-                    </div>
+                    <button
+                      className="btn btn-primary me-2"
+                      onClick={() => addItemCarts(id, 1)}
+                    >
+                      <i className="fa fa-shopping-cart me-2"></i>
+                      Thêm vào giỏ hàng
+                    </button>
 
-                    {/* <div className="btn" onClick={() => addFavorites(id)}>
-                      <i className="fa fa-heart me-2"></i>Yêu thích
-                    </div> */}
-
-                    <div className="btn" onClick={() => handlePayment()}>
-                      <i className="fa fa-credit-card me-2"></i>Thanh toán ngay
-                    </div>
+                    <button className="btn btn-success" onClick={handlePayment}>
+                      <i className="fa fa-credit-card me-2"></i>
+                      Thanh toán ngay
+                    </button>
                   </div>
                 </div>
               </div>
@@ -317,16 +308,12 @@ export const IngredientDetail = () => {
               handleEditComment={handleEditComment}
               handleDeleteComment={handleDeleteComment}
             />
-            <h6 className="display-4" style={{ textAlign: "center" }}>
-              Related stories
+
+            <h6 className="display-4 text-center mt-5">
+              Nguyên liệu liên quan
             </h6>
             <ViewIngredient ingredients={ingredients} />
           </div>
-          {/* làm thêm cái danh sách scahs vào đây */}
-          {/* <IngredientFeatur 
-                        Ingredient={Ingredient}
-                        handleEnrollNow={handleEnrollNow}
-                    /> */}
         </div>
       </div>
     </div>

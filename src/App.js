@@ -18,6 +18,9 @@ import { Profile } from "./components/pages/ProfilePage/ProfilePage";
 import { ProcessloginOAuth2 } from "./components/authentication/OAuth2";
 import { HomePage } from "./components/pages/HomePage/HomePage";
 import { Ingredients } from "./components/pages/IngredientPage/IngredientPage";
+import { DishDetail } from "./components/pages/DishDetailPage/DishDetailPage";
+import { Dishes } from "./components/pages/DishPage/DishPage";
+import { IngredientDetail } from "./components/pages/IngredientDetailPage/IngredientDetailPage";
 function App() {
   return (
     <div className="App">
@@ -42,6 +45,9 @@ function App() {
           {/* <Route path="/bookByAuthor" element={<BookByAuthor />} /> */}
           {/* <Route path="/favorite" element={<FavoriteCourses />} /> */}
           <Route path="/ingredient" element={<Ingredients />} />
+          <Route path="/ingredient-detail/:id" element={<IngredientDetail />} />
+          <Route path="/dish" element={<Dishes />} />
+          <Route path="/dish-detail/:id" element={<DishDetail />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<ShoppingCart />} />
           <Route path="/register" element={<Register />} />

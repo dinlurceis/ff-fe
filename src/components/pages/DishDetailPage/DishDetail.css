@@ -1,0 +1,139 @@
+.dish-detail-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.dish-detail-content {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.dish-main-info {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dish-image {
+  flex: 0 0 40%;
+}
+
+.dish-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.dish-info {
+  flex: 1;
+}
+
+.dish-name {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.dish-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cook-time,
+.price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+}
+
+.dish-ingredients {
+  background: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.dish-ingredients h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.dish-ingredients ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dish-ingredients li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.dish-ingredients li:last-child {
+  border-bottom: none;
+}
+
+.dish-details {
+  margin-top: 2rem;
+}
+
+.dish-description,
+.dish-recipe {
+  margin-bottom: 2rem;
+}
+
+.dish-description h3,
+.dish-recipe h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.recipe-content {
+  line-height: 1.6;
+  color: #444;
+}
+
+.related-dishes {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.related-dishes h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dish-main-info {
+    flex-direction: column;
+  }
+
+  .dish-image {
+    flex: 0 0 100%;
+  }
+
+  .dish-detail-container {
+    padding: 1rem;
+  }
+}

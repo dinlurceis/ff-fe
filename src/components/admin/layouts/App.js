@@ -3,14 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import UserManager from "../components/User/UserManager";
 import UserDetail from "../components/User/UserDetail";
-import BookManage from "../components/Book/BookManager";
-import BookDetail from "../components/Book/BookDetail";
+import BookManage from "../components/Ingredient/IngredientManager";
+import BookDetail from "../components/Ingredient/IngredientDetail";
 import { NotFound } from "../../error/NotFound";
 import AdminLayout from "./AdminLayout";
 import "../css/style.scss";
 import OrderManage from "../components/Order/OrderManager";
 import OrderDetail from "../components/Order/OrderDetail";
-import { UploadAdminBook } from "../components/Book/BookAdminUpload";
+import { UploadAdminBook } from "../components/Ingredient/IngredientAdminUpload";
 import CatgoryManage from "../components/Category/CategoryManage";
 import { UploadCategory } from "../components/Category/CategoryUpload";
 
