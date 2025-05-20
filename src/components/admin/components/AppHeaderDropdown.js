@@ -30,7 +30,7 @@ const AppHeaderDropdown = () =>{
                 className="py-0 pe-0"
                 caret={false}
             >
-                <CAvatar src="https://shirley-demo.myshopify.com/cdn/shop/files/logoshirley_300x.png?v=1613554226" size="md"/>
+                <CAvatar src="../../../../logo1.jpg" size="md"/>
             </CDropdownToggle>
             <CDropdownMenu className="pt-0" placement="bottom-end">
                 <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">

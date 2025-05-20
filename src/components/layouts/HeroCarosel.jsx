@@ -29,7 +29,7 @@ export const HeroSlider = () => {
           <div className="container">
             <div className="home-content text-center">
               <div className="row justify-content-end">
-                <div className="col-lg-6" style={{ marginTop: "30px" }}>
+                <div className="col-lg-6" style={{ marginTop: "60px" }}>
                   <h1>Thiếu nguyên liệu nấu ăn</h1>
                   <Link
                     to="/ingredient"
@@ -49,8 +49,8 @@ export const HeroSlider = () => {
           <div className="container">
             <div className="home-content text-center">
               <div className="row justify-content-start">
-                <div className="col-lg-6" style={{ marginTop: "30px" }}>
-                  <h1>I Love This Idea!</h1>
+                <div className="col-lg-6" style={{ marginTop: "50px" }}>
+                  <h1>I love this idea!</h1>
                   <h2>Tìm kiếm công thức nấu ăn</h2>
                   <Link
                     to="/dish"

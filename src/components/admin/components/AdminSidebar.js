@@ -24,7 +24,7 @@ const AdminSidebar =() =>{
             <CSidebarHeader className="border-bottom bg-white">
                 <Link to={"/"} style={{textAlign:"center",display:"flex"}}>
                     <img
-                        src="https://shirley-demo.myshopify.com/cdn/shop/files/logoshirley_300x.png?v=1613554226"
+                        src="../../../../logo1.jpg"
                         alt="Shirley Logo"
                         height={32}
                         className="sidebar-brand-full"

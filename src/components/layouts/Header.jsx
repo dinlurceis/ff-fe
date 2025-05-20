@@ -57,7 +57,7 @@ export const Header = () => {
             style={{ cursor: "pointer" }}
           >
             <h1 className="m-0 text-uppercase text-primary rounded">
-              <img src="../../../public/logo1.jpg" alt="Logo" />
+              <img src="../../../logo1.jpg" alt="Logo" width="200px"/>
             </h1>
           </NavLink>
 

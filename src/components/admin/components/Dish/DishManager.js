@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { getAllBook, SearchBook, toggleStatusBook } from "../../../../service/BookService";
 import { TablePagination } from "@mui/material";
-import "../../css/BookManage.css";
+import "../../css/DishManage.css";
 
 
-const BookManage = ()=>{
+const DishManage = ()=>{
     const [books,setBooks] = useState([]);//Lưu dánh sách truyện
     const [page,setPage] = useState(0);//Trang hiện tại
     const [rowsPerPage,setRowsPerPage]= useState(7);//Số dòng mỗi trang
@@ -93,13 +93,13 @@ const BookManage = ()=>{
     //         }
     //     }
     return (
-        <div className="book-manage">
-            <h2 className="book-manage-title">Book Management</h2>
-            <div className="book-manage-controls">
-                <div className="book-manage-search">
+        <div className="dish-manage">
+            <h2 className="dish-manage-title">Dish management</h2>
+            <div className="dish-manage-controls">
+                <div className="dish-manage-search">
                     <input 
                         type="text"
-                        placeholder="Search by title or author"
+                        placeholder="Search by name"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={(e) =>{
@@ -110,7 +110,7 @@ const BookManage = ()=>{
                         }}
                     />
                 </div>
-                <div className="book-manage-sort">
+                <div className="dish-manage-sort">
                     <select onChange={(e) => setSort(e.target.value)}>
                         <option value="title:asc">Sort by Title (A-Z)</option>
                         <option value="title:desc">Sort By Title (Z-A)</option>
@@ -119,17 +119,17 @@ const BookManage = ()=>{
                     </select>
                 </div>
             </div>
-            <div className="book-manage-table">
+            <div className="dish-manage-table">
                 <table>
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th className="table-icon">Title</th>
-                            <th className="table-icon">Author</th>
-                            <th className="table-icon">Category</th>
-                            <th className="table-icon">Price</th>
-                            <th className="table-icon">Created At</th>
-                            <th className="table-icon">Đăng truyện</th>
+                            <th className="table-icon">name</th>
+                            <th className="table-icon">description</th>
+                            <th className="table-icon">recipe</th>
+                            <th className="table-icon">price</th>
+                            <th className="table-icon">time_cook</th>
+                            <th className="table-icon">image</th>
                             {/* <th className="table-icon">Updated At</th> */}
                         </tr>
                     </thead>
@@ -207,4 +207,4 @@ const BookManage = ()=>{
     );
 };
 
-export default BookManage;
+export default DishManage;

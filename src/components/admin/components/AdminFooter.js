@@ -10,7 +10,7 @@ const AdminFooter = () =>{
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    SERLEY BOOK
+                    FRIDGE FEAST
                 </a>
                 <span className="ms-1">&copy; 2024 creativeLabs.</span>
             </div>

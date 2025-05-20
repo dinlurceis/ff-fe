@@ -124,7 +124,7 @@ const UserManager = () =>{
 
     return (
         <div className="user-manage">
-            <h2 className="user-manage-title">User Manager</h2>
+            <h2 className="user-manage-title">User management</h2>
             <div className="user-manage-controls">
                 <div className="user-manage-search">
                     <input 
@@ -155,11 +155,23 @@ const UserManager = () =>{
                         <tr>
                             <th>STT</th>
                             <th className="table-icon">Name</th>
+                            <th className="table-icon">Address</th>
+                            <th className="table-icon">Avatar_url</th>
+                            <th className="table-icon">Bio</th>
+                            <th className="table-icon">Certificate</th>
+                            <th className="table-icon">Cv_url</th>
+                            <th className="table-icon">Date_of_Birth</th>
+                            <th className="table-icon">Expertise</th>
+                            <th className="table-icon">Experience</th>
+                            <th className="table-icon">Facebook</th>
                             <th className="table-icon">Email</th>
+                            <th className="table-icon">is_active</th>
+                            <th className="table-icon">latitude</th>
+                            <th className="table-icon">longitude</th>
+                            <th className="table-icon">Password</th>
+                            <th className="table-icon">Phone</th>
+                            <th className="table-icon">Registration_status</th>
                             <th className="table-icon">Role</th>
-                            <th className="table-icon">Birth Day</th>
-                            <th className="table-icon">Ban/UnBan</th>
-                            <th className="table-icon">Author</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -37,12 +37,20 @@ const AppSideBarNav = () =>{
                 {renderNavItem("Manage","/admin/users")}
             </CNavGroup>
             <CNavGroup
-                toggler={<div className="me-2">Book</div>}
-                onClick={()=>toggleItem("book")}
-                visible={openItems["book"]}
+                toggler={<div className="me-2">Ingredient</div>}
+                onClick={()=>toggleItem("ingredient")}
+                visible={openItems["ingredient"]}
             >
-                {renderNavItem("Manage","/admin/book/manage")}
-                {renderNavItem("Upload Book","/admin/book/upload-book")}
+                {renderNavItem("Manage","/admin/ingredient/manage")}
+                {renderNavItem("Upload ingredient","/admin/ingredient/upload-ingredient")}
+            </CNavGroup>
+            <CNavGroup
+                toggler={<div className="me-2">Dish</div>}
+                onClick={()=>toggleItem("dish")}
+                visible={openItems["dish"]}
+            >
+                {renderNavItem("Manage","/admin/dish/manage")}
+                {renderNavItem("Create dish","/admin/dish/create-dish")}
             </CNavGroup>
             <CNavGroup
                 toggler={<div className="me-2">Order</div>}

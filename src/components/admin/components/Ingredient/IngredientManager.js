@@ -95,12 +95,12 @@ const IngredientManage = ()=>{
     //     }
     return (
         <div className="ingredient-manage">
-            <h2 className="ingredient-manage-title">ingredient Management</h2>
+            <h2 className="ingredient-manage-title">Ingredient management</h2>
             <div className="ingredient-manage-controls">
                 <div className="ingredient-manage-search">
                     <input 
                         type="text"
-                        placeholder="Search by title or supplier name"
+                        placeholder="Search by name"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={(e) =>{
@@ -125,8 +125,10 @@ const IngredientManage = ()=>{
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th className="table-icon">Tên</th>
-                            <th className="table-icon">Đơn vị</th>
+                            <th className="table-icon">Name</th>
+                            <th className="table-icon">Description</th>
+                            <th className="table-icon">Unit</th>
+                            <th className="table-icon">Image</th>
                             {/* <th className="table-icon">Đăng truyện</th> */}
                             {/* <th className="table-icon">Updated At</th> */}
                         </tr>

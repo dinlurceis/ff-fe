@@ -4,7 +4,7 @@ import { listAllCategory } from "../../../../service/CategoryService";
 import { Select } from "antd";
 import TinyMCE from "../../../../utils/TinyMCE";
 import { AdminUploadBook } from "../../../../service/BookService";
-export const UploadAdminBook = () =>{
+export const UploadAdminIngredient = () =>{
     const [listCategory, setListCategory] = useState([]);
     const [categorySearch, setCategorySearch] = useState();
     const [bookTitle,setBookTitle] = useState('');
@@ -15,7 +15,7 @@ export const UploadAdminBook = () =>{
     const [bookAuthorName,setBookAuthorName]=useState("");
 
     useEffect(() =>{
-        document.title = "Create a Book"
+        document.title = "Admin"
     })
 
     useEffect(() => {
@@ -82,23 +82,23 @@ export const UploadAdminBook = () =>{
                         <div className="card shadow-lg border-0 rounded-4 bg-light">
                             <div className="card-body p-5">
                                 <h3 className="card-title text-center mb-4 text-dark fw-bold">
-                                    Upload New Book
+                                    Upload new ingredient
                                 </h3>
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-4">
                                         <label htmlFor="bookTitle" className="form-label fs-5 text-dark fw-semibold">
-                                            Tên sách
+                                            Tên nguyên liệu
                                         </label>
                                         <input 
                                             type="text"
                                             className="form-control shadow-sm"
                                             id="bookTitle"
-                                            placeholder="Enter the title of the book"
+                                            placeholder="Enter the name of the ingredient"
                                             value={bookTitle}
                                             onChange={(e) =>setBookTitle(e.target.value)}
                                         />
                                     </div>
-                                    <div className="mb-4">
+                                    {/* <div className="mb-4">
                                         <label htmlFor="authorname" className="form-label fs-5 text-dark fw-semibold">
                                             Tác giả
                                         </label>
@@ -123,15 +123,27 @@ export const UploadAdminBook = () =>{
                                             value={bookIsbn}
                                             onChange={(e) =>setBookIsbn(e.target.value)}
                                         />
-                                    </div>
+                                    </div> */}
                                     <div className="mb-4">
                                         <label htmlFor="bookDescription" className="form-label fs-5 text-dark fw-semibold">
-                                            Mô tả sách
+                                            Mô tả nguyên liệu
                                         </label>
                                        <TinyMCE value={bookDescription} onChange={setBookDescription}/>
                                     </div>
-                                    
                                     <div className="mb-4">
+                                        <label htmlFor="bookTitle" className="form-label fs-5 text-dark fw-semibold">
+                                            Unit
+                                        </label>
+                                        <input 
+                                            type="text"
+                                            className="form-control shadow-sm"
+                                            id="bookTitle"
+                                            placeholder="Enter unit"
+                                            value={bookTitle}
+                                            onChange={(e) =>setBookTitle(e.target.value)}
+                                        />
+                                    </div>
+                                    {/* <div className="mb-4">
                                         <label htmlFor="bookCategory" className="form-label fs-5 text-dark fw-semibold">
                                             Chọn danh mục
                                         </label>
@@ -149,8 +161,8 @@ export const UploadAdminBook = () =>{
                                                 // style={{ height: '100%' }}
                                                 // popupMatchSelectWidth={false}
                                             />
-                                    </div>
-                                    <div className="mb-4">
+                                    </div> */}
+                                    {/* <div className="mb-4">
                                         <label htmlFor="bookPrice" className="form-label fs-5 text-dark fw-semibold">
                                             Giá (VND)
                                         </label>
@@ -163,10 +175,10 @@ export const UploadAdminBook = () =>{
                                             onChange={(e) => setBookPrice(e.target.value)}
                                             min="0"
                                         />
-                                    </div>
+                                    </div> */}
                                     <div className="mb-4">
                                         <label htmlFor="bookThumbnail" className="form-label fs-5 text-dark fw-semibold">
-                                            Bìa sách
+                                            Hình ảnh nguyên liệu
                                         </label>
                                         <input 
                                             className="form-control shadow-sm"
@@ -177,7 +189,7 @@ export const UploadAdminBook = () =>{
                                     </div>
                                     <div className="d-grid btn-block">
                                         <button type="submit" className="btn btn-lg shadow-sm upload-btn">
-                                            <FaUpload className="me-2"/> Upload Book
+                                            <FaUpload className="me-2"/> Upload ingredient
                                         </button>
                                     </div>
                                 </form>

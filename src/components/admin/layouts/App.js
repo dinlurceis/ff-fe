@@ -3,16 +3,18 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import UserManager from "../components/User/UserManager";
 import UserDetail from "../components/User/UserDetail";
-import BookManage from "../components/Ingredient/IngredientManager";
+import IngredientManage from "../components/Ingredient/IngredientManager";
 import BookDetail from "../components/Ingredient/IngredientDetail";
 import { NotFound } from "../../error/NotFound";
 import AdminLayout from "./AdminLayout";
 import "../css/style.scss";
 import OrderManage from "../components/Order/OrderManager";
 import OrderDetail from "../components/Order/OrderDetail";
-import { UploadAdminBook } from "../components/Ingredient/IngredientAdminUpload";
+import { UploadAdminIngredient } from "../components/Ingredient/IngredientAdminUpload";
 import CatgoryManage from "../components/Category/CategoryManage";
 import { UploadCategory } from "../components/Category/CategoryUpload";
+import DishManage from "../components/Dish/DishManager";
+import { CreateDish } from "../components/Dish/CreateDish";
 
 const AdminApp = () => {
   return (
@@ -25,15 +27,18 @@ const AdminApp = () => {
           <Route path="users/detail/:id" element={<UserDetail />} />
 
           {/* Thêm route này */}
-          <Route path="book/manage" element={<BookManage />} />
-          <Route path="book/detail/:bookId" element={<BookDetail />} />
-          <Route path="book/upload-book" element={<UploadAdminBook />}/>
+          <Route path="ingredient/manage" element={<IngredientManage />} />
+          <Route path="ingredient/detail/:ingredientId" element={<BookDetail />} />
+          <Route path="ingredient/upload-ingredient" element={<UploadAdminIngredient />}/>
 
           <Route path="order/manage" element={<OrderManage />} />
           <Route path="order/detail/:orderId" element={<OrderDetail />} />
 
           <Route path="category/manage" element={<CatgoryManage />} />
           <Route path="category/upload-category" element={<UploadCategory />} />
+
+          <Route path="dish/manage" element={<DishManage />} />
+          <Route path="dish/create-dish" element={<CreateDish />} />
         </Route>
         {/* Route riêng cho NotFound */}
         <Route path="*" element={<NotFound />} />
