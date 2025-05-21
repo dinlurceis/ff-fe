@@ -32,7 +32,7 @@ const CatgoryManage = ()=>{
     
     return (
         <div className="order-manage">
-            <h2 className="order-manage-title">Order Management</h2>
+            <h2 className="order-manage-title">Category management</h2>
             <div className="order-manage-table">
                 <table>
                     <thead>

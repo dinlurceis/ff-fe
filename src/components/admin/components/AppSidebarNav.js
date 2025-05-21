@@ -67,6 +67,13 @@ const AppSideBarNav = () =>{
                 {renderNavItem("Manage","/admin/category/manage")}
                 {renderNavItem("Create Category","/admin/category/upload-category")}
             </CNavGroup>
+            <CNavGroup
+                toggler={<div className="me-2">Cart</div>}
+                onClick={()=>toggleItem("cart")}
+                visible={openItems["cart"]}
+            >
+                {renderNavItem("Manage","/admin/cart/manage")}
+            </CNavGroup>
             {/* ANALYSIS Group */}
             <CNavTitle style={{color:"#fff"}}>ANALYSIS</CNavTitle>
         </CSidebarNav>
