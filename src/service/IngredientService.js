@@ -152,3 +152,25 @@ export const getIngredientWithSortAndMultiFieldAndSearch = async (
     throw error;
   }
 }
+export const getIngredientByKeyword = async (keyword) => {
+  try {
+    const response = await axios.get("/api/v1/ingredient/getIngredientByKeyword", keyword);
+    return response.data;
+  }
+  catch(err) {
+    throw err;
+  }
+}
+export const getIngredientByKeyword2 = async (keyword = "") => {
+  try {
+    // Build the URL with the keyword parameter
+    const url = `/api/v1/ingredient/getIngredientByKeyword?keyword=${keyword}`
+
+    // Make the API request
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching ingredients:", error)
+    throw error
+  }
+}

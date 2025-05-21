@@ -14782,3 +14782,11 @@ my-account-cover-photo
   justify-content: center;
   align-items: center;
 }
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,900);
+.lexend-peta {
+  font-family: "Lexend Peta", sans-serif;
+  font-weight: 400;
+}
+body {
+  font-family: "Roboto", sans-serif;
+}

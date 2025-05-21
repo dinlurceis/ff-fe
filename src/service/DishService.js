@@ -75,30 +75,21 @@ export const SearchDish = async (
   listSearch = []
 ) => {
   try {
-    const apiUrl = `api/v1/dish//getDishWithSortAndMultiFieldAndSearch`;
+    var apiUrl = `api/v1/dish/getDishWithSortAndMultiFieldAndSearch`;
 
-    // Tạo URLSearchParams để đảm bảo params được encode đúng cách
-    const params = new URLSearchParams();
-    params.append("page", currentPage);
-    params.append("size", pageSize);
-    console.log(currentPage);
-    console.log(pageSize);
-    console.log(sortBy);
-    console.log(listSearch);
+    apiUrl += `?page=${currentPage}&size=${pageSize}`;
     if (sortBy) {
-      params.append("sortBy", sortBy);
-      console.log(sortBy);
+      apiUrl += `&sorts=${sortBy}`;
     }
-
-    console.log("Chưa qua nổi listSearch", listSearch);
     if (listSearch) {
+      apiUrl += `&search=`;
       //Append từng search item riêng biệt (sẽ ra search=title:conan&search=category:Trinh Thám)
-      listSearch.forEach((item) => params.append("search", item));
+      listSearch.forEach((item) => apiUrl += `${item},`);
+      apiUrl = apiUrl.slice(0, -1); // Xóa dấu phẩy cuối cùng
     }
     console.log("qua list search rồi");
-    console.log("param search", params);
 
-    const response = await axios.get(apiUrl, { params });
+    const response = await axios.get(apiUrl);
     return response.data;
   } catch (error) {
     console.error("Error fetching dishes:", error);

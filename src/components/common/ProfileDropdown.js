@@ -9,11 +9,12 @@ export const ProfileDropdown = ({
   handleLogout,
 }) => {
   const isUserOnly =
+    role &&
     role.includes("USER") &&
     !role.includes("SUPPLIER") &&
     !role.includes("ADMIN");
-  const isAuthorOnly = role.includes("SUPPLIER") && !role.includes("ADMIN");
-  const isAdmin = role.includes("ADMIN");
+  const isAuthorOnly = role && role.includes("SUPPLIER") && !role.includes("ADMIN");
+  const isAdmin = role && role.includes("ADMIN");
   console.log(avatar);
   console.log(isTokenValid);
   console.log(role);
