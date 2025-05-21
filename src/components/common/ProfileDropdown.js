@@ -13,7 +13,8 @@ export const ProfileDropdown = ({
     role.includes("USER") &&
     !role.includes("SUPPLIER") &&
     !role.includes("ADMIN");
-  const isAuthorOnly = role && role.includes("SUPPLIER") && !role.includes("ADMIN");
+  const isAuthorOnly =
+    role && role.includes("SUPPLIER") && !role.includes("ADMIN");
   const isAdmin = role && role.includes("ADMIN");
   console.log(avatar);
   console.log(isTokenValid);
@@ -64,8 +65,8 @@ export const ProfileDropdown = ({
               <i className="fa fa-id-card-o me-2"></i>Profile
             </Dropdown.Item>
             {isUserOnly && (
-              <Dropdown.Item as={Link} to="/register-teacher">
-                <i className="fa fa-graduation-cap me-2"></i>Register Author
+              <Dropdown.Item as={Link} to="/register-supplier">
+                <i className="fa fa-graduation-cap me-2"></i>Register Supplier
               </Dropdown.Item>
             )}
             {isAuthorOnly && (

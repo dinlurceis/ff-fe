@@ -21,6 +21,7 @@ import { Ingredients } from "./components/pages/IngredientPage/IngredientPage";
 import { DishDetail } from "./components/pages/DishDetailPage/DishDetailPage";
 import { Dishes } from "./components/pages/DishPage/DishPage";
 import { IngredientDetail } from "./components/pages/IngredientDetailPage/IngredientDetailPage";
+import { RegisterSupply } from "./components/pages/RegisterPage/RegisterSupply";
 function App() {
   return (
     <div className="App">
@@ -94,7 +95,7 @@ function App() {
               </PrivateRoute>
             }
           /> */}
-          {/* <Route path="/register-teacher" element={<Contact />} /> */}
+          <Route path="/register-supplier" element={<RegisterSupply />} />
           {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
           {/* <Route path="/upload-book" element={<UploadBook />} /> */}
         </Route>

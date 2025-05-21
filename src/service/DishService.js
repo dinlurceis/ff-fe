@@ -100,6 +100,7 @@ export const SearchDish = async (
 export const getDishById = async (id) => {
   try {
     const response = await axios.get(`api/v1/dish/getDishById/${id}`);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching chapter by id:", error);

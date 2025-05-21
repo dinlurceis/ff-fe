@@ -92,7 +92,7 @@ export const LoginPage = () =>{
                                 authContext.refresh();
                                 if(listRole.includes("ADMIN")){
                                     navigate("/admin");
-                                }else if(listRole.includes("AUTHOR")){
+                                }else if(listRole.includes("SUPPLIER")){
                                     console.log(email);
                                     navigate("/");
                                 }else{

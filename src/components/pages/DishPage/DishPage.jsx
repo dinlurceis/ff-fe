@@ -1,10 +1,9 @@
-
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Search } from "./components/Search";
 import { ViewDish } from "./components/ViewDish";
 import ReactPaginate from "react-paginate";
 import { SearchDish } from "../../../service/DishService";
-import { useEffect, useState } from "react";
 
 export const Dishes = () => {
   const [loading, setLoading] = useState(true);
@@ -12,12 +11,11 @@ export const Dishes = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
   const [totalPages, setTotalPages] = useState(0);
-  const [supplierName, setSupplierName] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [listSearch, setListSearch] = useState([]);
 
   useEffect(() => {
-    document.title = "Món ăn";
+    document.title = "Dishes";
   });
 
   const fetchDishes = async () => {
@@ -27,7 +25,6 @@ export const Dishes = () => {
         currentPage,
         pageSize,
         sortBy,
-        supplierName,
         listSearch
       );
       if (result && result.result) {
@@ -46,7 +43,7 @@ export const Dishes = () => {
   useEffect(() => {
     setCurrentPage(1);
     setPageSize(12);
-  }, [sortBy, supplierName, listSearch]);
+  }, [sortBy, listSearch]);
 
   useEffect(() => {
     fetchDishes();
@@ -58,7 +55,7 @@ export const Dishes = () => {
   };
   return (
     <motion.div
-      key={currentPage || sortBy || supplierName || listSearch}
+      key={currentPage || sortBy || listSearch}
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
@@ -67,7 +64,6 @@ export const Dishes = () => {
       <Search
         dishes={dishes}
         sortBy={setSortBy}
-        supplierName={setSupplierName}
         listSearch={setListSearch}
       />
       <div className="container-fluid">

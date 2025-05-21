@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 export const ViewDish = ({ dishes }) => {
   return (
     <div className="row" style={{ width: "100%" }}>
-      {dishes.length > 0 ? (
+      {dishes && dishes.length > 0 ? (
         dishes.map((dish) => (
           <div
             className="col-lg-2 col-md-4 col-sm-6 pb-4"
-            key={dish.dishId}
+            key={dish.id}
           >
             <Link
               className="ingredients-list-item"
-              to={`/dish-detail/${dish.dishId}`}
+              to={`/dish-detail/${dish.id}`}
             >
               <img
                 className="img-fluid"
@@ -21,7 +21,7 @@ export const ViewDish = ({ dishes }) => {
               />
               <div className="ingredients-info">
                 <div className="dishes-title">
-                  {dish.namedish}
+                  {dish.name}
                 </div>
                 {/* <div className="dish-price mt-2">
                   <strong>Giá: </strong>

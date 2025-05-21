@@ -195,7 +195,7 @@ export const HomePage = () => {
                       </span>
                       <Link
                         className="choose-btn"
-                        to={`/dish-detail/${dish.name}`}
+                        to={`/dish-detail/${dish.id}`}
                       >
                         Chọn
                       </Link>

@@ -11,10 +11,11 @@ export const DishDetail = () => {
   const [dishes, setDishes] = useState([]);
   const navigate = useNavigate();
 
+  console.log(id);
   const fetchDishes = async () => {
     setLoading(true);
     try {
-      const result = await getAllDish(1, 12);
+      const result = await getAllDish(1, 12, null, null);
       if (result && result.result) {
         setDishes(result.result.items);
       } else {

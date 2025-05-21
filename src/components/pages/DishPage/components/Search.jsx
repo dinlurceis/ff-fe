@@ -11,7 +11,6 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000000);
   const [sort, setSort] = useState("");
-  const [supplier, setSupplier] = useState("");
 
   const handleSearch = () => {
     let searchs = [];
@@ -32,14 +31,9 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
       searchs.push(`price>${minPrice}`);
     }
     console.log(sort);
-    console.log(supplier);
     if (sort) {
       console.log(sort);
       sortBy(sort);
-    }
-    if (supplier) {
-      console.log(supplier);
-      supplierName(supplier);
     }
 
     if (searchs.length > 0) {
@@ -140,7 +134,7 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
                   <option value="id:asc">Sort By:Cũ nhất</option>
                 </select>
               </div>
-              <div className="row mx-0 justify-content-center">
+              {/* <div className="row mx-0 justify-content-center">
                 <div className="col-lg-8">
                   <div className="section-title text-center position-relative mb-5">
                     <h5 className="display-4" style={{ fontSize: "50px" }}>
@@ -148,7 +142,7 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
                     </h5>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <ViewDish dishes={dishes} />
             </div>
           </div>
