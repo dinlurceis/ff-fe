@@ -66,7 +66,7 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
       {/* <div className="container"> */}
       <div
         className="row gutters"
-        style={{ width: "100%", marginTop: "200px" }}
+        style={{ width: "100%", marginTop: "20px" }}
       >
         {/* Cột trái */}
         <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -95,7 +95,7 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
                   <input
                     type="text"
                     className="form-control search-input custom-input w-100"
-                    placeholder="Search by Title"
+                    placeholder="Search by name"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
@@ -140,7 +140,7 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
                   <option value="id:asc">Sort By:Cũ nhất</option>
                 </select>
               </div>
-              <div className="row mx-0 justify-content-center">
+              {/* <div className="row mx-0 justify-content-center">
                 <div className="col-lg-8">
                   <div className="section-title text-center position-relative mb-5">
                     <h5 className="display-4" style={{ fontSize: "50px" }}>
@@ -148,7 +148,7 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
                     </h5>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <ViewIngredient ingredients={ingredients} />
             </div>
           </div>

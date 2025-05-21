@@ -1,0 +1,128 @@
+@import url(https://fonts.googleapis.com/css?family=Lexend+Peta:400,900);
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script:400,900);
+@import url(https://fonts.googleapis.com/css?family=Roboto:200,400,900);
+.filter-container {
+  padding: 16px;
+  border: 1px solid #999999;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+}
+
+.filter-title {
+  font-family: "Lexend Peta", sans-serif;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-section-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.filter-option input {
+  margin-right: 8px;
+}
+
+.price-input-wrapper h4 {
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.price-inputs input {
+  width: 100px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.price-inputs button {
+  background-color: #f2291b;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.price-inputs button:hover {
+  background-color: #d11c0f;
+}
+
+.current-filter-info {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #555;
+}
+.search-container {
+  padding: 50px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-grid {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.sidebar {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.main-content {
+  flex: 3;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.search-form {
+  margin-bottom: 30px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row > * {
+  flex: 1;
+}
+
+.title-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.title-section h2 {
+  font-size: 32px;
+  color: #333;
+  font-weight: bold;
+}

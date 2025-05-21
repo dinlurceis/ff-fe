@@ -39,14 +39,15 @@ function App() {
         {/* </Route> */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="/dish" element={<Dishes />} />
+          
+          <Route path="/ingredient" element={<Ingredients />} />
           {/* <Route path="/book-detail/:id" element={<BookDetail />} /> */}
         </Route>
         <Route path="/" element={<HeaderAndFooterRouter />}>
           {/* <Route path="/bookByAuthor" element={<BookByAuthor />} /> */}
           {/* <Route path="/favorite" element={<FavoriteCourses />} /> */}
-          <Route path="/ingredient" element={<Ingredients />} />
           <Route path="/ingredient-detail/:id" element={<IngredientDetail />} />
-          <Route path="/dish" element={<Dishes />} />
           <Route path="/dish-detail/:id" element={<DishDetail />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<ShoppingCart />} />
