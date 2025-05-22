@@ -79,13 +79,11 @@ export const SearchDish = async (
 
     apiUrl += `?page=${currentPage}&size=${pageSize}`;
     if (sortBy) {
-      apiUrl += `&sorts=${sortBy}`;
+      apiUrl += `&sortBy=${sortBy}`;
     }
     if (listSearch) {
-      apiUrl += `&search=`;
       //Append từng search item riêng biệt (sẽ ra search=title:conan&search=category:Trinh Thám)
-      listSearch.forEach((item) => apiUrl += `${item},`);
-      apiUrl = apiUrl.slice(0, -1); // Xóa dấu phẩy cuối cùng
+      listSearch.forEach((item) => apiUrl += `&search=${item}`);
     }
     console.log("qua list search rồi");
 

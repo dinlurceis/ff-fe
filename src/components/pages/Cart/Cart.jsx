@@ -106,7 +106,7 @@ const ShoppingCart = () => {
                   ingredients={carts}
                   clearCart={clearcart}
                   totalMoney={totalMoney}
-                  listingredient={listIngredient}
+                  listIngredient={listIngredient}
                 />
             </div>
         );

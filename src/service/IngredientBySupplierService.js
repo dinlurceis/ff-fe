@@ -1,3 +1,4 @@
+import { Variable } from "lucide-react";
 import axios from "../utils/CustomizeAxios";
 
 export const getIngredientSupplierById = async (ingredientId) => {
@@ -34,31 +35,22 @@ export const searchIngredients = async (
   currentPage = 1,
   pageSize = 10,
   sortBy = null,
-  searchTerms = [] // Nhận là mảng thay vì ...rest
+  listSearch = [] // Nhận là mảng thay vì ...rest
 ) => {
   try {
-    const apiUrl =
+    var apiUrl =
       "/api/v1/ingredientBySupplier/getIngredientWithSortAndMultiFieldAndSearch";
 
-    const params = new URLSearchParams();
-    params.append("page", currentPage);
-    params.append("size", pageSize);
-
+    apiUrl += `?page=${currentPage}&size=${pageSize}`;
     if (sortBy) {
-      params.append("sortBy", sortBy);
+      apiUrl += `&sortBy=${sortBy}`;
     }
-
-    // Xử lý mảng searchTerms
-    if (Array.isArray(searchTerms) && searchTerms.length > 0) {
-      searchTerms.forEach((term) => {
-        if (term) {
-          // Chỉ append nếu term tồn tại
-          params.append("search", term);
-        }
-      });
+    if (listSearch) {
+      //Append từng search item riêng biệt (sẽ ra search=title:conan&search=category:Trinh Thám)
+      listSearch.forEach((item) => (apiUrl += `&search=${item}`));
     }
-
-    const response = await axios.get(apiUrl, { params });
+    console.log(apiUrl);
+    const response = await axios.get(apiUrl);
     return response.data;
   } catch (error) {
     console.error("Error searching ingredients:", error);

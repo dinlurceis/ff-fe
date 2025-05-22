@@ -1,0 +1,67 @@
+@import url(https://fonts.googleapis.com/css?family=Lexend+Peta:400,900);
+
+.view-dish-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  ); /* CHỈNH Ở ĐÂY */
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.dish-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+}
+
+.dish-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  text-decoration: none;
+}
+
+.dish-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.dish-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.dish-info {
+  padding: 15px;
+}
+
+.dish-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: center;
+  font-family: "Lexend Peta", sans-serif;
+}
+
+/* Optional: Uncomment these if you want to show price and quantity */
+.dish-price,
+.dish-quantity {
+  font-size: 0.95rem;
+  margin-top: 5px;
+  color: #555;
+}
+
+.no-results {
+  text-align: center;
+  padding: 50px;
+  color: #555;
+}

@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 
-const ProductFilter = ({
+export const ProductFilter = ({
   categorySearch,
   setCategorySearch,
   listCategory,
-  // minPrice,
-  // maxPrice,
-  // setMinPrice,
-  // setMaxPrice,
+  minTimeCook,
+  maxTimeCook,
+  setMinTimeCook,
+  setMaxTimeCook,
 }) => {
-  //   const [selectedCategory, setSelectedCategory] = useState('');
-  //   const [minPrice, setMinPrice] = useState(0);
-  //   const [maxPrice, setMaxPrice] = useState(1000000);
+  // const [selectedCategory, setSelectedCategory] = useState('');
+  // const [minTimeCook, setMinTimeCook] = useState(0);
+  // const [maxTimeCook, setMaxTimeCook] = useState(120);
 
-  // Giá trị min-max của slider
-  // const PRICE_MIN = 0;
-  // const PRICE_MAX = 1000000;
+  // Thời gian nấu trị min-max của slider
+  const TimeCook_MIN = 0;
+  const TimeCook_MAX = 120;
 
   //   const categories = [
   //     { id: 'sach-tieng-viet', name: 'Sách Tiếng Việt', count: 3465 },
@@ -23,13 +23,13 @@ const ProductFilter = ({
   //     { id: 'do-choi', name: 'Đồ Chơi', count: 1 }
   //   ];
 
-  // const priceRanges = [
-  //   { id: '0-150000', label: '0 - 150,000đ', count: 3465, min: 0, max: 150000 },
-  //   { id: '150000-300000', label: '150,000đ - 300,000đ', count: 76, min: 150000, max: 300000 },
-  //   { id: '300000-500000', label: '300,000đ - 500,000đ', count: 14, min: 300000, max: 500000 },
-  //   { id: '500000-700000', label: '500,000đ - 700,000đ', count: 2, min: 500000, max: 700000 },
-  //   { id: '700000-above', label: '700,000đ - 1,000,000', count: 1, min: 700000, max: 1000000 }
-  // ];
+  const timeCookRanges = [
+    { id: "0-15", label: "0 - 15 phút", count: 5, min: 0, max: 15 },
+    { id: "15-30", label: "15 - 30 phút", count: 3, min: 15, max: 30 },
+    { id: "30-45", label: "30 - 45 phút", count: 4, min: 30, max: 45 },
+    { id: "45-60", label: "45 - 60 phút", count: 2, min: 45, max: 60 },
+    { id: "60-above", label: "> 60 phút", count: 1, min: 60, max: 120 },
+  ];
 
   const handleCategoryChange = (id) => {
     setCategorySearch(
@@ -40,35 +40,30 @@ const ProductFilter = ({
     );
   };
 
-  // const handlePriceRangeSelect = (range) => {
-  //   setMinPrice(range.min);
-  //   setMaxPrice(range.max || PRICE_MAX);
-  // };
+  const handleTimeCookRangeSelect = (range) => {
+    setMinTimeCook(range.min);
+    setMaxTimeCook(range.max || TimeCook_MAX);
+  };
 
-  // const calculateSliderPosition = (value) => {
-  //   return ((value - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
-  // };
+  const calculateSliderPosition = (value) => {
+    return ((value - TimeCook_MIN) / (TimeCook_MAX - TimeCook_MIN)) * 100;
+  };
 
-  // const handleSliderChange = (values) => {
-  //   // Sắp xếp lại giá trị để giá trị lớn hơn luôn là max
-  //   const sortedValues = values.sort((a, b) => a - b);
-  //   setMaxPrice(sortedValues[1]);
-  //   setMinPrice(sortedValues[0]);
-  // };
+  const handleSliderChange = (values) => {
+    // Sắp xếp lại Thời gian nấu trị để Thời gian nấu trị lớn hơn luôn là max
+    const sortedValues = values.sort((a, b) => a - b);
+    setMaxTimeCook(sortedValues[1]);
+    setMinTimeCook(sortedValues[0]);
+  };
 
-  // const resetPriceFilter = () => {
-  //   setMinPrice(PRICE_MIN);
-  //   setMaxPrice(PRICE_MAX);
-  // };
+  const resetTimeCookFilter = () => {
+    setMinTimeCook(TimeCook_MIN);
+    setMaxTimeCook(TimeCook_MAX);
+  };
 
   return (
-    <div className="p-4 border rounded-lg">
-      <h2
-        className="text-xl font-bold mb-4 text-red-600"
-        style={{ color: "#f2291b", textAlign: "center" }}
-      >
-        LỌC THEO
-      </h2>
+    <div className="filter-container">
+      <h2 className="filter-title">LỌC THEO</h2>
 
       <div className="mb-4">
         <h3 className="mb-2" style={{ fontSize: "25px" }}>
@@ -91,99 +86,97 @@ const ProductFilter = ({
       </div>
 
       <div>
-        {/* <h3 className="mb-2" style={{fontSize:"25px"}}>GIÁ</h3>
-        {priceRanges.map(range => (
+        <h3 className="mb-2" style={{ fontSize: "25px" }}>
+          THỜI GIAN NẤU
+        </h3>
+        {timeCookRanges.map((range) => (
           <div key={range.id} className="flex items-center mb-1">
             <input
               type="radio"
               id={range.id}
-              name="price-range"
-              checked={minPrice === range.min && (maxPrice === range.max || range.max === null)}
+              name="TimeCook-range"
+              checked={
+                minTimeCook === range.min &&
+                (maxTimeCook === range.max || range.max === null)
+              }
               className="mr-2"
-              onChange={() => handlePriceRangeSelect(range)}
+              onChange={() => handleTimeCookRangeSelect(range)}
             />
             <label htmlFor={range.id} className="flex-grow">
               {range.label} ({range.count})
             </label>
           </div>
-        ))} */}
-
-        {/* <div className="mt-4 relative">
-          <h4 className="font-semibold mb-2">Hoặc chọn mức giá phù hợp</h4> */}
-
-        {/* Custom Price Slider */}
-        {/* <div className="relative w-full h-10"> */}
-        {/* Slider Track */}
-        {/* <div className="absolute w-full h-1 bg-gray-300 top-1/2 transform -translate-y-1/2 rounded"> */}
-        {/* Progress Bar */}
-        {/* <div
+        ))}
+        <div className="mt-4 relative">
+          <h4 className="font-semibold mb-2">Hoặc chọn thời gian nấu phù hợp</h4>
+          {/* Custom TimeCook Slider
+        <div className="relative w-full h-10"> 
+        <div className="absolute w-full h-1 bg-gray-300 top-1/2 transform -translate-y-1/2 rounded">
+        <div
                 className="absolute h-1 bg-blue-500 rounded"
                 style={{
-                  left: `${calculateSliderPosition(minPrice)}%`,
-                  width: `${calculateSliderPosition(maxPrice) - calculateSliderPosition(minPrice)}%`,
+                  left: `${calculateSliderPosition(minTimeCook)}%`,
+                  width: `${calculateSliderPosition(maxTimeCook) - calculateSliderPosition(minTimeCook)}%`,
                 }}
               ></div>
-            </div> */}
+            </div>
 
-        {/* Input Range Min */}
-        {/* <input
+        <input
               type="range"
-              min={PRICE_MIN}
-              max={PRICE_MAX}
-              value={minPrice}
+              min={TimeCook_MIN}
+              max={TimeCook_MAX}
+              value={minTimeCook}
               onChange={(e) => {
                 const value = Number(e.target.value);
-                if (value < maxPrice - 1000) {
-                  setMinPrice(value);
+                if (value < maxTimeCook - 1000) {
+                  setMinTimeCook(value);
                 }
               }}
               className="absolute w-full pointer-events-none appearance-none z-30"
               style={{ WebkitAppearance: 'none' }}
-            /> */}
+            />
 
-        {/* Input Range Max */}
-        {/* <input
+        <input
               type="range"
-              min={PRICE_MIN}
-              max={PRICE_MAX}
-              value={maxPrice}
+              min={TimeCook_MIN}
+              max={TimeCook_MAX}
+              value={maxTimeCook}
               onChange={(e) => {
                 const value = Number(e.target.value);
-                if (value > minPrice + 1000) {
-                  setMaxPrice(value);
+                if (value > minTimeCook + 1000) {
+                  setMaxTimeCook(value);
                 }
               }}
               className="absolute w-full pointer-events-none appearance-none z-20"
               style={{ WebkitAppearance: 'none' }}
-            /> */}
+            />
 
-        {/* Thumbs */}
-        {/* <div
+        <div
               className="absolute w-4 h-4 bg-blue-600 rounded-full top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40"
-              style={{ left: `${calculateSliderPosition(minPrice)}%` }}
+              style={{ left: `${calculateSliderPosition(minTimeCook)}%` }}
             ></div>
             <div
               className="absolute w-4 h-4 bg-blue-600 rounded-full top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40"
-              style={{ left: `${calculateSliderPosition(maxPrice)}%` }}
+              style={{ left: `${calculateSliderPosition(maxTimeCook)}%` }}
             ></div>
-          </div> */}
+          </div>
 
-        {/* Giá hiện tại */}
-        {/* <div className="w-full flex justify-between text-sm text-gray-600 mt-6">
-            <span style={{width:"20px"}}>{minPrice}đ</span>
+        <div className="w-full flex justify-between text-sm text-gray-600 mt-6">
+            <span style={{width:"20px"}}>{minTimeCook} phút</span>
             <span>-</span>
-            <span style={{width:"20px"}}>{maxPrice}đ</span>
+            <span style={{width:"20px"}}>{maxTimeCook} phút</span>
           </div> */}
-
-        {/* Manual Price Input */}
-        {/* <div className="flex items-center space-x-2 mt-4">
+          
+          <div className="flex items-center space-x-2 mt-4">
             <input
               type="number"
-              value={minPrice}
-              style={{width:"100px"}}
+              value={minTimeCook}
+              style={{ width: "100px" }}
               onChange={(e) => {
                 const value = Number(e.target.value);
-                setMinPrice(Math.min(Math.max(value, PRICE_MIN), maxPrice - 1000));
+                setMinTimeCook(
+                  Math.min(Math.max(value, TimeCook_MIN), maxTimeCook - 15)
+                );
               }}
               className="w-24 p-1 border rounded"
               placeholder="Từ"
@@ -191,26 +184,26 @@ const ProductFilter = ({
             <span> - </span>
             <input
               type="number"
-              value={maxPrice}
-              style={{width:"100px"}}
+              value={maxTimeCook}
+              style={{ width: "100px" }}
               onChange={(e) => {
                 const value = Number(e.target.value);
-                setMaxPrice(Math.max(Math.min(value, PRICE_MAX), minPrice + 1000));
+                setMaxTimeCook(
+                  Math.max(Math.min(value, TimeCook_MAX), minTimeCook + 15)
+                );
               }}
               className="w-24 p-1 border rounded"
               placeholder="Đến"
             />
             <button
-              onClick={resetPriceFilter}
-              style={{background:"#f2291b"}}
+              onClick={resetTimeCookFilter}
+              style={{ background: "#f2291b" }}
               className="ml-2 px-2 py-1 bg-red-500 text-white rounded text-sm"
             >
               Xóa
             </button>
           </div>
-        </div> */}
-
-        {/* Hiển thị thông tin lọc hiện tại */}
+        </div>
         <div className="mt-4 text-sm text-gray-600">
           <div>
             <b>Danh mục:</b>{" "}
@@ -221,13 +214,11 @@ const ProductFilter = ({
                   .join(", ")
               : "Không có"}
           </div>
-          {/* <div>
-            <b>Giá: </b>Từ {minPrice}đ - Đến {maxPrice}đ
-          </div> */}
+          <div>
+            <b>Thời gian nấu: </b>Từ {minTimeCook} phút - Đến {maxTimeCook} phút
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
-export default ProductFilter;

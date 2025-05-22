@@ -1,46 +1,23 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { Link } from "react-router-dom";
+import "./DishPage.css"; // import file CSS
 
 export const ViewDish = ({ dishes }) => {
   return (
-    <div className="row" style={{ width: "100%" }}>
+    <div className="view-dish-container">
       {dishes && dishes.length > 0 ? (
         dishes.map((dish) => (
-          <div
-            className="col-lg-2 col-md-4 col-sm-6 pb-4"
-            key={dish.id}
-          >
-            <Link
-              className="ingredients-list-item"
-              to={`/dish-detail/${dish.id}`}
-            >
-              <img
-                className="img-fluid"
-                src={dish.dishImage}
-                alt={dish.name}
-              />
-              <div className="ingredients-info">
-                <div className="dishes-title">
-                  {dish.name}
-                </div>
-                {/* <div className="dish-price mt-2">
-                  <strong>Giá: </strong>
-                  <span className="dish-price-value">
-                    {dish.pricedish.toLocaleString()} VND
-                  </span>
-                </div>
-                <div className="dish-quantity">
-                  <strong>Số lượng còn: </strong>
-                  <span>{dish.quantity}</span>
-                </div> */}
+          <div className="dish-card" key={dish.id}>
+            <Link className="dish-link" to={`/dish-detail/${dish.id}`}>
+              <img className="dish-image" src={dish.dishImage} alt={dish.name} />
+              <div className="dish-info">
+                <div className="dish-name">{dish.name}</div>
               </div>
             </Link>
           </div>
         ))
       ) : (
-        <div className="text-center pt-5">
-          <h4>Không tìm thấy nguyên liệu phù hợp.</h4>
-          <p>Hãy thử điều chỉnh bộ lọc hoặc tìm kiếm các danh mục khác!</p>
+        <div className="no-results">
+          <h4>Không tìm thấy món ăn phù hợp.</h4>
         </div>
       )}
     </div>

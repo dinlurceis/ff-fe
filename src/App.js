@@ -22,6 +22,7 @@ import { DishDetail } from "./components/pages/DishDetailPage/DishDetailPage";
 import { Dishes } from "./components/pages/DishPage/DishPage";
 import { IngredientDetail } from "./components/pages/IngredientDetailPage/IngredientDetailPage";
 import { RegisterSupply } from "./components/pages/RegisterPage/RegisterSupply";
+import { UploadIngredient } from "./components/SupplierComponents/UploadIngredient";
 function App() {
   return (
     <div className="App">
@@ -46,7 +47,7 @@ function App() {
           {/* <Route path="/book-detail/:id" element={<BookDetail />} /> */}
         </Route>
         <Route path="/" element={<HeaderAndFooterRouter />}>
-          {/* <Route path="/bookByAuthor" element={<BookByAuthor />} /> */}
+          {/* <Route path="/bookBySupplier" element={<BookBySupplier />} /> */}
           {/* <Route path="/favorite" element={<FavoriteCourses />} /> */}
           <Route path="/ingredient-detail/:id" element={<IngredientDetail />} />
           <Route path="/dish-detail/:id" element={<DishDetail />} />
@@ -97,7 +98,7 @@ function App() {
           /> */}
           <Route path="/register-supplier" element={<RegisterSupply />} />
           {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
-          {/* <Route path="/upload-book" element={<UploadBook />} /> */}
+          <Route path="/upload-ingredient-by-supplier" element={<UploadIngredient />} />
         </Route>
 
         {/* <Route path="/my-account" element={<ProfilePage />} /> */}

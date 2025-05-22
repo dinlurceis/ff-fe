@@ -12,20 +12,16 @@ const instance = axios.create({
 const publicEndpoints = [
   "api/v1/auth", // Tất cả các endpoint bắt đầu bằng /auth/
   "api/v1/auth/register",
-  // 'api/v1/books/getBook',
-  // 'api/v1/books/books-search-criteria',
-  // 'api/v1/books/books-search-keyword',
-  // 'api/v1/books/bookList',
-  // 'api/v1/chapter/getChapterById',
-  // 'api/v1/chapter/findPrevChapter',
-  // 'api/v1/chapter/findNextChapter',
-  // 'api/v1/chapter/findChaptersByBookId',
-  // 'api/v1/chapter/getRecentChaptersWithElapsedTime',
-  // 'api/v1/chapter/getLatestChapterAndTime',
-  // 'api/v1/chapter/getRecentChapterByBookWithElapsedTime',
-  // 'api/v1/category/getCategoryById',
-  // 'api/v1/comment/getCommentsByBook',
-  // 'api/v1/payment/vn-pay-callback'
+  "/api/v1/category/categoryById/{categoryId}",
+  "/api/v1/dish/getCommentsByIngredientSupplier/{ingredientBySupplierId}",
+  "/api/v1/dish/getAllDish",
+  "/api/v1/dish/getDishById/{dishId}",
+  "/api/v1/dish/getDishWithSortAndMultiFieldAndSearch",
+  "/api/v1/ingredientBySupplier/getIngredientWithSortAndMultiFieldAndSearch",
+  "/api/v1/ingredientBySupplier/getIngredientById/{ingredientId}",
+  "/api/v1/ingredientBySupplier/getAllIngredientBySupplier",
+  "/api/v1/ingredient/getIngredientById/{ingredientId}",
+  "/payment/vn-pay-callback"
 ];
 
 // Kiểm tra xem một URL có phải là public endpoint không

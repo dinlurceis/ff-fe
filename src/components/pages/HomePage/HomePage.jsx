@@ -94,8 +94,8 @@ export const HomePage = () => {
       const ingredientNames = selectedIngredients.map(
         (ingredient) => ingredient.name
       );
-
-      const result = await SearchDish(1, 5, null, ingredientNames);
+      const x = "keyword:" + ingredientNames.join(",");
+      const result = await SearchDish(1, 5, null, [x]);
       if (result && result.result) {
         setMatchedDishes(result.result.items || []);
       } else {

@@ -3,83 +3,73 @@ import { Select } from "antd";
 import { listAllCategory } from "../../../../service/CategoryService";
 import ProductFilter from "./FilterIngredients";
 import { ViewIngredient } from "./ViewIngredient";
+import { searchIngredients } from "../../../../service/IngredientBySupplierService";
 
-export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
-  const [listCategory, setListCategory] = useState([]);
-  const [categorySearch, setCategorySearch] = useState([]);
-  const [title, setTitle] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000000);
+export const Search = ({ ingredients, sortBy, listSearch }) => {
+  // const [listCategory, setListCategory] = useState([]);
+  // const [categorySearch, setCategorySearch] = useState([]);
+  const [nameIngredient, setNameIngredient] = useState("");
+  const [minPriceIngredient, setMinPriceIngredient] = useState(0);
+  const [maxPriceIngredient, setMaxPriceIngredient] = useState(2000000);
   const [sort, setSort] = useState("");
-  const [supplier, setSupplier] = useState("");
+  // const [supplier, setSupplier] = useState("");
 
   const handleSearch = () => {
     let searchs = [];
 
-    if (title && title.trim() !== "") {
-      searchs.push(`title:${title}`);
+    console.log(nameIngredient);
+    searchs.push(`nameIngredient:${nameIngredient}`);
+  
+    // if (categorySearch.length > 0) {
+    //   searchs.push(...categorySearch);
+    // }
+
+    console.log(minPriceIngredient);
+    if (maxPriceIngredient !== null && maxPriceIngredient !== "") {
+      searchs.push(`priceIngredient<${maxPriceIngredient}`);
     }
 
-    if (categorySearch.length > 0) {
-      searchs.push(...categorySearch);
+    if (minPriceIngredient !== null && minPriceIngredient !== "") {
+      searchs.push(`priceIngredient>${minPriceIngredient}`);
     }
 
-    if (maxPrice !== null && maxPrice !== "") {
-      searchs.push(`price<${maxPrice}`);
-    }
-
-    if (minPrice !== null && minPrice !== "") {
-      searchs.push(`price>${minPrice}`);
-    }
-    console.log(sort);
-    console.log(supplier);
     if (sort) {
-      console.log(sort);
-      sortBy(sort);
-    }
-    if (supplier) {
-      console.log(supplier);
-      supplierName(supplier);
+      sortBy(sort); // Gửi sort về cha nếu cần
     }
 
-    if (searchs.length > 0) {
-      listSearch(searchs);
-    }
+    listSearch(searchs); // Gửi search về cha nếu cần
+    handleFilterAll(searchs, sort); // Gọi API
   };
 
-  useEffect(() => {
-    const listCategories = async () => {
-      try {
-        const data = await listAllCategory();
-        if (data.result && Array.isArray(data.result)) {
-          setListCategory(data.result);
-        }
-      } catch (error) {
-        console.error("Error fetching favorite course:", error);
+  const handleFilterAll = async (searchs, sortValue) => {
+    try {
+      const response = await searchIngredients(1, 12, sortValue, searchs); // sortValue là string
+      if (response && response.result) {
+        ingredients(response.result.items);
+      } else {
+        ingredients([]);
       }
-    };
-    listCategories();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching ingredients:", error);
+    }
+  };
 
   return (
     <>
       {/* <div className="container"> */}
-      <div
-        className="row gutters"
-        style={{ width: "100%", marginTop: "20px" }}
-      >
+      <div className="row gutters" style={{ width: "100%", marginTop: "20px" }}>
         {/* Cột trái */}
         <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
           <div className="card h-100">
             <div className="card-body">
               <ProductFilter
-                categorySearch={categorySearch}
-                setCategorySearch={setCategorySearch}
-                listCategory={listCategory}
-                minPrice={minPrice}
-                maxPrice={maxPrice}
-                setMinPrice={setMinPrice}
-                setMaxPrice={setMaxPrice}
+                // categorySearch={categorySearch}
+                // setCategorySearch={setCategorySearch}
+                // listCategory={listCategory}
+                minPriceIngredient={minPriceIngredient}
+                maxPriceIngredient={maxPriceIngredient}
+                setMinPriceIngredient={setMinPriceIngredient}
+                setMaxPriceIngredient={setMaxPriceIngredient}
               />
             </div>
           </div>
@@ -96,8 +86,8 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
                     type="text"
                     className="form-control search-input custom-input w-100"
                     placeholder="Search by name"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={nameIngredient}
+                    onChange={(e) => setNameIngredient(e.target.value)}
                   />
                 </div>
                 <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3">
@@ -128,8 +118,6 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
                   onChange={(e) => setSort(e.target.value)}
                 >
                   <option value="">Mặc định</option>
-                  <option value="title:asc">Sort By:Name (A-Z)</option>
-                  <option value="title:desc">Sort By:Name(Z-A)</option>
                   <option value="price:asc">
                     Sort By:Price (Low &gt; High)
                   </option>
@@ -142,7 +130,7 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
               </div>
               {/* <div className="row mx-0 justify-content-center">
                 <div className="col-lg-8">
-                  <div className="section-title text-center position-relative mb-5">
+                  <div className="section-nameIngredient text-center position-relative mb-5">
                     <h5 className="display-4" style={{ fontSize: "50px" }}>
                       Khám phá nguyên liệu
                     </h5>
@@ -161,16 +149,16 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
     //     <div className="container-fluid mb-3">
     //         <div className="search-bar p-4 rounded shadow-sm custom-search-bar">
 
-    //             {/* Hàng 1: Title, supplier, Category - Cùng chiều cao */}
+    //             {/* Hàng 1: nameIngredient, supplier, Category - Cùng chiều cao */}
     //             <div className="row g-3 align-items-stretch mb-3">
-    //                 {/* Title Search */}
+    //                 {/* nameIngredient Search */}
     //                 <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 d-flex">
     //                     <input
     //                         type="text"
     //                         className="form-control search-input custom-input h-100"
-    //                         placeholder="Search by Title"
-    //                         value={title}
-    //                         onChange={(e) => setTitle(e.target.value)}
+    //                         placeholder="Search by nameIngredient"
+    //                         value={nameIngredient}
+    //                         onChange={(e) => setnameIngredient(e.target.value)}
     //                         style={{ height: '100%' }}
     //                     />
     //                 </div>
@@ -205,28 +193,28 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
     //                 </div>
     //             </div>
 
-    //             {/* Hàng 2: Price Range, Sort, Search Button */}
+    //             {/* Hàng 2: PriceIngredient Range, Sort, Search Button */}
     //             <div className="row g-3 align-items-center">
-    //                 {/* Min Price */}
+    //                 {/* Min PriceIngredient */}
     //                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6">
     //                     <input
     //                         type="number"
     //                         className="form-control search-input custom-input"
-    //                         placeholder="Min Price"
-    //                         value={minPrice || ''}
-    //                         onChange={(e) => setMinPrice(e.target.value)}
+    //                         placeholder="Min PriceIngredient"
+    //                         value={minPriceIngredient || ''}
+    //                         onChange={(e) => setMinPriceIngredient(e.target.value)}
     //                         min={0}
     //                     />
     //                 </div>
 
-    //                 {/* Max Price */}
+    //                 {/* Max PriceIngredient */}
     //                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6">
     //                     <input
     //                         type="number"
     //                         className="form-control search-input custom-input"
-    //                         placeholder="Max Price"
-    //                         value={maxPrice || ''}
-    //                         onChange={(e) => setMaxPrice(e.target.value)}
+    //                         placeholder="Max PriceIngredient"
+    //                         value={maxPriceIngredient || ''}
+    //                         onChange={(e) => setMaxPriceIngredient(e.target.value)}
     //                         min={0}
     //                     />
     //                 </div>
@@ -239,10 +227,10 @@ export const Search = ({ ingredients, sortBy, supplierName, listSearch }) => {
     //                         onChange={(e) => setSort(e.target.value)}
     //                     >
     //                         <option value="">Default Sorting</option>
-    //                         <option value="title:asc">Sort By:Name (A-Z)</option>
-    //                         <option value="title:desc">Sort By:Name(Z-A)</option>
-    //                         <option value="price:asc">Sort By:Price (Low &gt; High)</option>
-    //                         <option value="price:desc">Sort By:Price (Hight &gt; Low)</option>
+    //                         <option value="nameIngredient:asc">Sort By:Name (A-Z)</option>
+    //                         <option value="nameIngredient:desc">Sort By:Name(Z-A)</option>
+    //                         <option value="PriceIngredient:asc">Sort By:PriceIngredient (Low &gt; High)</option>
+    //                         <option value="PriceIngredient:desc">Sort By:PriceIngredient (Hight &gt; Low)</option>
     //                         <option value="id:desc">Sort By:Truyện mới nhất</option>
     //                         <option value="id:asc">Sort By:Truyện xưa nhất</option>
     //                     </select>

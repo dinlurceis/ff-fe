@@ -64,6 +64,7 @@ export const DishDetail = () => {
   if (!dish) {
     return <div>Dish data is not available</div>;
   }
+  const steps = dish.recipe.split(".").filter((step) => step.trim());
 
   return (
     <div className="dish-detail-container">
@@ -73,11 +74,14 @@ export const DishDetail = () => {
           <h2>{dish.name}</h2>
           <div className="dish-meta">
             <span>
-              <i className="far fa-clock"></i> {dish.timeCook} phút
+              <i className="fas fa-coins"></i>
+              {"Thời gian nấu dự kiến: "}
+              <i className="far fa-clock"></i> {dish.timeCook}
             </span>
             <span>
-              <i className="fas fa-coins"></i>{" "}
-              {dish.price?.toLocaleString("vi-VN")} đ
+              <i className="fas fa-coins"></i>
+              {"Giá dự kiến: "}
+              {(dish.price * 1000)?.toLocaleString("vi-VN")} đ
             </span>
           </div>
         </div>
@@ -89,17 +93,28 @@ export const DishDetail = () => {
             <img src={dish.dishImage} alt={dish.name} />
           </div>
 
-          {/* Right Column - Details */}
+          {/* Right Column - Info (description, ingredients, meta) */}
           <div className="dish-info">
             {/* Description */}
             <section className="dish-section">
-              <h3>Mô tả món ăn</h3>
+              <h3 className="lexe">Mô tả món ăn</h3>
               <p>{dish.description}</p>
+            </section>
+
+            <section className="dish-section">
+              <h3 className="lexe">Danh mục món ăn</h3>
+              <ul className="ingredients-list">
+                {dish.dishCategory?.map((category, index) => (
+                  <li key={index}>
+                    <span className="ingredient-item">{category}</span>
+                  </li>
+                ))}
+              </ul>
             </section>
 
             {/* Ingredients */}
             <section className="dish-section">
-              <h3>Nguyên liệu</h3>
+              <h3 className="lexe">Nguyên liệu</h3>
               <ul className="ingredients-list">
                 {dish.dishIngredient?.map((ingredient, index) => (
                   <li key={index}>
@@ -108,19 +123,24 @@ export const DishDetail = () => {
                 ))}
               </ul>
             </section>
-
-            {/* Recipe */}
-            <section className="dish-section">
-              <h3>Cách làm</h3>
-              <div className="recipe-content">
-                {dish.recipe?.split("\n").map((step, index) => (
-                  <p key={index} className="recipe-step">
-                    <span className="step-number">{index + 1}.</span> {step}
-                  </p>
-                ))}
-              </div>
-            </section>
           </div>
+        </div>
+
+        {/* Full Width Recipe Section */}
+        <div className="dish-recipe-full">
+          <section className="dish-section">
+            <h3 className="lexe">Cách làm</h3>
+            <div className="recipe-content">
+              {steps.map((step, index) =>
+                step.trim() ? (
+                  <p key={index} className="recipe-step">
+                    <span className="step-number">{index + 1}.</span>{" "}
+                    {step}
+                  </p>
+                ) : null
+              )}
+            </div>
+          </section>
         </div>
       </div>
     </div>

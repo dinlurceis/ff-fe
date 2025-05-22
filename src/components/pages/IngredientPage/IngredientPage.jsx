@@ -11,7 +11,7 @@ export const Ingredients = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
   const [totalPages, setTotalPages] = useState(0);
-  const [supplierName, setSupplierName] = useState("");
+  // const [supplierName, setSupplierName] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [listSearch, setListSearch] = useState([]);
 
@@ -26,7 +26,7 @@ export const Ingredients = () => {
         currentPage,
         pageSize,
         sortBy,
-        supplierName,
+        // supplierName,
         listSearch
       );
       if (result && result.result) {
@@ -45,7 +45,7 @@ export const Ingredients = () => {
   useEffect(() => {
     setCurrentPage(1);
     setPageSize(12);
-  }, [sortBy, supplierName, listSearch]);
+  }, [sortBy, listSearch]);
 
   useEffect(() => {
     fetchIngredients();
@@ -57,7 +57,7 @@ export const Ingredients = () => {
   };
   return (
     <motion.div
-      key={currentPage || sortBy || supplierName || listSearch}
+      key={currentPage || sortBy || listSearch}
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
@@ -66,7 +66,7 @@ export const Ingredients = () => {
       <Search
         ingredients={ingredients}
         sortBy={setSortBy}
-        supplierName={setSupplierName}
+        // supplierName={setSupplierName}
         listSearch={setListSearch}
       />
       <div className="container-fluid">

@@ -14,6 +14,7 @@ import {
   getAllIngredientBySupplier,
   getIngredientSupplierById,
 } from "../../../service/IngredientBySupplierService";
+import "../DishDetailPage/DishDetail.css";
 
 export const IngredientDetail = () => {
   const accessToken = sessionStorage.getItem("accessToken");
@@ -75,6 +76,22 @@ export const IngredientDetail = () => {
       .catch((error) => console.log(error));
   }, [id]);
 
+  useEffect(() => {
+    setLoading(true); // Bổ sung dòng này để đảm bảo set lại trạng thái
+    getIngredientSupplierById(id)
+      .then((data) => {
+        setIngredient(data.result);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+
+    // Scroll lên đầu trang khi chuyển nguyên liệu
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [id]);
+
   if (loading) return <div>Loading...</div>;
 
   if (!ingredient) {
@@ -86,7 +103,7 @@ export const IngredientDetail = () => {
     const commentData = {
       content: newComment.trim(),
       parentCommentId: null,
-      ingredientId: id,
+      ingredientBuSupplierId: id,
     };
 
     try {
@@ -118,7 +135,7 @@ export const IngredientDetail = () => {
     const replydata = {
       content: replyText.trim(),
       parentCommentId: commentId,
-      IngredientId: id,
+      ingredientBuSupplierId: id,
     };
 
     try {
@@ -208,6 +225,7 @@ export const IngredientDetail = () => {
 
   const addItemCarts = async (id, quantity) => {
     try {
+      console.log("call add to cart");
       const response = addItemCart(id, quantity);
       if (response) {
         console.log("Sản phẩm đã được thêm vào giỏ hàng");
@@ -221,77 +239,62 @@ export const IngredientDetail = () => {
     console.log(id);
     let orderItems = [];
     orderItems.push({
-      IngredientId: id,
+      ingredientId: id,
       quantity: 1,
     });
-    let IngredientList = [];
-    IngredientList.push(ingredient);
-    console.log({ id, IngredientList });
+    let ingredientList = [];
+    ingredientList.push(ingredient);
+    console.log({ id, ingredientList });
     console.log("danh sách sản phẩm được thanh toán:", orderItems);
     // ví dụ điều hướng sang trang thanh toán và truyền dữ liệu
     navigate("/order", {
-      state: { items: orderItems, listIngredients: IngredientList },
+      state: { items: orderItems, listIngredients: ingredientList },
     });
   };
-
   return (
-    <div className="container-fluid py-3">
-      <div className="container py-5">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="mb-5 mt-5">
-              <div className="row">
-                <div className="col-12">
-                  <h4 className="text-secondary text-uppercase pb-2">
-                    Ingredient Detail
-                  </h4>
-                </div>
-              </div>
-              <div className="row">
-                {/* Image Column */}
-                <div className="col-md-4 mb-4">
-                  <img
-                    className="img-fluid rounded w-100"
-                    src={ingredient.thumbnail}
-                    alt={ingredient.nameIngredient}
-                  />
-                </div>
+    <div className="dish-detail-container">
+      <div className="dish-detail-content">
+        {/* Header Section */}
+        <div className="dish-header">
+          <h2>{ingredient.nameIngredient}</h2>
+        </div>
 
-                {/* Description + Info Column */}
-                <div className="col-md-8">
-                  <h4 className="mt-4">{ingredient.nameIngredient}</h4>
-                  <h6 className="mt-4">
-                    Đơn vị phân phối: <strong>{ingredient.supplierName}</strong>
-                  </h6>
+        {/* Main Content */}
+        <div className="dish-main">
+          {/* Left Column - Image */}
+          <div className="dish-image">
+            <img
+              src={ingredient.ingredientUrl}
+              alt={ingredient.nameIngredient}
+            />
+          </div>
 
-                  <h5 className="mt-3">Mô tả:</h5>
-                  <div>{ingredient.description}</div>
+          {/* Right Column - Info (description, ingredients, meta) */}
+          <div className="dish-info">
+            {/* Description */}
+            <div className="price-big">{ingredient.priceIngredient} VNĐ</div>
+            <section className="dish-section">
+              <h3 className="lexe">Số lượng tồn kho</h3>
+              <p>{ingredient.stock}</p>
+            </section>
+            <section className="dish-section">
+              <h3 className="lexe">Người đăng bán</h3>
+              <p>{ingredient.supplierName}</p>
+            </section>
 
-                  <h6 className="mt-3">
-                    Giá:{" "}
-                    <strong>
-                      {ingredient.priceIngredient?.toLocaleString("vi-VN")} VND
-                    </strong>
-                  </h6>
+            <div class="button-group">
+              <button class="btn btn-cart" onClick={() => addItemCarts(id, 1)}>
+                <i class="fa fa-shopping-cart"></i>
+                Thêm vào giỏ hàng
+              </button>
 
-                  <div className="mt-4 btn-block">
-                    <button
-                      className="btn btn-primary me-2"
-                      onClick={() => addItemCarts(id, 1)}
-                    >
-                      <i className="fa fa-shopping-cart me-2"></i>
-                      Thêm vào giỏ hàng
-                    </button>
-
-                    <button className="btn btn-success" onClick={handlePayment}>
-                      <i className="fa fa-credit-card me-2"></i>
-                      Thanh toán ngay
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <button class="btn btn-pay" onClick={() => handlePayment()}>
+                <i class="fa fa-credit-card"></i>
+                Thanh toán ngay
+              </button>
             </div>
-
+          </div>
+          <div className="review-container">
             <ReviewSection
               comments={comments}
               newComment={newComment}
@@ -308,14 +311,75 @@ export const IngredientDetail = () => {
               handleEditComment={handleEditComment}
               handleDeleteComment={handleDeleteComment}
             />
-
-            <h6 className="display-4 text-center mt-5">
-              Nguyên liệu liên quan
-            </h6>
-            <ViewIngredient ingredients={ingredients} />
           </div>
         </div>
+        <h6 className="related-ingre lexe">Nguyên liệu liên quan</h6>
+        <ViewIngredient ingredients={ingredients} />
       </div>
     </div>
   );
+  // return (
+  //   <div className="container-fluid py-3">
+  //     <div className="container py-5">
+  //       <div className="row">
+  //         <div className="col-lg-12">
+  //           <div className="mb-5 mt-5">
+  //             <div className="row">
+  //               <div className="col-12">
+  //                 <h4 className="text-secondary text-uppercase pb-2">
+  //                   Ingredient Detail
+  //                 </h4>
+  //               </div>
+  //             </div>
+  //             <div className="row">
+  //               {/* Image Column */}
+  //               <div className="col-md-4 mb-4">
+  //                 <img
+  //                   className="img-fluid rounded w-100"
+  //                   src={ingredient.thumbnail}
+  //                   alt={ingredient.nameIngredient}
+  //                 />
+  //               </div>
+
+  //               {/* Description + Info Column */}
+  //               <div className="col-md-8">
+  //                 <h4 className="mt-4">{ingredient.nameIngredient}</h4>
+  //                 <h6 className="mt-4">
+  //                   Đơn vị phân phối: <strong>{ingredient.supplierName}</strong>
+  //                 </h6>
+
+  //                 <h5 className="mt-3">Mô tả:</h5>
+  //                 <div>{ingredient.description}</div>
+
+  //                 <h6 className="mt-3">
+  //                   Giá:{" "}
+  //                   <strong>
+  //                     {ingredient.priceIngredient?.toLocaleString("vi-VN")} VND
+  //                   </strong>
+  //                 </h6>
+  //               </div>
+  //             </div>
+  //           </div>
+
+  //           <ReviewSection
+  //             comments={comments}
+  //             newComment={newComment}
+  //             editingCommentId={editingCommentId}
+  //             setEditingCommentId={setEditingCommentId}
+  //             setNewComment={setNewComment}
+  //             replyContent={replyContent}
+  //             setReplyContent={setReplyContent}
+  //             editContent={editContent}
+  //             setEditContent={setEditContent}
+  //             handleAddComment={handleAddComment}
+  //             handleReplyToggle={handleReplyToggle}
+  //             handleAddReply={handleAddReply}
+  //             handleEditComment={handleEditComment}
+  //             handleDeleteComment={handleDeleteComment}
+  //           />
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 };

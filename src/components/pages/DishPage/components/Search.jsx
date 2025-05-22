@@ -1,43 +1,48 @@
 import { useEffect, useState } from "react";
 import { Select } from "antd";
 import { listAllCategory } from "../../../../service/CategoryService";
-import ProductFilter from "./FilterDishes";
 import { ViewDish } from "./ViewDish";
+import { SearchDish } from "../../../../service/DishService";
+import { ProductFilter } from "./FilterDishes";
 
-export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
+export const Search = ({ dishes, sortBy, listSearch }) => {
   const [listCategory, setListCategory] = useState([]);
   const [categorySearch, setCategorySearch] = useState([]);
-  const [title, setTitle] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000000);
+  const [name, setName] = useState("");
   const [sort, setSort] = useState("");
+  const [minTimeCook, setMinTimeCook] = useState(0);
+  const [maxTimeCook, setMaxTimeCook] = useState(120);
 
   const handleSearch = () => {
     let searchs = [];
 
-    if (title && title.trim() !== "") {
-      searchs.push(`title:${title}`);
+    searchs.push(`name:${name.trim()}`);
+
+    if (categorySearch && categorySearch.length > 0) {
+      const selectedCategoryNames = listCategory
+        .filter((category) => categorySearch.includes(category.id))
+        .map((category) => category.name)
+        .join(",");
+
+      searchs.push(`category:${selectedCategoryNames}`);
+    }
+    if (maxTimeCook !== null && maxTimeCook !== "") {
+      searchs.push(`timeCook<${maxTimeCook}`);
     }
 
-    if (categorySearch.length > 0) {
-      searchs.push(...categorySearch);
+    if (minTimeCook !== null && minTimeCook !== "") {
+      searchs.push(`timeCook>${minTimeCook}`);
     }
 
-    if (maxPrice !== null && maxPrice !== "") {
-      searchs.push(`price<${maxPrice}`);
-    }
-
-    if (minPrice !== null && minPrice !== "") {
-      searchs.push(`price>${minPrice}`);
-    }
-    console.log(sort);
     if (sort) {
       console.log(sort);
       sortBy(sort);
     }
 
+    console.log(searchs);
     if (searchs.length > 0) {
       listSearch(searchs);
+      handleFilterAll(searchs);
     }
   };
 
@@ -47,21 +52,34 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
         const data = await listAllCategory();
         if (data.result && Array.isArray(data.result)) {
           setListCategory(data.result);
+          // setCategorySearch(
+          //   "category:" +
+          //   data.result.map((category) => `${category.name}`).join(","))
         }
       } catch (error) {
-        console.error("Error fetching favorite course:", error);
+        console.error("Error fetching categories:", error);
       }
     };
     listCategories();
   }, []);
 
+  const handleFilterAll = async () => {
+    try {
+      const response = await SearchDish(1, 12, sortBy, listSearch);
+      if (response && response.result) {
+        dishes(response.result.items);
+      } else {
+        dishes([]);
+      }
+    } catch (error) {
+      console.error("Error fetching dishes:", error);
+    }
+  };
+
   return (
     <>
       {/* <div className="container"> */}
-      <div
-        className="row gutters"
-        style={{ width: "100%", marginTop: "200px" }}
-      >
+      <div className="row gutters" style={{ width: "100%", marginTop: "20px" }}>
         {/* Cột trái */}
         <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
           <div className="card h-100">
@@ -70,10 +88,10 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
                 categorySearch={categorySearch}
                 setCategorySearch={setCategorySearch}
                 listCategory={listCategory}
-                minPrice={minPrice}
-                maxPrice={maxPrice}
-                setMinPrice={setMinPrice}
-                setMaxPrice={setMaxPrice}
+                minTimeCook={minTimeCook}
+                maxTimeCook={maxTimeCook}
+                setMinTimeCook={setMinTimeCook}
+                setMaxTimeCook={setMaxTimeCook}
               />
             </div>
           </div>
@@ -89,9 +107,9 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
                   <input
                     type="text"
                     className="form-control search-input custom-input w-100"
-                    placeholder="Search by Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Search by name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3">
@@ -122,21 +140,21 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
                   onChange={(e) => setSort(e.target.value)}
                 >
                   <option value="">Mặc định</option>
-                  <option value="title:asc">Sort By:Name (A-Z)</option>
-                  <option value="title:desc">Sort By:Name(Z-A)</option>
-                  <option value="price:asc">
-                    Sort By:Price (Low &gt; High)
+                  <option value="name:asc">Sort By:Name (A-Z)</option>
+                  <option value="name:desc">Sort By:Name(Z-A)</option>
+                  {/* <option value="TimeCook:asc">
+                    Sort By:TimeCook (Low &gt; High)
                   </option>
-                  <option value="price:desc">
-                    Sort By:Price (Hight &gt; Low)
-                  </option>
+                  <option value="TimeCook:desc">
+                    Sort By:TimeCook (Hight &gt; Low)
+                  </option> */}
                   <option value="id:desc">Sort By:Mới nhất</option>
                   <option value="id:asc">Sort By:Cũ nhất</option>
                 </select>
               </div>
               {/* <div className="row mx-0 justify-content-center">
                 <div className="col-lg-8">
-                  <div className="section-title text-center position-relative mb-5">
+                  <div className="section-name text-center position-relative mb-5">
                     <h5 className="display-4" style={{ fontSize: "50px" }}>
                       Khám phá nguyên liệu
                     </h5>
@@ -155,16 +173,16 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
     //     <div className="container-fluid mb-3">
     //         <div className="search-bar p-4 rounded shadow-sm custom-search-bar">
 
-    //             {/* Hàng 1: Title, supplier, Category - Cùng chiều cao */}
+    //             {/* Hàng 1: name, supplier, Category - Cùng chiều cao */}
     //             <div className="row g-3 align-items-stretch mb-3">
-    //                 {/* Title Search */}
+    //                 {/* name Search */}
     //                 <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 d-flex">
     //                     <input
     //                         type="text"
     //                         className="form-control search-input custom-input h-100"
-    //                         placeholder="Search by Title"
-    //                         value={title}
-    //                         onChange={(e) => setTitle(e.target.value)}
+    //                         placeholder="Search by name"
+    //                         value={name}
+    //                         onChange={(e) => setname(e.target.value)}
     //                         style={{ height: '100%' }}
     //                     />
     //                 </div>
@@ -199,28 +217,28 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
     //                 </div>
     //             </div>
 
-    //             {/* Hàng 2: Price Range, Sort, Search Button */}
+    //             {/* Hàng 2: TimeCook Range, Sort, Search Button */}
     //             <div className="row g-3 align-items-center">
-    //                 {/* Min Price */}
+    //                 {/* Min TimeCook */}
     //                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6">
     //                     <input
     //                         type="number"
     //                         className="form-control search-input custom-input"
-    //                         placeholder="Min Price"
-    //                         value={minPrice || ''}
-    //                         onChange={(e) => setMinPrice(e.target.value)}
+    //                         placeholder="Min TimeCook"
+    //                         value={minTimeCook || ''}
+    //                         onChange={(e) => setMinTimeCook(e.target.value)}
     //                         min={0}
     //                     />
     //                 </div>
 
-    //                 {/* Max Price */}
+    //                 {/* Max TimeCook */}
     //                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6">
     //                     <input
     //                         type="number"
     //                         className="form-control search-input custom-input"
-    //                         placeholder="Max Price"
-    //                         value={maxPrice || ''}
-    //                         onChange={(e) => setMaxPrice(e.target.value)}
+    //                         placeholder="Max TimeCook"
+    //                         value={maxTimeCook || ''}
+    //                         onChange={(e) => setMaxTimeCook(e.target.value)}
     //                         min={0}
     //                     />
     //                 </div>
@@ -233,10 +251,10 @@ export const Search = ({ dishes, sortBy, supplierName, listSearch }) => {
     //                         onChange={(e) => setSort(e.target.value)}
     //                     >
     //                         <option value="">Default Sorting</option>
-    //                         <option value="title:asc">Sort By:Name (A-Z)</option>
-    //                         <option value="title:desc">Sort By:Name(Z-A)</option>
-    //                         <option value="price:asc">Sort By:Price (Low &gt; High)</option>
-    //                         <option value="price:desc">Sort By:Price (Hight &gt; Low)</option>
+    //                         <option value="name:asc">Sort By:Name (A-Z)</option>
+    //                         <option value="name:desc">Sort By:Name(Z-A)</option>
+    //                         <option value="TimeCook:asc">Sort By:TimeCook (Low &gt; High)</option>
+    //                         <option value="TimeCook:desc">Sort By:TimeCook (Hight &gt; Low)</option>
     //                         <option value="id:desc">Sort By:Truyện mới nhất</option>
     //                         <option value="id:asc">Sort By:Truyện xưa nhất</option>
     //                     </select>

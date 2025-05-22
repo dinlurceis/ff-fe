@@ -13,7 +13,7 @@ export const ProfileDropdown = ({
     role.includes("USER") &&
     !role.includes("SUPPLIER") &&
     !role.includes("ADMIN");
-  const isAuthorOnly =
+  const isSupplierOnly =
     role && role.includes("SUPPLIER") && !role.includes("ADMIN");
   const isAdmin = role && role.includes("ADMIN");
   console.log(avatar);
@@ -56,9 +56,9 @@ export const ProfileDropdown = ({
       <Dropdown.Menu align="end">
         {isTokenValid === null ? null : isTokenValid ? (
           <>
-            {isAuthorOnly && (
-              <Dropdown.Item as={Link} to="/bookByAuthor">
-                <i className="fa fa-user-circle-o me-2"></i>Book by Author
+            {isSupplierOnly && (
+              <Dropdown.Item as={Link} to="/ingredientBySupplier">
+                <i className="fa fa-user-circle-o me-2"></i>Nguyên liệu đã đăng tải
               </Dropdown.Item>
             )}
             <Dropdown.Item as={Link} to="/profile">
@@ -66,12 +66,12 @@ export const ProfileDropdown = ({
             </Dropdown.Item>
             {isUserOnly && (
               <Dropdown.Item as={Link} to="/register-supplier">
-                <i className="fa fa-graduation-cap me-2"></i>Register Supplier
+                <i className="fa fa-graduation-cap me-2"></i>Đăng ký làm nhà cung cấp
               </Dropdown.Item>
             )}
-            {isAuthorOnly && (
-              <Dropdown.Item as={Link} to="/upload-book">
-                <i className="fa fa-upload me-2"></i>Upload Book
+            {isSupplierOnly && (
+              <Dropdown.Item as={Link} to="/upload-ingredient-by-supplier">
+                <i className="fa fa-upload me-2"></i>Đăng tải nguyên liệu
               </Dropdown.Item>
             )}
             {isAdmin && (

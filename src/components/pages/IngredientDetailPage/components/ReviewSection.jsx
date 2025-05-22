@@ -18,19 +18,19 @@ export const ReviewSection = ({
 }) =>{
     return (
         <div className="comments-section mt-5">
-            <h2 className="mb-4 text-secondary"><FaCommentDots /> Comments</h2>
+            <h2 className="mb-4 text-secondary lexe"><FaCommentDots /> Bình luận</h2>
             {/* Add Comment */}
             <div className='comment-form mb-5'>
                 <textarea 
                     className='form-control mb-3'
                     rows="3"
-                    placeholder="Write your comment..."
+                    placeholder="Nhập vào bình luận..."
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                 />
                 <div className="btn-block">
                     <button className="btn px-4 mt-3" onClick={handleAddComment}>
-                        Submit Comment
+                        Gửi bình luận
                     </button>
                 </div>
                
@@ -73,7 +73,7 @@ export const ReviewSection = ({
                                     onChange={(e) =>setEditContent({...editContent,[comment.id]: e.target.value})}
                                 />
                                 <button className="btn btn-success mt-2" onClick={() =>handleEditComment(comment.id,editContent[comment.id])}>
-                                    Save
+                                    Lưu
                                 </button>
                             </div>
                         ):(
@@ -118,7 +118,7 @@ export const ReviewSection = ({
                                                     onChange={(e) => setEditContent({...editContent,[reply.id]: e.target.value})}
                                                 />
                                                 <button className='btn btn-success mt-2' onClick={() => handleEditComment(reply.id,editContent[reply.id])}>
-                                                    Save
+                                                    Lưu
                                                 </button>
                                             </div>
                                         ):(
@@ -140,7 +140,7 @@ export const ReviewSection = ({
                                     onChange={(e) => setReplyContent({...replyContent,[comment.id]:e.target.value})}
                                 />
                                 <button className="btn btn-primary px-4" onClick={() =>handleAddReply(comment.id)}>
-                                    Submit Reply
+                                    Gửi bình luận
                                 </button>
                             </div>
                         )}
@@ -148,7 +148,7 @@ export const ReviewSection = ({
                         {/* Reply button after replies */}
                         <div className="comment-actions d-flex justify-content-end mt-2">
                             <button className="btn btn-sm btn-outline-info" onClick={() => handleReplyToggle(comment.id)}>
-                                <FaReply className="mr-1 reply-review"/> Reply
+                                <FaReply className="mr-1 reply-review"/> Phản hồi
                             </button>
                         </div>
                     </div>

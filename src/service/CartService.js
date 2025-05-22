@@ -2,8 +2,8 @@ import axios from "../utils/CustomizeAxios";
 
 export const addItemCart = async (ingredientId,quantity=1) => {
     try {
-        const response = await axios.post(`api/v1/cart/addOrUpdateItem`,{
-            ingredientId:ingredientId,
+        const response = await axios.post(`api/v1/cart/addOrUpdateItemCart`,{
+            supplierHasIngredientId:ingredientId,
             quantity:quantity
         })
         return response.data;

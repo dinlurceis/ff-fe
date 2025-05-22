@@ -4,6 +4,7 @@ import { Search } from "./components/Search";
 import { ViewDish } from "./components/ViewDish";
 import ReactPaginate from "react-paginate";
 import { SearchDish } from "../../../service/DishService";
+import "../IngredientPage/components/IngredientPage.css"
 
 export const Dishes = () => {
   const [loading, setLoading] = useState(true);
