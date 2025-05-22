@@ -18,8 +18,8 @@ export const useAuthData = () => {
       introspect()
         .then((data) => {
           if (data.valid) {
-            setRole(data.scope);
-            console.log("Fetched roles:", data.scope);
+            setRole(data.role);
+            console.log("Fetched roles:", data.role);
           } else {
             setRole([]);
           }

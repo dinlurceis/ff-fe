@@ -142,6 +142,13 @@ export const Search = ({ dishes, sortBy, listSearch }) => {
                   <option value="">Mặc định</option>
                   <option value="name:asc">Sort By:Name (A-Z)</option>
                   <option value="name:desc">Sort By:Name(Z-A)</option>
+                  <option value="timeCook:asc">
+                    Sort By:Thời gian nấu(tăng dần)
+                  </option>
+
+                  <option value="timeCook:desc">
+                    Sort By:Thời gian nấu(giảm dần)
+                  </option>
                   {/* <option value="TimeCook:asc">
                     Sort By:TimeCook (Low &gt; High)
                   </option>

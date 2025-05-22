@@ -2,7 +2,7 @@ import axios from "../utils/CustomizeAxios";
 
 export const createCategory = async (name,description) => {
     try {
-        const response = await axios.post(`api/v1/category/insertCategory`,{
+        const response = await axios.post(`api/v1/category/addCategory`,{
             name:name,
             description:description
         })

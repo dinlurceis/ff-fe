@@ -281,7 +281,12 @@ export const IngredientDetail = () => {
               <h3 className="lexe">Người đăng bán</h3>
               <p>{ingredient.supplierName}</p>
             </section>
+            <section className="dish-section">
+              <h3 className="lexe">Mô tả nguyên liệu</h3>
+              {/* <p>{ingredient.description}</p> */}
+              <div dangerouslySetInnerHTML={{ __html:ingredient.description }} />
 
+            </section>
             <div class="button-group">
               <button class="btn btn-cart" onClick={() => addItemCarts(id, 1)}>
                 <i class="fa fa-shopping-cart"></i>

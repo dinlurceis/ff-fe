@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import { banAuthor, banUser, getAllUser, unBanUser, updateRoleAuthor } from "../../../../service/UserService";
+import { banSupplier, banUser, getAllUser, unBanUser, updateRoleSupplier } from "../../../../service/UserService";
 import { useNavigate } from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
 import "../../css/UserManage.css";
+import { acceptSupplier, rejectSupplier } from "../../../../service/RegisterSipplierService";
 const UserManager = () =>{
     const [users,setUsers] = useState([]);
     const [page,setPage] = useState(0);
@@ -10,7 +11,7 @@ const UserManager = () =>{
     const [totalItems,setTotalItems] = useState(0);
     const [sort,setSort] = useState("id:desc");
     const [searchTerm ,setSearchTerm] = useState("");
-    // const [roleAuthor,setRoleAuthor]=useState(false);
+    // const [roleSupplier,setRoleSupplier]=useState(false);
     const navigate = useNavigate();
 
     useEffect(() =>{
@@ -45,19 +46,19 @@ const UserManager = () =>{
         navigate(`/admin/users/detail/${id}`);//điều hướng đến trang chi tiết người dùng
     }
 
-    const updateAuthor = async (userId) => {
+    const updateSupplier = async (userId) => {
     try {
-        await updateRoleAuthor(userId); // Gọi API cập nhật role AUTHOR
+        await acceptSupplier(userId); // Gọi API cập nhật role Supplier
 
-        // Cập nhật role ở frontend nếu chưa có AUTHOR
+        // Cập nhật role ở frontend nếu chưa có Supplier
         setUsers((prevUsers) =>
             prevUsers.map((user) =>
-                user.id === userId
+                user.userId === userId
                     ? {
                         ...user,
-                        role: user.role.includes("AUTHOR")
+                        role: user.role.includes("Supplier")
                             ? user.role
-                            : [...user.role, "AUTHOR"]
+                            : [...user.role, "Supplier"]
                     }
                     : user
             )
@@ -67,34 +68,34 @@ const UserManager = () =>{
         }
     };
 
-    const banRoleAuthor = async (userId) => {
+    const banRoleSupplier = async (userId) => {
     try {
-        await banAuthor(userId); // Gọi API xóa role AUTHOR ở backend
+        await rejectSupplier(userId); // Gọi API xóa role Supplier ở backend
 
-        // Cập nhật lại UI: xóa AUTHOR khỏi danh sách role
+        // Cập nhật lại UI: xóa Supplier khỏi danh sách role
         setUsers((prevUsers) =>
             prevUsers.map((user) =>
-                user.id === userId
+                user.userId === userId
                     ? {
                         ...user,
-                        role: user.role.filter((r) => r !== "AUTHOR") // Loại bỏ AUTHOR(dùng filter để loại bỏ author trong UI)
+                        role: user.role.filter((r) => r !== "SUPPLIER") // Loại bỏ Supplier(dùng filter để loại bỏ SUPPLIER trong UI)
                     }
                     : user
             )
         );
         } catch (error) {
-            console.log(`Error removing author role from user ${userId}:`, error);
+            console.log(`Error removing Supplier role from user ${userId}:`, error);
         }
     };
 
-    const handleToggleAuthorStatus = async(userId,role) =>{
+    const handleToggleSupplierStatus = async(userId,role) =>{
         try{
-            if(role.includes("AUTHOR")){
+            if(role.includes("SUPPLIER")){
                 console.log(12)
-                await banRoleAuthor(userId);
+                await banRoleSupplier(userId);
             }else{
                 console.log(13);
-                await updateAuthor(userId);
+                await updateSupplier(userId);
             }
         }catch(error){
             console.error(`Error toggling ban status for user ${userId}}`,error);
@@ -103,7 +104,7 @@ const UserManager = () =>{
 
     const handleToggleBanStatus = async(userId,isActive) =>{
         try{
-            const user = users.find((user) => user.id === userId);//lấy thông tin dựa trên userId
+            const user = users.find((user) => user.userId === userId);//lấy thông tin dựa trên userId
             if(isActive){
                 console.log(isActive)
                 await banUser(userId);
@@ -114,7 +115,7 @@ const UserManager = () =>{
             // console.log(user);
             setUsers((prevUsers) =>
                 prevUsers.map((user) =>
-                    user.id===userId ? {...user,active: !isActive} : user
+                    user.userId===userId ? {...user,active: !isActive} : user
                 )
             );
         }catch(error){
@@ -155,56 +156,44 @@ const UserManager = () =>{
                         <tr>
                             <th>STT</th>
                             <th className="table-icon">Name</th>
-                            <th className="table-icon">Address</th>
-                            <th className="table-icon">Avatar_url</th>
-                            <th className="table-icon">Bio</th>
-                            <th className="table-icon">Certificate</th>
-                            <th className="table-icon">Cv_url</th>
-                            <th className="table-icon">Date_of_Birth</th>
-                            <th className="table-icon">Expertise</th>
-                            <th className="table-icon">Experience</th>
-                            <th className="table-icon">Facebook</th>
                             <th className="table-icon">Email</th>
-                            <th className="table-icon">is_active</th>
-                            <th className="table-icon">latitude</th>
-                            <th className="table-icon">longitude</th>
-                            <th className="table-icon">Password</th>
-                            <th className="table-icon">Phone</th>
-                            <th className="table-icon">Registration_status</th>
                             <th className="table-icon">Role</th>
+                            <th className="table-icon">Phone</th>
+                            <th className="table-icon">Ban/Unban</th>
+                            <th className="table-icon">Supplier</th>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map((user,index) =>(
-                            <tr key={user.id}>
+                            <tr key={user.userId}>
                                 <td>{page * rowsPerPage + index +1}</td>
                                 <td
-                                    onClick={() => handleRowClick(user.id)}
+                                    onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
                                     >{user.fullName}
                                 </td>
                                 <td
-                                    onClick={() => handleRowClick(user.id)}
+                                    onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
                                 >{user.email}</td>
                                 <td>
                                     <div
-                                        onClick={()=>updateAuthor(user.id)}
+                                        onClick={()=>updateSupplier(user.userId)}
                                     >
-                                        {user.role.join(',')}
+                                        {user.roles.join(',')}
                                     </div>
                                 </td>
                                 <td
-                                    onClick={() => handleRowClick(user.id)}
+                                    onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
-                                >{user.birthday ? new Date(user.birthday).toLocaleDateString() : "N/A"}</td>
+                                >{user.phoneNumber ? user.phoneNumber : "N/A"}</td>
                                 <td>
                                     <label className="switch">
                                         <input 
                                             type="checkbox"
                                             checked={user.active}
                                             onChange={() =>
-                                                handleToggleBanStatus(user.id,user.active)
+                                                handleToggleBanStatus(user.userId,user.active)
                                             }    
                                         />
                                         <span className="slider round">
@@ -216,13 +205,13 @@ const UserManager = () =>{
                                     <label className="switch">
                                         <input 
                                             type="checkbox"
-                                            checked={user.role.includes("AUTHOR")?true:false}
+                                            checked={user.roles.includes("SUPPLIER")?true:false}
                                             onChange={() =>
-                                                handleToggleAuthorStatus(user.id,user.role)
+                                                handleToggleSupplierStatus(user.userId,user.roles)
                                             }    
                                         />
                                         <span className="slider round">
-                                            {user.role.includes("AUTHOR") ? "Yes":"No"}
+                                            {user.roles.includes("SUPPLIER") ? "Yes":"No"}
                                         </span>
                                     </label>
                                 </td>
