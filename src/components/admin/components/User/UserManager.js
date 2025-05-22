@@ -25,7 +25,7 @@ const UserManager = () =>{
             const response= await getAllUser(page,size,searchTerm,sort);
 
             setUsers(response.result.items);
-
+            console.log(response.result.items);
             setTotalItems(response.result.totalElements)
         }catch(error){
             console.error("Error fetching users:",error);
@@ -156,22 +156,11 @@ const UserManager = () =>{
                             <th>STT</th>
                             <th className="table-icon">Name</th>
                             <th className="table-icon">Address</th>
-                            <th className="table-icon">Avatar_url</th>
-                            <th className="table-icon">Bio</th>
-                            <th className="table-icon">Certificate</th>
-                            <th className="table-icon">Cv_url</th>
-                            <th className="table-icon">Date_of_Birth</th>
-                            <th className="table-icon">Expertise</th>
-                            <th className="table-icon">Experience</th>
-                            <th className="table-icon">Facebook</th>
                             <th className="table-icon">Email</th>
-                            <th className="table-icon">is_active</th>
-                            <th className="table-icon">latitude</th>
-                            <th className="table-icon">longitude</th>
-                            <th className="table-icon">Password</th>
                             <th className="table-icon">Phone</th>
-                            <th className="table-icon">Registration_status</th>
                             <th className="table-icon">Role</th>
+                            <th className="table-icon">Action</th>
+                            <th className="table-icon">is_active</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -181,12 +170,23 @@ const UserManager = () =>{
                                 <td
                                     onClick={() => handleRowClick(user.id)}
                                     style={{cursor:"pointer"}}
-                                    >{user.fullName}
+                                    >{user.full_name}
                                 </td>
                                 <td
                                     onClick={() => handleRowClick(user.id)}
                                     style={{cursor:"pointer"}}
-                                >{user.email}</td>
+                                    >{user.address}
+                                </td>
+                                <td
+                                    onClick={() => handleRowClick(user.id)}
+                                    style={{cursor:"pointer"}}
+                                    >{user.email}
+                                </td>
+                                <td
+                                    onClick={() => handleRowClick(user.id)}
+                                    style={{cursor:"pointer"}}
+                                    >{user.phone_number}
+                                </td>
                                 <td>
                                     <div
                                         onClick={()=>updateAuthor(user.id)}
@@ -194,10 +194,6 @@ const UserManager = () =>{
                                         {user.role.join(',')}
                                     </div>
                                 </td>
-                                <td
-                                    onClick={() => handleRowClick(user.id)}
-                                    style={{cursor:"pointer"}}
-                                >{user.birthday ? new Date(user.birthday).toLocaleDateString() : "N/A"}</td>
                                 <td>
                                     <label className="switch">
                                         <input 
@@ -216,13 +212,13 @@ const UserManager = () =>{
                                     <label className="switch">
                                         <input 
                                             type="checkbox"
-                                            checked={user.role.includes("AUTHOR")?true:false}
+                                            checked={user.role.includes("SUPPLIER")?true:false}
                                             onChange={() =>
                                                 handleToggleAuthorStatus(user.id,user.role)
                                             }    
                                         />
                                         <span className="slider round">
-                                            {user.role.includes("AUTHOR") ? "Yes":"No"}
+                                            {user.role.includes("SUPPLIER") ? "Yes":"No"}
                                         </span>
                                     </label>
                                 </td>
