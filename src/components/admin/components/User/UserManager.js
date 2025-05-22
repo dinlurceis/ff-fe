@@ -175,18 +175,12 @@ const UserManager = () =>{
                                 <td
                                     onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
-                                    >{user.address}
+                                    >{user.fullName}
                                 </td>
                                 <td
                                     onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
-                                    >{user.email}
-                                </td>
-                                <td
-                                    onClick={() => handleRowClick(user.userId)}
-                                    style={{cursor:"pointer"}}
-                                    >{user.phone_number}
-                                </td>
+                                >{user.email}</td>
                                 <td>
                                     <div
                                         onClick={()=>updateSupplier(user.userId)}
