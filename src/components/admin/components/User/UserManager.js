@@ -26,7 +26,7 @@ const UserManager = () =>{
             const response= await getAllUser(page,size,searchTerm,sort);
 
             setUsers(response.result.items);
-
+            console.log(response.result.items);
             setTotalItems(response.result.totalElements)
         }catch(error){
             console.error("Error fetching users:",error);
@@ -170,12 +170,23 @@ const UserManager = () =>{
                                 <td
                                     onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
-                                    >{user.fullName}
+                                    >{user.full_name}
                                 </td>
                                 <td
                                     onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
-                                >{user.email}</td>
+                                    >{user.address}
+                                </td>
+                                <td
+                                    onClick={() => handleRowClick(user.userId)}
+                                    style={{cursor:"pointer"}}
+                                    >{user.email}
+                                </td>
+                                <td
+                                    onClick={() => handleRowClick(user.userId)}
+                                    style={{cursor:"pointer"}}
+                                    >{user.phone_number}
+                                </td>
                                 <td>
                                     <div
                                         onClick={()=>updateSupplier(user.userId)}
