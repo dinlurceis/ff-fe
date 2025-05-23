@@ -96,8 +96,8 @@ export const listAllIngredient = async () => {
 
 export const deleteSoftIngredient = async (ingredientId) => {
   try {
-    const response = await axios.delete(
-      `api/v1/ingredient/deleteSoft/${ingredientId}`
+    const response = await axios.patch(
+      `api/v1/ingredient/toggleStatus/${ingredientId}`
     );
     return response.data;
   } catch (error) {
@@ -173,4 +173,31 @@ export const getIngredientByKeyword2 = async (keyword = "") => {
     console.error("Error fetching ingredients:", error)
     throw error
   }
+}
+
+export const getAllIngredient = async (page,size,keyword,sorts) =>{
+    try{
+        
+        const params = new URLSearchParams();
+        params.append('page', page);
+        params.append('size', size);
+        
+        if (keyword) {
+            params.append('keyword', keyword);
+        }
+        
+        // Add each sort parameter separately
+        if (sorts) {
+            params.append('sorts',sorts);
+        }
+        console.log(params);
+        console.log({page,size,keyword,sorts})
+        
+        const response = await axios.get('api/v1/ingredient/getAllIngredientByKeyword', {
+            params: params
+        });
+        return response.data;
+    }catch(error){
+        throw error;
+    }
 }

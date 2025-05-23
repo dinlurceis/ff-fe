@@ -3,17 +3,17 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { TablePagination } from "@mui/material";
 import "../../css/IngredientManage.css";
-import { deleteSoftIngredient, getIngredientWithSortAndMultiFieldAndSearch } from "../../../../service/IngredientService";
+import { deleteSoftIngredient, getAllIngredient, getIngredientWithSortAndMultiFieldAndSearch } from "../../../../service/IngredientService";
 
 
 const IngredientManage = ()=>{
-    const [ingredients,setIngredients] = useState([]);//Lưu dánh sách truyện
-    const [page,setPage] = useState(0);//Trang hiện tại
-    const [rowsPerPage,setRowsPerPage]= useState(7);//Số dòng mỗi trang
-    const [totalItems,setTotalItems] = useState(0);//Tổng số khóa học
-    const [sort,setSort] = useState("id:desc");//Thứ tự sắp xếp
-    const [searchTerm,setSearchTerm] = useState("");//Từ kháo tìm kiếm
-    const navigate = useNavigate();//Hook điều hướng
+    const [ingredients,setIngredients] = useState([]);
+    const [page,setPage] = useState(0);
+    const [rowsPerPage,setRowsPerPage]= useState(7);
+    const [totalItems,setTotalItems] = useState(0);
+    const [sort,setSort] = useState("id:desc");
+    const [searchTerm,setSearchTerm] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() =>{
             fetchIngredients(page + 1,rowsPerPage,searchTerm,sort);
@@ -22,7 +22,7 @@ const IngredientManage = ()=>{
     const fetchIngredients = async (page,size,searchTerm,sort) =>{
         try{
 
-            const response= await getIngredientWithSortAndMultiFieldAndSearch(page,size,searchTerm,sort);
+            const response= await getAllIngredient(page,size,searchTerm,sort);
 
             setIngredients(response.result.items);
             setTotalItems(response.result.totalElements)
@@ -31,68 +31,32 @@ const IngredientManage = ()=>{
         }
     }
 
-    // useEffect(() => {
-    //     fetchingredients();
-    // },[page,rowsPerPage,sort,searchTerm]);
-
-    // const fetchingredients = async() =>{
-    //     try{
-    //         console.log({page,rowsPerPage,sort,searchTerm});
-    //         const listSearch=[];
-    //         if(searchTerm){
-    //             listSearch.push(`title:${searchTerm}`)
-    //         }
-            
-    //         const response= await Searchingredient(page+1,rowsPerPage,sort,"",listSearch);
-    //         console.log(response);
-    //         setingredients(response.result.items);//lưu danh sách khóa học
-    //         setTotalItems(response.totalElements);//Lưu tổng số khóa học
-    //     }catch(error){
-    //         console.error("Error fetching ingredients:",error)
-    //     }
-    // };
-    
-    //Xử lý điều kiện tìm kiếm
-    // const handleSerachKeyDown = (e) =>{
-    //     if(e.key === "Enter"){
-    //         fetchingredients();
-    //     }
-    // };
+    const handleSerachKeyDown = (e) =>{
+        if(e.key === "Enter"){
+            fetchIngredients();
+        }
+    };
 
     const handleRowClick = (id) =>{
         navigate(`/admin/ingredient/detail/${id}`);//chuyển hướng tới đúng URL
     }
 
-    // const handleToggleIngredientStatus = async(ingredientId,isActive) =>{
-    //         try{
-    //             const ingredient = ingredients.find((ingredient) => ingredient.id === ingredientId);//lấy thông tin dựa trên userId
-    //             await deleteSoftIngredient(ingredientId);
-    //             console.log(ingredient);
+    const handleToggleIngredientStatus = async(ingredientId,isActive) =>{
+            try{
+                const ingredient = ingredients.find((ingredient) => ingredient.ingredientId === ingredientId);//lấy thông tin dựa trên userId
+                console.log(ingredient);
+                await deleteSoftIngredient(ingredientId);
+                console.log(ingredient);
 
-    //             setIngredients((prevIngredients) =>
-    //                 prevIngredients.map((ingredient) =>
-    //                     ingredient.id===ingredientId ? {...ingredient,isActive: !isActive} : ingredient
-    //                 )
-    //             );
-    //         }catch(error){
-    //             console.error(`Error toggling ban status for user ${ingredientId}`,error);
-    //         }
-    //     };
-
-
-    // const handleToggleingredientStatus = async(ingredientId) =>{
-    //         try{
-    //             const ingredient = ingredients.find((ingredient) => ingredient.id === ingredientId);//lấy thông tin dựa trên ingredientId
-    //             await handleToggleingredientStatus(ingredientId);
-    //             setingredients((previngredients) =>
-    //                 previngredients.map((ingredient) =>
-    //                     ingredient.id===ingredientId ? {...ingredient,active: !ingredient.active} : ingredient
-    //                 )
-    //             );
-    //         }catch(error){
-    //             console.error(`Error toggling ban status for user ${ingredientId}`,error);
-    //         }
-    //     }
+                setIngredients((prevIngredients) =>
+                    prevIngredients.map((ingredient) =>
+                        ingredient.ingredientId===ingredientId ? {...ingredient,active: !isActive} : ingredient
+                    )
+                );
+            }catch(error){
+                console.error(`Error toggling ban status for user ${ingredientId}`,error);
+            }
+        };
     return (
         <div className="ingredient-manage">
             <h2 className="ingredient-manage-title">Ingredient management</h2>
@@ -113,8 +77,8 @@ const IngredientManage = ()=>{
                 </div>
                 <div className="ingredient-manage-sort">
                     <select onChange={(e) => setSort(e.target.value)}>
-                        <option value="title:asc">Sort by Title (A-Z)</option>
-                        <option value="title:desc">Sort By Title (Z-A)</option>
+                        <option value="name:asc">Sort by Title (A-Z)</option>
+                        <option value="name:desc">Sort By Title (Z-A)</option>
                         <option value="id:desc">Sort by Date (Oldest)</option>
                         <option value="id:asc">Sort by Date (Newest)</option>
                     </select>
@@ -125,10 +89,12 @@ const IngredientManage = ()=>{
                     <thead>
                         <tr>
                             <th>STT</th>
+                            <th className="table-icon">Image</th>
                             <th className="table-icon">Name</th>
                             <th className="table-icon">Description</th>
                             <th className="table-icon">Unit</th>
-                            <th className="table-icon">Image</th>
+                            <th className="table-icon">Action</th>
+                            {/* <th className="table-icon">Image</th> */}
                             {/* <th className="table-icon">Đăng truyện</th> */}
                             {/* <th className="table-icon">Updated At</th> */}
                         </tr>
@@ -138,29 +104,48 @@ const IngredientManage = ()=>{
                             <tr key={ingredient.ingredientId}>
                                 <td>{page*rowsPerPage+index+1}</td>
                                 <td
-                                    onClick={() => handleRowClick(ingredient.id)}
+                                    onClick={() => handleRowClick(ingredient.ingredientId)}
+                                    style={{cursor:"pointer"}}
+                                    > <img 
+                                        src={ingredient.ingredientImage} 
+                                        alt={ingredient.ingredientName}
+                                        style={{
+                                            width: "60px",
+                                            height: "60px", // 3:4 ratio
+                                            objectFit: "cover",
+                                            borderRadius: "4px"
+                                        }}
+                                    />           
+                                </td>
+                                <td
+                                    onClick={() => handleRowClick(ingredient.ingredientId)}
                                     style={{cursor:"pointer"}}
                                     >{ingredient.name}
                                 </td>
+                                 <td
+                                    onClick={() => handleRowClick(ingredient.ingredientId)}
+                                    style={{cursor:"pointer"}}
+                                    ><div dangerouslySetInnerHTML={{ __html:ingredient.description }} />
+                                </td>
                                 <td
-                                    onClick={() => handleRowClick(ingredient.id)}
+                                    onClick={() => handleRowClick(ingredient.ingredientId)}
                                     style={{cursor:"pointer"}}
                                     >{ingredient.unit}
                                 </td>
-                                {/* <td>
+                                <td>
                                     <label className="switch">
                                         <input 
                                             type="checkbox"
-                                            checked={ingredient.isActive}
+                                            checked={ingredient.active}
                                             onChange={() =>
-                                                handleToggleIngredientStatus(ingredient.id,ingredient.isActive)
+                                                handleToggleIngredientStatus(ingredient.ingredientId,ingredient.active)
                                             }    
                                         />
                                         <span className="slider round">
-                                            {ingredient.isActive ? "Yes":"No"}
+                                            {ingredient.active ? "Yes":"No"}
                                         </span>
                                     </label>
-                                </td> */}
+                                </td>
 
                                 {/* <td>
                                     {ingredient.updatedAt

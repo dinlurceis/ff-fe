@@ -65,10 +65,10 @@
   }
 
   
-  .ingredient-manage-table tr:hover {
+  /* .ingredient-manage-table tr:hover {
     background-color: #3a3d42;
   }
-  
+   */
   .table-icon {
     margin-right: 8px;
     color: #999;

@@ -56,9 +56,9 @@ const UserManager = () =>{
                 user.userId === userId
                     ? {
                         ...user,
-                        role: user.role.includes("Supplier")
-                            ? user.role
-                            : [...user.role, "Supplier"]
+                        roles: user.roles.includes("SUPPLIER")
+                            ? user.roles
+                            : [...user.roles, "SUPPLIER"]
                     }
                     : user
             )
@@ -78,7 +78,7 @@ const UserManager = () =>{
                 user.userId === userId
                     ? {
                         ...user,
-                        role: user.role.filter((r) => r !== "SUPPLIER") // Loại bỏ Supplier(dùng filter để loại bỏ SUPPLIER trong UI)
+                        role: user.roles.filter((r) => r !== "SUPPLIER") // Loại bỏ Supplier(dùng filter để loại bỏ SUPPLIER trong UI)
                     }
                     : user
             )
@@ -88,19 +88,19 @@ const UserManager = () =>{
         }
     };
 
-    const handleToggleSupplierStatus = async(userId,role) =>{
-        try{
-            if(role.includes("SUPPLIER")){
-                console.log(12)
-                await banRoleSupplier(userId);
-            }else{
-                console.log(13);
-                await updateSupplier(userId);
-            }
-        }catch(error){
-            console.error(`Error toggling ban status for user ${userId}}`,error);
-        }
-    };
+    // const handleToggleSupplierStatus = async(userId,role) =>{
+    //     try{
+    //         if(role.includes("SUPPLIER")){
+    //             console.log(12)
+    //             await banRoleSupplier(userId);
+    //         }else{
+    //             console.log(13);
+    //             await updateSupplier(userId);
+    //         }
+    //     }catch(error){
+    //         console.error(`Error toggling ban status for user ${userId}}`,error);
+    //     }
+    // };
 
     const handleToggleBanStatus = async(userId,isActive) =>{
         try{
@@ -160,7 +160,7 @@ const UserManager = () =>{
                             <th className="table-icon">Role</th>
                             <th className="table-icon">Phone</th>
                             <th className="table-icon">Ban/Unban</th>
-                            <th className="table-icon">Supplier</th>
+                            {/* <th className="table-icon">Supplier</th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -170,17 +170,17 @@ const UserManager = () =>{
                                 <td
                                     onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
-                                    >{user.full_name}
-                                </td>
-                                <td
-                                    onClick={() => handleRowClick(user.userId)}
-                                    style={{cursor:"pointer"}}
                                     >{user.fullName}
                                 </td>
                                 <td
                                     onClick={() => handleRowClick(user.userId)}
                                     style={{cursor:"pointer"}}
-                                >{user.email}</td>
+                                    >{user.email}
+                                </td>
+                                {/* <td
+                                    onClick={() => handleRowClick(user.userId)}
+                                    style={{cursor:"pointer"}}
+                                >{user.email}</td> */}
                                 <td>
                                     <div
                                         onClick={()=>updateSupplier(user.userId)}
@@ -206,7 +206,7 @@ const UserManager = () =>{
                                         </span>
                                     </label>
                                 </td>
-                                 <td>
+                                 {/* <td>
                                     <label className="switch">
                                         <input 
                                             type="checkbox"
@@ -219,7 +219,7 @@ const UserManager = () =>{
                                             {user.roles.includes("SUPPLIER") ? "Yes":"No"}
                                         </span>
                                     </label>
-                                </td>
+                                </td> */}
                             </tr>
                         ))}
                     </tbody>

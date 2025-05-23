@@ -4,46 +4,27 @@ import { listAllCategory } from "../../../../service/CategoryService";
 import { Select } from "antd";
 import TinyMCE from "../../../../utils/TinyMCE";
 import { AdminUploadBook } from "../../../../service/BookService";
+import { createIngredient } from "../../../../service/IngredientService";
 export const UploadAdminIngredient = () =>{
-    const [listCategory, setListCategory] = useState([]);
-    const [categorySearch, setCategorySearch] = useState();
-    const [bookTitle,setBookTitle] = useState('');
-    const [bookIsbn,setBookIsbn]=useState('');
-    const [bookDescription,setBookDescription]= useState('');
-    const [bookPrice,setBookPrice] = useState("");
-    const [bookThumbnail,setBookThumbnail]=useState(null);
-    const [bookAuthorName,setBookAuthorName]=useState("");
+    const [ingredientName,setIngredientName] = useState('');
+    const [ingredientDescription,setIngredientDescription]= useState('');
+    const [ingredientUnit,setIngredientUnit] = useState("");
+    const [ingredientThumbnail,setIngredientThumbnail]=useState(null);
 
     useEffect(() =>{
-        document.title = "Admin"
+        document.title = "Admin up load ingredient"
     })
 
-    useEffect(() => {
-            const listCategories = async () => {
-                try {
-                    const data = await listAllCategory();
-                    if (data.result && Array.isArray(data.result)) {
-                        setListCategory(data.result);
-                    }
-                } catch (error) {
-                    console.error("Error fetching favorite course:", error);
-                }
-            };
-            listCategories();
-        }, []);
 
     // Hàm reset form về giá trị mặc định
     const resetForm = () => {
-        setBookTitle('');
-        setBookIsbn('');
-        setBookDescription('');
-        setBookPrice('');
-        setBookAuthorName('');
-        setCategorySearch([]);
-        setBookThumbnail(null);
+        setIngredientName('');
+        setIngredientDescription('');
+        setIngredientUnit('');
+        setIngredientThumbnail(null);
         
         // Reset file input
-        const fileInput = document.getElementById('bookThumbnail');
+        const fileInput = document.getElementById('ingredientThumbnail');
         if (fileInput) {
             fileInput.value = '';
         }
@@ -53,17 +34,14 @@ export const UploadAdminIngredient = () =>{
         e.preventDefault();
         try {
             // Prepare book data object
-            const bookData = {
-              title: bookTitle,
-              description: bookDescription,
-              isbn: bookIsbn,
-              price: bookPrice,
-              authorName:bookAuthorName,
-              categoriesId: categorySearch // Assuming your API expects category IDs
+            const ingredientData = {
+              name: ingredientName,
+              description: ingredientDescription,
+              unit: ingredientUnit
             };
             
             // Call the upload function with book data and thumbnail, but no PDF
-            const result = await AdminUploadBook(bookData, bookThumbnail);
+            const result = await createIngredient(ingredientData.name,ingredientData.description,ingredientData.unit, ingredientThumbnail);
             
             // Reset form sau khi upload thành công
             resetForm();
@@ -72,7 +50,7 @@ export const UploadAdminIngredient = () =>{
             console.error("Upload failed:", error);
             // Handle error - display message to user
           }
-        console.log({bookTitle,bookIsbn,bookDescription,bookPrice,categorySearch,bookThumbnail})
+        //console.log({bookTitle,bookIsbn,bookDescription,bookPrice,categorySearch,bookThumbnail})
     };
     return (
         <div className="upload-book-container">
@@ -94,41 +72,15 @@ export const UploadAdminIngredient = () =>{
                                             className="form-control shadow-sm"
                                             id="bookTitle"
                                             placeholder="Enter the name of the ingredient"
-                                            value={bookTitle}
-                                            onChange={(e) =>setBookTitle(e.target.value)}
+                                            value={ingredientName}
+                                            onChange={(e) =>setIngredientName(e.target.value)}
                                         />
-                                    </div>
-                                    {/* <div className="mb-4">
-                                        <label htmlFor="authorname" className="form-label fs-5 text-dark fw-semibold">
-                                            Tác giả
-                                        </label>
-                                        <input 
-                                            type="text"
-                                            className="form-control shadow-sm"
-                                            id="authorname"
-                                            placeholder="Enter the isbn of the book"
-                                            value={bookAuthorName}
-                                            onChange={(e) =>setBookAuthorName(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="bookIsbn" className="form-label fs-5 text-dark fw-semibold">
-                                           Mã số chuẩn quốc tế của sách
-                                        </label>
-                                        <input 
-                                            type="text"
-                                            className="form-control shadow-sm"
-                                            id="bookIsbn"
-                                            placeholder="Enter the isbn of the book"
-                                            value={bookIsbn}
-                                            onChange={(e) =>setBookIsbn(e.target.value)}
-                                        />
-                                    </div> */}
+                                    </div>                                
                                     <div className="mb-4">
                                         <label htmlFor="bookDescription" className="form-label fs-5 text-dark fw-semibold">
                                             Mô tả nguyên liệu
                                         </label>
-                                       <TinyMCE value={bookDescription} onChange={setBookDescription}/>
+                                       <TinyMCE value={ingredientDescription} onChange={setIngredientDescription}/>
                                     </div>
                                     <div className="mb-4">
                                         <label htmlFor="bookTitle" className="form-label fs-5 text-dark fw-semibold">
@@ -139,43 +91,10 @@ export const UploadAdminIngredient = () =>{
                                             className="form-control shadow-sm"
                                             id="bookTitle"
                                             placeholder="Enter unit"
-                                            value={bookTitle}
-                                            onChange={(e) =>setBookTitle(e.target.value)}
+                                            value={ingredientUnit}
+                                            onChange={(e) =>setIngredientUnit(e.target.value)}
                                         />
                                     </div>
-                                    {/* <div className="mb-4">
-                                        <label htmlFor="bookCategory" className="form-label fs-5 text-dark fw-semibold">
-                                            Chọn danh mục
-                                        </label>
-                                        <Select
-                                                mode="multiple"
-                                                placeholder="Select categories"
-                                                value={categorySearch}
-                                                onChange={(e) => setCategorySearch(e)}
-                                                options={listCategory.map((category) => ({
-                                                    value: `${category.id}`,
-                                                    label: `${category.name}`
-                                                }))}
-                                                className="form-select shadow-sm"
-                                                // className="w-100"
-                                                // style={{ height: '100%' }}
-                                                // popupMatchSelectWidth={false}
-                                            />
-                                    </div> */}
-                                    {/* <div className="mb-4">
-                                        <label htmlFor="bookPrice" className="form-label fs-5 text-dark fw-semibold">
-                                            Giá (VND)
-                                        </label>
-                                        <input 
-                                            type="number"
-                                            className="form-control shadow-sm"
-                                            id="bookPrice"
-                                            placeholder="Enter the price of the book"
-                                            value={bookPrice}
-                                            onChange={(e) => setBookPrice(e.target.value)}
-                                            min="0"
-                                        />
-                                    </div> */}
                                     <div className="mb-4">
                                         <label htmlFor="bookThumbnail" className="form-label fs-5 text-dark fw-semibold">
                                             Hình ảnh nguyên liệu
@@ -183,8 +102,8 @@ export const UploadAdminIngredient = () =>{
                                         <input 
                                             className="form-control shadow-sm"
                                             type="file"
-                                            id="bookThumbnail"
-                                            onChange={(e) => setBookThumbnail(e.target.files[0])}
+                                            id="ingredientThumbnail"
+                                            onChange={(e) => setIngredientThumbnail(e.target.files[0])}
                                         />
                                     </div>
                                     <div className="d-grid btn-block">

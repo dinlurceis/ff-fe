@@ -88,7 +88,7 @@ export const LoginPage = () =>{
                         .then((introspectData) =>{
                             console.log(introspectData.valid);
                             if(introspectData && introspectData.valid){
-                                const listRole = introspectData.scope;
+                                const listRole = introspectData.role;
                                 authContext.refresh();
                                 if(listRole.includes("ADMIN")){
                                     navigate("/admin");

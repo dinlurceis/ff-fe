@@ -1,195 +1,114 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TablePagination } from "@mui/material";
-import "../../css/SupplierManage.css";
-import { deleteSoftIngredient, getIngredientWithSortAndMultiFieldAndSearch } from "../../../../service/IngredientService";
+import { acceptSupplier, getAllSupplier, rejectSupplier } from "../../../../service/RegisterSipplierService";
+import { toast, ToastContainer } from "react-toastify";
+import { cilBan, cilCalendar, cilCheckCircle, cilClipboard, cilEnvelopeClosed, cilUser } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 
 
-const SupplierManage = ()=>{
-    const [ingredients,setIngredients] = useState([]);//Lưu dánh sách truyện
-    const [page,setPage] = useState(0);//Trang hiện tại
-    const [rowsPerPage,setRowsPerPage]= useState(7);//Số dòng mỗi trang
-    const [totalItems,setTotalItems] = useState(0);//Tổng số khóa học
-    const [sort,setSort] = useState("id:desc");//Thứ tự sắp xếp
-    const [searchTerm,setSearchTerm] = useState("");//Từ kháo tìm kiếm
-    const navigate = useNavigate();//Hook điều hướng
+const AuthorCensor = () => {
+  const [applications, setApplications] = useState([]);
+//   const [rowsPerPage, setRowsPerPage] = useState(7);
 
-    useEffect(() =>{
-            fetchIngredients(page + 1,rowsPerPage,searchTerm,sort);
-        },[page,rowsPerPage,sort,searchTerm]);
-    
-    const fetchIngredients = async (page,size,searchTerm,sort) =>{
-        try{
+  const navigate = useNavigate();
+  useEffect(() => {
+    fetchApplications();
+  }, []);
 
-            const response= await getIngredientWithSortAndMultiFieldAndSearch(page,size,searchTerm,sort);
-
-            setIngredients(response.result.items);
-            setTotalItems(response.result.totalElements)
-        }catch(error){
-            console.error("Error fetching users:",error);
-        }
+  const fetchApplications = async () => {
+    try {
+      const response = await getAllSupplier();
+      setApplications(response.result);
+      console.log(response.result);
+    } catch (error) {
+      console.error("Error fetching Author applications:", error);
+      toast.error("Failed to load Author applications.");
     }
+  };
 
-    // useEffect(() => {
-    //     fetchingredients();
-    // },[page,rowsPerPage,sort,searchTerm]);
+  const handleCertificationClick = (id) => {
+    navigate(`/admin/supplier/detail/${id}`);
+  };
 
-    // const fetchingredients = async() =>{
-    //     try{
-    //         console.log({page,rowsPerPage,sort,searchTerm});
-    //         const listSearch=[];
-    //         if(searchTerm){
-    //             listSearch.push(`title:${searchTerm}`)
-    //         }
-            
-    //         const response= await Searchingredient(page+1,rowsPerPage,sort,"",listSearch);
-    //         console.log(response);
-    //         setingredients(response.result.items);//lưu danh sách khóa học
-    //         setTotalItems(response.totalElements);//Lưu tổng số khóa học
-    //     }catch(error){
-    //         console.error("Error fetching ingredients:",error)
-    //     }
-    // };
-    
-    //Xử lý điều kiện tìm kiếm
-    // const handleSerachKeyDown = (e) =>{
-    //     if(e.key === "Enter"){
-    //         fetchingredients();
-    //     }
-    // };
-
-    const handleRowClick = (id) =>{
-        navigate(`/admin/ingredient/detail/${id}`);//chuyển hướng tới đúng URL
+  const handleApproval = async (id, approved) => {
+    try {
+      if (approved) {
+        await acceptSupplier(id);
+        toast.success(`Author application approved.`);
+      } else {
+        await rejectSupplier(id);
+        toast.error(`Author application rejected.`, {
+          className: "toast-error",
+          icon: "❌",
+        });
+      }
+      fetchApplications();
+    } catch (error) {
+      console.error("Error updating Author application status:", error);
+      toast.error("Failed to update application status.");
     }
+  };
 
-    // const handleToggleIngredientStatus = async(ingredientId,isActive) =>{
-    //         try{
-    //             const ingredient = ingredients.find((ingredient) => ingredient.id === ingredientId);//lấy thông tin dựa trên userId
-    //             await deleteSoftIngredient(ingredientId);
-    //             console.log(ingredient);
-
-    //             setIngredients((prevIngredients) =>
-    //                 prevIngredients.map((ingredient) =>
-    //                     ingredient.id===ingredientId ? {...ingredient,isActive: !isActive} : ingredient
-    //                 )
-    //             );
-    //         }catch(error){
-    //             console.error(`Error toggling ban status for user ${ingredientId}`,error);
-    //         }
-    //     };
-
-
-    // const handleToggleingredientStatus = async(ingredientId) =>{
-    //         try{
-    //             const ingredient = ingredients.find((ingredient) => ingredient.id === ingredientId);//lấy thông tin dựa trên ingredientId
-    //             await handleToggleingredientStatus(ingredientId);
-    //             setingredients((previngredients) =>
-    //                 previngredients.map((ingredient) =>
-    //                     ingredient.id===ingredientId ? {...ingredient,active: !ingredient.active} : ingredient
-    //                 )
-    //             );
-    //         }catch(error){
-    //             console.error(`Error toggling ban status for user ${ingredientId}`,error);
-    //         }
-    //     }
-    return (
-        <div className="ingredient-manage">
-            <h2 className="ingredient-manage-title">Ingredient management</h2>
-            <div className="ingredient-manage-controls">
-                <div className="ingredient-manage-search">
-                    <input 
-                        type="text"
-                        placeholder="Search by name"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyDown={(e) =>{
-                            if(e.key === "Enter"){
-                                setPage(0);
-                                fetchIngredients(1,rowsPerPage,searchTerm,sort);
-                            }
-                        }}
-                    />
-                </div>
-                <div className="ingredient-manage-sort">
-                    <select onChange={(e) => setSort(e.target.value)}>
-                        <option value="title:asc">Sort by Title (A-Z)</option>
-                        <option value="title:desc">Sort By Title (Z-A)</option>
-                        <option value="id:desc">Sort by Date (Oldest)</option>
-                        <option value="id:asc">Sort by Date (Newest)</option>
-                    </select>
-                </div>
-            </div>
-            <div className="ingredient-manage-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th className="table-icon">Tên</th>
-                            <th className="table-icon">Email</th>
-                            <th className="table-icon">Số điện thoại</th>
-                            <th className="table-icon">Địa chỉ</th>
-                            <th className="table-icon">Avatar</th>
-                            {/* <th className="table-icon">Đăng truyện</th> */}
-                            {/* <th className="table-icon">Updated At</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {ingredients.map((ingredient,index) =>(
-                            <tr key={ingredient.ingredientId}>
-                                <td>{page*rowsPerPage+index+1}</td>
-                                <td
-                                    onClick={() => handleRowClick(ingredient.id)}
-                                    style={{cursor:"pointer"}}
-                                    >{ingredient.name}
-                                </td>
-                                <td
-                                    onClick={() => handleRowClick(ingredient.id)}
-                                    style={{cursor:"pointer"}}
-                                    >{ingredient.unit}
-                                </td>
-                                {/* <td>
-                                    <label className="switch">
-                                        <input 
-                                            type="checkbox"
-                                            checked={ingredient.isActive}
-                                            onChange={() =>
-                                                handleToggleIngredientStatus(ingredient.id,ingredient.isActive)
-                                            }    
-                                        />
-                                        <span className="slider round">
-                                            {ingredient.isActive ? "Yes":"No"}
-                                        </span>
-                                    </label>
-                                </td> */}
-
-                                {/* <td>
-                                    {ingredient.updatedAt
-                                        ?new Date(ingredient.updatedAt).toLocaleString()
-                                        :"N/A"}
-                                </td> */}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className="pagination-container">
-                <TablePagination 
-                    component="div"
-                    count={totalItems}
-                    page={page}
-                    onPageChange={(event,newPage) => setPage(newPage)}
-                    rowsPerPage={rowsPerPage}
-                    onRowsPerPageChange={(event) => 
-                        setRowsPerPage(parseInt(event.target.value,10))
-                    }
-                    rowsPerPageOptions={[7,14,21]}
-                    //className="custom-pagination"
-                    labelDisplayedRows={({from,to,count}) =>`${from}-${to} of ${count}`}
-                />
-            </div>
-        </div>
-    );
+  return (
+    <div className="user-manage">
+      <h2 className="user-manage-title">Author Application Censorship</h2>
+      <div className="user-manage-table">
+        <table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>
+                <CIcon icon={cilUser} className="table-icon" /> Name
+              </th>
+              <th>
+                <CIcon icon={cilEnvelopeClosed} className="table-icon" /> Email
+              </th>
+              <th>
+                <CIcon icon={cilCalendar} className="table-icon" /> Description
+              </th>
+              <th>
+                <CIcon icon={cilClipboard} className="table-icon" /> Detail
+              </th>
+              <th>
+                <CIcon icon={cilCheckCircle} className="table-icon" /> Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {applications.map((app, index) => (
+              <tr key={app.id} onClick={()=>handleCertificationClick(app.id)}>
+                <td>{ index + 1}</td>
+                <td>{app.name}</td>
+                <td>{app.email}</td>
+                <td>{app.description}</td>
+                <td
+                  className="certification-link"
+                  onClick={() => handleCertificationClick(app.id)}
+                >
+                  CV
+                </td>
+                <td>
+                  <button
+                    className="approve-btn"
+                    onClick={() => handleApproval(app.id, true)}
+                  >
+                    <CIcon icon={cilCheckCircle} /> Approve
+                  </button>
+                  <button
+                    className="reject-btn"
+                    onClick={() => handleApproval(app.id, false)}
+                  >
+                    <CIcon icon={cilBan} /> Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {/* <ToastContainer position="top-right" autoClose={3000} /> */}
+    </div>
+  );
 };
 
-export default SupplierManage;
+export default AuthorCensor;

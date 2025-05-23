@@ -26,7 +26,7 @@ const AppSideBarNav = () =>{
     );
 
     return (
-        <CSidebarNav>
+        <CSidebarNav style={{background:"#000"}}>
             {/* MANAGEMENT Group */}
             <CNavTitle style={{color:"#fff"}}>MANAGEMENT</CNavTitle>
             <CNavGroup

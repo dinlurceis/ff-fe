@@ -17,6 +17,8 @@ import DishManage from "../components/Dish/DishManager";
 import { CreateDish } from "../components/Dish/CreateDish";
 import  CartManage  from "../components/Cart/CartManager";
 import SupplierManage from "../components/Supplier/SupplierManager";
+import SupplierInforDetail from "../components/Supplier/SupplierInfoDetail";
+import DishDetail from "../components/Dish/DishDetail";
 
 const AdminApp = () => {
   return (
@@ -40,9 +42,11 @@ const AdminApp = () => {
           <Route path="category/upload-category" element={<UploadCategory />} />
 
           <Route path="dish/manage" element={<DishManage />} />
+          <Route path="dish/detail/:id" element={<DishDetail />} />
           <Route path="dish/create-dish" element={<CreateDish />} />
           <Route path="cart/manage" element={<CartManage />} />
           <Route path="supplier/manage" element={<SupplierManage />} />
+          <Route path="supplier/detail/:id" element={<SupplierInforDetail />} />
         </Route>
         {/* Route riêng cho NotFound */}
         <Route path="*" element={<NotFound />} />

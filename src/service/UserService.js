@@ -35,6 +35,15 @@ export const getUserById = async (userId) => {
         throw error;
     }
 }
+export const getSupplierById = async (userId) => {
+    try {
+        const response = await axios.get(`api/v1/users/${userId}/details`)
+        return response.data;
+    } catch (error) {
+        console.error('Error get my info', error);
+        throw error;
+    }
+}
 
 export const banUser = async (userId) => {
     try {

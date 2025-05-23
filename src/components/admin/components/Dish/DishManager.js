@@ -29,33 +29,33 @@ const DishManage = () => {
     }
   };
 
-  // useEffect(() => {
-  //     fetchdishes();
-  // },[page,rowsPerPage,sort,searchTerm]);
+  useEffect(() => {
+      fetchdishes();
+  },[page,rowsPerPage,sort,searchTerm]);
 
-  // const fetchdishes = async() =>{
-  //     try{
-  //         console.log({page,rowsPerPage,sort,searchTerm});
-  //         const listSearch=[];
-  //         if(searchTerm){
-  //             listSearch.push(`title:${searchTerm}`)
-  //         }
+  const fetchdishes = async() =>{
+      try{
+          console.log({page,rowsPerPage,sort,searchTerm});
+          const listSearch=[];
+          if(searchTerm){
+              listSearch.push(`name:${searchTerm}`)
+          }
 
-  //         const response= await Searchdish(page+1,rowsPerPage,sort,"",listSearch);
-  //         console.log(response);
-  //         setdishes(response.result.items);//lưu danh sách khóa học
-  //         setTotalItems(response.totalElements);//Lưu tổng số khóa học
-  //     }catch(error){
-  //         console.error("Error fetching dishes:",error)
-  //     }
-  // };
+          const response= await SearchDish(page+1,rowsPerPage,sort,listSearch);
+          console.log(response);
+          setDishes(response.result.items);//lưu danh sách khóa học
+          setTotalItems(response.totalElements);//Lưu tổng số khóa học
+      }catch(error){
+          console.error("Error fetching dishes:",error)
+      }
+  };
 
   //Xử lý điều kiện tìm kiếm
-  // const handleSerachKeyDown = (e) =>{
-  //     if(e.key === "Enter"){
-  //         fetchdishes();
-  //     }
-  // };
+  const handleSerachKeyDown = (e) =>{
+      if(e.key === "Enter"){
+          fetchdishes();
+      }
+  };
 
   //Điều hướng đến trang chi tiết khóa học
   const handleRowClick = (id) => {
@@ -122,7 +122,9 @@ const DishManage = () => {
           <thead>
             <tr>
               <th>STT</th>
+              <th className="table-icon">Image</th>
               <th className="table-icon">name</th>
+              <th className="table-icon">Description</th>
               <th className="table-icon">Time Cook</th>
               <th className="table-icon">price</th>
               {/* <th className="table-icon">Updated At</th> */}
@@ -133,10 +135,30 @@ const DishManage = () => {
               <tr key={dish.id}>
                 <td>{page * rowsPerPage + index + 1}</td>
                 <td
+                  onClick={() => handleRowClick(dish.ingredientId)}
+                  style={{cursor:"pointer"}}
+                  > <img 
+                          src={dish.dishImage} 
+                          alt={dish.name}
+                          style={{
+                              width: "60px",
+                              height: "60px", // 3:4 ratio
+                              objectFit: "cover",
+                              borderRadius: "4px"
+                          }}
+                      />           
+                  </td>
+                <td
                   onClick={() => handleRowClick(dish.id)}
                   style={{ cursor: "pointer" }}
                 >
                   {dish.name}
+                </td>
+                <td
+                  onClick={() => handleRowClick(dish.id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <div dangerouslySetInnerHTML={{ __html:dish.description }} />
                 </td>
                 <td
                   onClick={() => handleRowClick(dish.id)}
@@ -151,24 +173,24 @@ const DishManage = () => {
                   {dish.price} VND
                 </td>
                 {/* <td>
-                                    <label className="switch">
-                                        <input 
-                                            type="checkbox"
-                                            checked={dish.isActive}
-                                            onChange={() =>
-                                                handleToggleDishStatus(dish.id,dish.isActive)
-                                            }    
-                                        />
-                                        <span className="slider round">
-                                            {dish.isActive ? "Yes":"No"}
-                                        </span>
-                                    </label>
-                                </td> */}
+                      <label className="switch">
+                          <input 
+                              type="checkbox"
+                              checked={dish.isActive}
+                              onChange={() =>
+                                  handleToggleDishStatus(dish.id,dish.isActive)
+                              }    
+                          />
+                          <span className="slider round">
+                              {dish.isActive ? "Yes":"No"}
+                          </span>
+                      </label>
+                  </td> */}
                 {/* <td>
-                                    {dish.updatedAt
-                                        ?new Date(dish.updatedAt).toLocaleString()
-                                        :"N/A"}
-                                </td> */}
+                      {dish.updatedAt
+                          ?new Date(dish.updatedAt).toLocaleString()
+                          :"N/A"}
+                    </td> */}
               </tr>
             ))}
           </tbody>
