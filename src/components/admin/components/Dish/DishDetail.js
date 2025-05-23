@@ -68,7 +68,7 @@ const DishDetail = () =>{
                         <strong>Description:</strong> <div dangerouslySetInnerHTML={{ __html:dish.description }} />
                     </p>
                      <p>
-                        <strong>Recipe:</strong> {dish.recipe}
+                        <strong>Recipe:</strong> <div dangerouslySetInnerHTML={{ __html:dish.recipe }} />
                     </p>
                     <p>
                         <strong>Price dự kiến:</strong> {dish.price} VND

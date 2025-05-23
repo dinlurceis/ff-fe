@@ -70,3 +70,29 @@ export const addIngredient = async (ingredientId, stock, price) => {
     throw error;
   }
 };
+
+export const getAllIngredientByMe = async (page, size, keyword, sorts) => {
+  try {
+    const params = new URLSearchParams();
+    params.append("page", page);
+    params.append("size", size);
+
+    if (keyword) {
+      params.append("keyword", keyword);
+    }
+
+    // Add each sort parameter separately
+    if (sorts) {
+      params.append("sorts", sorts);
+    }
+    console.log(params);
+    console.log({ page, size, keyword, sorts });
+
+    const response = await axios.get("api/v1/ingredientBySupplier/getAllIngredientByCurrentUser", {
+      params: params,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

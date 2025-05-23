@@ -135,7 +135,7 @@ const DishManage = () => {
               <tr key={dish.id}>
                 <td>{page * rowsPerPage + index + 1}</td>
                 <td
-                  onClick={() => handleRowClick(dish.ingredientId)}
+                  onClick={() => handleRowClick(dish.dishId)}
                   style={{cursor:"pointer"}}
                   > <img 
                           src={dish.dishImage} 
@@ -149,25 +149,25 @@ const DishManage = () => {
                       />           
                   </td>
                 <td
-                  onClick={() => handleRowClick(dish.id)}
+                  onClick={() => handleRowClick(dish.dishId)}
                   style={{ cursor: "pointer" }}
                 >
                   {dish.name}
                 </td>
                 <td
-                  onClick={() => handleRowClick(dish.id)}
+                  onClick={() => handleRowClick(dish.dishId)}
                   style={{ cursor: "pointer" }}
                 >
                   <div dangerouslySetInnerHTML={{ __html:dish.description }} />
                 </td>
                 <td
-                  onClick={() => handleRowClick(dish.id)}
+                  onClick={() => handleRowClick(dish.dishId)}
                   style={{ cursor: "pointer" }}
                 >
                   {dish.timeCook || "Unknown"}
                 </td>
                 <td
-                  onClick={() => handleRowClick(dish.id)}
+                  onClick={() => handleRowClick(dish.dishId)}
                   style={{ cursor: "pointer" }}
                 >
                   {dish.price} VND

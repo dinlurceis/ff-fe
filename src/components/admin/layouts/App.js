@@ -15,7 +15,7 @@ import CatgoryManage from "../components/Category/CategoryManage";
 import { UploadCategory } from "../components/Category/CategoryUpload";
 import DishManage from "../components/Dish/DishManager";
 import { CreateDish } from "../components/Dish/CreateDish";
-import  CartManage  from "../components/Cart/CartManager";
+import  CartManage  from "../components/IngredientBySupplier/IngredientBySupplierManager";
 import SupplierManage from "../components/Supplier/SupplierManager";
 import SupplierInforDetail from "../components/Supplier/SupplierInfoDetail";
 import DishDetail from "../components/Dish/DishDetail";
@@ -44,7 +44,7 @@ const AdminApp = () => {
           <Route path="dish/manage" element={<DishManage />} />
           <Route path="dish/detail/:id" element={<DishDetail />} />
           <Route path="dish/create-dish" element={<CreateDish />} />
-          <Route path="cart/manage" element={<CartManage />} />
+          <Route path="ingredientBySupplier/manage" element={<CartManage />} />
           <Route path="supplier/manage" element={<SupplierManage />} />
           <Route path="supplier/detail/:id" element={<SupplierInforDetail />} />
         </Route>
