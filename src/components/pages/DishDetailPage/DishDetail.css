@@ -211,3 +211,9 @@
 .review-container {
   width: 100%;
 }
+.bigger-amount {
+  font-size: 2vw;
+  color: #6d7900;
+  font-family: "Lexend Peta", sans-serif;
+  font-weight: 900;
+}

@@ -5,7 +5,7 @@ import { registerSupplier } from "../../../service/RegisterSipplierService";
 
 export const RegisterSupply = () => {
   useEffect(() => {
-    document.title = "Register Teacher";
+    document.title = "Register Supplier";
   });
 
   const accessToken = localStorage.getItem("accessToken");
@@ -14,10 +14,10 @@ export const RegisterSupply = () => {
     fullName: "",
     email: "",
     phone: "",
-    subject: "",
-    experience: "",
+    expertise: "",
+    yearsOfExperience: "",
     bio: "",
-    facebook: "",
+    facebookLink: "",
   });
 
   const handleChange = (e) => {
@@ -41,7 +41,7 @@ export const RegisterSupply = () => {
       .then((data) => {
         setFormData((prevData) => ({
           ...prevData,
-          fullName: `${data.result.fullName}`,
+          name: `${data.result.fullName}`,
           email: data.result.email,
         }));
       })
@@ -61,14 +61,23 @@ export const RegisterSupply = () => {
 
     const jsonBlob = new Blob(
       [
+    //     private String email;
+    // private String name;
+    // private String phone;
+    // private String expertise;
+    // private Double yearsOfExperience;
+    // private String bio;
+    // private String facebookLink;
+    // private String certificate;
+    // private String cvUrl;
         JSON.stringify({
-          name: formData.fullName,
           email: formData.email,
+          name: formData.name,
           phone: formData.phone,
-          subject: formData.subject,
-          experience: formData.experience,
+          expertise: formData.expertise,
+          yearsOfExperience: formData.yearsOfExperience,
           bio: formData.bio,
-          facebookLink: formData.facebook,
+          facebookLink: formData.facebookLink,
         }),
       ],
       { type: "application/json" }
@@ -108,7 +117,7 @@ export const RegisterSupply = () => {
           <div className="col-md-8">
             <div className="custom-card shadow-sm p-4 rounded-4">
               <h2 className="text-center mb-4 text-primary form-title">
-                Become a Teacher
+                Become a Supplier
               </h2>
               <p className="text-center mb-5 text-muted form-subtitle">
                 Share your expertise and join our community of professionals.
@@ -123,9 +132,9 @@ export const RegisterSupply = () => {
                     <input
                       type="text"
                       className="form-control custom-form-control"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
+                      id="name"
+                      name="name"
+                      value={formData.name}
                       onChange={handleChange}
                       required
                       readOnly
@@ -171,7 +180,7 @@ export const RegisterSupply = () => {
                   </div>
                 </div>
 
-                {/* Subject */}
+                {/* expertise */}
                 <div className="mb-3">
                   <div className="input-group custom-input-group">
                     <span className="input-group-text custom-input-group-text">
@@ -180,12 +189,12 @@ export const RegisterSupply = () => {
                     <input
                       type="text"
                       className="form-control custom-form-control"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
+                      id="expertise"
+                      name="expertise"
+                      value={formData.expertise}
                       onChange={handleChange}
                       required
-                      placeholder="Subject of Expertise"
+                      placeholder="Expertise"
                     />
                   </div>
                 </div>
@@ -199,9 +208,9 @@ export const RegisterSupply = () => {
                     <input
                       type="number"
                       className="form-control custom-form-control"
-                      id="experience"
-                      name="experience"
-                      value={formData.experience}
+                      id="yearsOfExperience"
+                      name="yearsOfExperience"
+                      value={formData.yearsOfExperience}
                       onChange={handleChange}
                       required
                       placeholder="Years of Experience"
@@ -222,7 +231,7 @@ export const RegisterSupply = () => {
                       value={formData.bio}
                       onChange={handleChange}
                       rows="3"
-                      placeholder="Tell us more about yourself"
+                      placeholder="Giới thiệu bản thân"
                     />
                   </div>
                 </div>
@@ -236,11 +245,11 @@ export const RegisterSupply = () => {
                     <input
                       type="url"
                       className="form-control custom-form-control"
-                      id="facebook"
-                      name="facebook"
-                      value={formData.facebook}
+                      id="facebookLink"
+                      name="facebookLink"
+                      value={formData.facebookLink}
                       onChange={handleChange}
-                      placeholder="Facebook Profile Link"
+                      placeholder="Facebook Link"
                     />
                   </div>
                 </div>
@@ -251,7 +260,7 @@ export const RegisterSupply = () => {
                     htmlFor="cv"
                     className="form-label text-muted custom-form-label"
                   >
-                    Upload CV (PDF only)
+                    Đăng tải CV (PDF only)
                   </label>
                   <input
                     type="file"
@@ -269,7 +278,7 @@ export const RegisterSupply = () => {
                     htmlFor="certificate"
                     className="form-label text-muted custom-form-label"
                   >
-                    Upload Certificate (PDF only)
+                    Đăng tải chứng chỉ (PDF only)
                   </label>
                   <input
                     type="file"
@@ -297,7 +306,7 @@ export const RegisterSupply = () => {
                     className="btn btn-primary w-100 py-2 rounded-pill mt-3 custom-submit-btn"
                   >
                     <i className="fa fa-user-plus me-2"></i>
-                    Register as Teacher
+                    Register as Supplier
                   </button>
                 )}
               </form>

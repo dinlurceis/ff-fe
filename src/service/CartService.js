@@ -15,7 +15,7 @@ export const addItemCart = async (ingredientId,quantity=1) => {
 
 export const deleteItemcart = async (ingredientId) => {
     try {
-        const response = await axios.delete(`api/v1/cart/delete/${ingredientId}`)
+        const response = await axios.delete(`api/v1/cart/deleteItem/${ingredientId}`)
         return response.data;
     } catch (error) {
         console.error('Error get my info', error);

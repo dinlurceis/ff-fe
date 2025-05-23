@@ -12,10 +12,10 @@ export const Order = () => {
 
     const location = useLocation();
     const orderItems = location.state?.items || [];
-    const listBook = location.state?.listBooks || [];
-    console.log(listBook);
-    //sum là tổng cộng dồn được,book là phần tử hiện tại
-    const totalMoney = listBook.reduce((sum, book) => sum + book.totalPrice, 0);
+    const listIngredient = location.state?.listIngredients || [];
+    console.log(listIngredient);
+    //sum là tổng cộng dồn được,Ingredient là phần tử hiện tại
+    const totalMoney = listIngredient.reduce((sum, ingredient) => sum + ingredient.totalPrice, 0);
 
     useEffect(() => {
         document.title = "Order Page";
@@ -29,7 +29,7 @@ export const Order = () => {
         city:"", 
         district:"",
         ward:"",
-        paymentExpression:"DIRECTPAYMENT",
+        paymentExpression:"DIRECT",
         detailRequests: orderItems  // Sử dụng dữ liệu từ location.state
     });
     console.log(orderItems);
@@ -47,9 +47,9 @@ export const Order = () => {
         detailRequests: ""
     });
 
-    const handleDeleteBookcart = async (bookId) =>{
+    const handleDeleteIngredientcart = async (supplierHasIngredientId) =>{
         try{
-            await deleteItemcart(bookId);
+            await deleteItemcart(supplierHasIngredientId);
             //xóa bản ghi trùng với favoriteId và cập nhập lại danh sách favorites             
         }catch(error){
             console.error("Error delete favorite:",error);
@@ -90,17 +90,19 @@ export const Order = () => {
         try {
             // console.log(formData);
             const data = await createOrder(formData.fullName, formData.phoneNumber, formData.address, formData.note, formData.paymentExpression, formData.detailRequests);
-            console.log(data);
-            if(data.result){
-                if (data.result.paymentExpression === "ONLINEPAYMENT") {
-                    const vnpayUrl = await createPayment(data.result.totalMoney||listBook[0].price*orderItems[0].quantity);
+            if(data){
+                console.log("Đơn hàng đã được tạo thành công");
+                if (data.result.paymentExpression === "ONLINE") {
+                    console.log("Đang xử lý thanh toán trực tuyến");
+                    const vnpayUrl = await createPayment(data.result.totalMoney||listIngredient[0].priceIngredient*orderItems[0].quantity);
+                    console.log("Url : " +vnpayUrl);
                     console.log(vnpayUrl.result.paymentUrl);
                     window.location.href = vnpayUrl.result.paymentUrl;
                 }else{
                     navigate("/payment-success");
                 }
                 formData.detailRequests.map((detail)=>
-                    handleDeleteBookcart(detail.bookId)
+                    handleDeleteIngredientcart(detail.supplierHasIngredientId)
             )
             }
             
@@ -136,40 +138,40 @@ export const Order = () => {
                                             <table className="table">
                                                 <thead>
                                                     <tr>
-                                                        <th className="pro-thumbnail">Image</th>
-                                                        <th className="pro-title">Product</th>
-                                                        <th className="pro-price">Price</th>
-                                                        <th className="pro-quantity">Quantity</th>
-                                                        <th className="pro-subtotal">Total</th>
+                                                        <th className="pro-thumbnail">Ảnh</th>
+                                                        <th className="pro-title">Sản phẩm</th>
+                                                        <th className="pro-price">Giá</th>
+                                                        <th className="pro-quantity">Số lượng</th>
+                                                        <th className="pro-subtotal">Tổng cộng</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {listBook.map((book) => (
-                                                        <tr key={book.bookId}>
+                                                    {listIngredient.map((ingredient) => (
+                                                        <tr key={ingredient.supplierHasIngredientId}>
                                                             <td className="pro-thumbnail">
-                                                                <Link to={`/book-detail/${book.bookId}`}>
-                                                                    <img src={book.thumbnail} alt="Product" />
+                                                                <Link to={`/ingredient-detail/${ingredient.supplierHasIngredientId}`}>
+                                                                    <img src={ingredient.ingredientUrl} alt="Product" />
                                                                 </Link>
                                                             </td>
                                                             <td className="pro-title">
-                                                                <span>{book.title}</span>
+                                                                <span>{ingredient.nameIngredient}</span>
                                                             </td>
                                                             <td className="pro-price">
-                                                                <span>{book.priceBook||book.price}</span>
+                                                                <span>{ingredient.priceIngredient}</span>
                                                             </td>
                                                             <td className="pro-quantity">
                                                                 <div className="pro-qty">
-                                                                    {book.quantity||orderItems[0].quantity}
+                                                                    {ingredient.quantity||orderItems[0].quantity}
                                                                 </div>
                                                             </td>
                                                             <td className="pro-subtotal">
-                                                                <span>{book.totalPrice||book.price*orderItems[0].quantity}</span>
+                                                                <span>{ingredient.totalPrice*orderItems[0].quantity}</span>
                                                             </td>
                                                         </tr>
                                                     ))}
                                                 </tbody>
                                             </table>
-                                            <h4 style={{color:"#000", marginTop:"20px"}}>Tổng cộng ({orderItems.length} sản phẩm): {totalMoney||listBook[0].price*orderItems[0].quantity} VND</h4>
+                                            <h4 style={{color:"#000", marginTop:"20px"}}>Tổng cộng ({orderItems.length} sản phẩm): {totalMoney||listIngredient[0].priceIngredient*orderItems[0].quantity} VND</h4>
                                         </div>
                                     </div>
                                 </form>

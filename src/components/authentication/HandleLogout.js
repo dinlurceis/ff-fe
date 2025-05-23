@@ -23,7 +23,7 @@ export const HandleLogout = () =>{//truyền set vào để cập nhật trạng
         //setLoggedOut(true);//nếu có token thì xóa và setLoggout=true(đã đăng nhập)
 
         try{
-            const response = await fetch("http://localhost:8080/ApiWebManga/auth/logout",{
+            const response = await fetch("http://localhost:8081/api/v1/auth/logout",{
                 method: 'POST',
                 credentials: 'include', // Thêm dòng này để gửi kèm HttpOnly cookies
                 headers:{

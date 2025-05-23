@@ -275,11 +275,11 @@ export const IngredientDetail = () => {
             <div className="price-big">{ingredient.priceIngredient} VNĐ</div>
             <section className="dish-section">
               <h3 className="lexe">Số lượng tồn kho</h3>
-              <p>{ingredient.stock}</p>
+              <h5 className="bigger-amount">{ingredient.stock}</h5>
             </section>
             <section className="dish-section">
               <h3 className="lexe">Người đăng bán</h3>
-              <p>{ingredient.supplierName}</p>
+              <h5 className="bigger-amount">{ingredient.supplierName}</h5>
             </section>
             <section className="dish-section">
               <h3 className="lexe">Mô tả nguyên liệu</h3>

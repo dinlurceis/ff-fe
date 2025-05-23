@@ -39,10 +39,10 @@ const ShoppingCart = () => {
         fetchCarts();
     },[accessToken]);
 
-    const updateCart = async(ingredientId, quantity) => {
+    const updateCart = async(supplierHasIngredientId, quantity) => {
         setLoading(true);
         try {
-            const response = await addItemCart(ingredientId, quantity);
+            const response = await addItemCart(supplierHasIngredientId, quantity);
             if(response.result && Array.isArray(response.result.items)) {
                 setTotalMoney(response.result.totalMoney)
                 setCarts(response.result.items);
@@ -59,12 +59,12 @@ const ShoppingCart = () => {
         }
     };
 
-    const handleDeleteIngredientcart = async (ingredientId) =>{
+    const handleDeleteIngredientcart = async (supplierHasIngredientId) =>{
             try{
-                await deleteItemcart(ingredientId);
+                await deleteItemcart(supplierHasIngredientId);
                 //xóa bản ghi trùng với favoriteId và cập nhập lại danh sách favorites
                 setCarts((prevCarts) =>
-                    prevCarts.filter((ingredient) => ingredient.ingredientId !== ingredientId)
+                    prevCarts.filter((ingredient) => ingredient.supplierHasIngredientId !== supplierHasIngredientId)
                 );                
             }catch(error){
                 console.error("Error delete favorite:",error);

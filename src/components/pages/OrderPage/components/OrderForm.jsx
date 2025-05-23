@@ -157,7 +157,7 @@ export const OrderForm = (props) => {
                 </div>
                 <Select
                   placeholder="Phương thức thanh toán"
-                  defaultValue="DIRECTPAYMENT"
+                  defaultValue="DIRECT"
                   value={formData.paymentExpression}
                   onChange={(value) =>
                     handleInputChange({
@@ -165,8 +165,8 @@ export const OrderForm = (props) => {
                     })
                   }
                   options={[
-                    { value: "DIRECTPAYMENT", label: "Thanh toán trực tiếp" },
-                    { value: "ONLINEPAYMENT", label: "Thanh toán online" }
+                    { value: "DIRECT", label: "Thanh toán trực tiếp" },
+                    { value: "ONLINE", label: "Thanh toán online" }
                   ]}
                   className="w-100"
                   style={{ height: "40px" }}

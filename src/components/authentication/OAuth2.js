@@ -18,7 +18,7 @@ export const ProcessloginOAuth2 = ()=>{
             if(isMatch){//nếu như tìm thấy thì gửi trả về backend cái code
                 const authCode = isMatch[1];//lấy ra mã code trong cái google trả về
 
-                fetch(`http://localhost:8080/ApiWebManga/auth/outbound/authentication?code=${authCode}`,{
+                fetch(`http://localhost:8081/api/v1/auth/outbound/authentication?code=${authCode}`,{
                     method: "POST",
                 })
                 .then((response)=>response.json())
@@ -27,7 +27,7 @@ export const ProcessloginOAuth2 = ()=>{
 
                         sessionStorage.setItem("accessToken",data.result.accessToken);
 
-                        fetch(`http://localhost:8080/ApiWebManga/users/myInfo`, {
+                        fetch(`http://localhost:8081/api/v1/users/myInfo`, {
                             method: "GET",
                             headers: {
                               "Content-Type": "application/json",

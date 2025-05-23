@@ -14,12 +14,12 @@ export const CartDetail = ({
   const [selectedItems, setSelectedItems] = useState([]);
   const navigate = useNavigate(); // điều hướng đến trang thanh toán
   // chọn/bỏ chọn từng sản phẩm
-  const handleSelectItem = (ingredientId) => {
+  const handleSelectItem = (supplierHasIngredientId) => {
     setSelectedItems(
       (prevSelected) =>
-        prevSelected.includes(ingredientId)
-          ? prevSelected.filter((id) => id !== ingredientId) // khi người dùng bấm chọn nếu đã có trong selectItem thì mình bỏ chọn
-          : [...prevSelected, ingredientId] // nếu chưa có thì mình thêm nó vào danh sách
+        prevSelected.includes(supplierHasIngredientId)
+          ? prevSelected.filter((id) => id !== supplierHasIngredientId) // khi người dùng bấm chọn nếu đã có trong selectItem thì mình bỏ chọn
+          : [...prevSelected, supplierHasIngredientId] // nếu chưa có thì mình thêm nó vào danh sách
     );
   };
 
@@ -29,7 +29,7 @@ export const CartDetail = ({
       setSelectedItems([]); // xóa tất cả check box
     } else {
       setSelectedItems(
-        ingredients.map((ingredient) => ingredient.ingredientId)
+        ingredients.map((ingredient) => ingredient.supplierHasIngredientId)
       ); // check box tất cả sản phẩm
     }
   };
@@ -37,13 +37,13 @@ export const CartDetail = ({
   // Xử lý thanh toán những sản phẩm đã chọn
   const handlePayment = () => {
     const selectedIngredients = ingredients.filter((ingredient) =>
-      selectedItems.includes(ingredient.ingredientId)
+      selectedItems.includes(ingredient.supplierHasIngredientId)
     );
     if (selectedIngredients.length === 0) {
       alert("Vui lòng chọn 1 sản phẩm để thanh toán");
     }
     const orderItems = selectedIngredients.map((ingredient) => ({
-      ingredientId: ingredient.ingredientId,
+      supplierHasIngredientId: ingredient.supplierHasIngredientId,
       quantity: ingredient.quantity,
     }));
     console.log("danh sách sản phẩm được thanh toán:", orderItems);
@@ -55,7 +55,7 @@ export const CartDetail = ({
   };
 
   const selectedTotal = ingredients //tổng số tiền các sản phẩm đã chọn
-    .filter((ingredient) => selectedItems.includes(ingredient.ingredientId))
+    .filter((ingredient) => selectedItems.includes(ingredient.supplierHasIngredientId))
     .reduce((sum, ingredient) => sum + Number(ingredient.totalPrice), 0);
 
   return (
@@ -104,24 +104,24 @@ export const CartDetail = ({
                           </thead>
                           <tbody>
                             {ingredients.map((ingredient) => (
-                              <tr key={ingredient.ingredientId}>
+                              <tr key={ingredient.supplierHasIngredientId}>
                                 <td>
                                   <input
                                     type="checkbox"
                                     checked={selectedItems.includes(
-                                      ingredient.ingredientId
+                                      ingredient.supplierHasIngredientId
                                     )}
                                     onChange={() =>
-                                      handleSelectItem(ingredient.ingredientId)
+                                      handleSelectItem(ingredient.supplierHasIngredientId)
                                     }
                                   />
                                 </td>
                                 <td className="pro-thumbnail">
                                   <Link
-                                    to={`/ingredient-detail/${ingredient.ingredientId}`}
+                                    to={`/ingredient-detail/${ingredient.supplierHasIngredientId}`}
                                   >
                                     <img
-                                      src={ingredient.thumbnail}
+                                      src={ingredient.ingredientUrl}
                                       alt={ingredient.nameIngredient}
                                     />
                                   </Link>
@@ -150,7 +150,7 @@ export const CartDetail = ({
                                         value={ingredient.quantity}
                                         onChange={(e) =>
                                           updateItem(
-                                            ingredient.ingredientId,
+                                            ingredient.supplierHasIngredientId,
                                             e.target.value
                                           )
                                         }
@@ -170,7 +170,7 @@ export const CartDetail = ({
                                   <button
                                     type="button"
                                     onClick={() =>
-                                      deleteItem(ingredient.ingredientId)
+                                      deleteItem(ingredient.supplierHasIngredientId)
                                     }
                                   >
                                     <i className="fa fa-trash-o"></i>

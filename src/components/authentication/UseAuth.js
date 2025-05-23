@@ -20,7 +20,7 @@ export const useAuth = ({loggedOut})=>{
             //nếu accessToken sắp hết hạn(cụ thể là 5 phút),thực hiện bằng refresh
             if(timeLeft < fiveMinutesInMs){
                 try{
-                    const response = await fetch('http://localhost:8080/ApiWebManga/auth/refresh',{
+                    const response = await fetch('http://localhost:8081/api/v1/auth/refresh',{
                         method: 'POST',
                         credentials: 'include',//quan trọng:gửi kèm cookies
                         headers:{
@@ -58,7 +58,7 @@ export const useAuth = ({loggedOut})=>{
             }
 
             try{
-                const response = await fetch('http://localhost:8080/ApiWebManga/auth/introspect',{
+                const response = await fetch('http://localhost:8081/api/v1/auth/introspect',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

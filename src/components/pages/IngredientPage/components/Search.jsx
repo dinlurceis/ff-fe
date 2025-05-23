@@ -18,7 +18,7 @@ export const Search = ({ ingredients, sortBy, listSearch }) => {
     let searchs = [];
 
     console.log(nameIngredient);
-    searchs.push(`nameIngredient:${nameIngredient}`);
+    searchs.push(`keyword:${nameIngredient}`);
   
     // if (categorySearch.length > 0) {
     //   searchs.push(...categorySearch);
@@ -26,11 +26,11 @@ export const Search = ({ ingredients, sortBy, listSearch }) => {
 
     console.log(minPriceIngredient);
     if (maxPriceIngredient !== null && maxPriceIngredient !== "") {
-      searchs.push(`priceIngredient<${maxPriceIngredient}`);
+      searchs.push(`price<${maxPriceIngredient}`);
     }
 
     if (minPriceIngredient !== null && minPriceIngredient !== "") {
-      searchs.push(`priceIngredient>${minPriceIngredient}`);
+      searchs.push(`price>${minPriceIngredient}`);
     }
 
     if (sort) {
