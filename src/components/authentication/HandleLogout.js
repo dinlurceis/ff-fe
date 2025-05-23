@@ -19,7 +19,7 @@ export const HandleLogout = () =>{//truyền set vào để cập nhật trạng
         }
 
         //trường hợp có token thì xử lý cả fontend,bakend
-        sessionStorage.clear();
+        //sessionStorage.clear();
         //setLoggedOut(true);//nếu có token thì xóa và setLoggout=true(đã đăng nhập)
 
         try{

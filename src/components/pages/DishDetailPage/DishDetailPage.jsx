@@ -98,7 +98,7 @@ export const DishDetail = () => {
             {/* Description */}
             <section className="dish-section">
               <h3 className="lexe">Mô tả món ăn</h3>
-              <p>{dish.description}</p>
+              <div dangerouslySetInnerHTML={{ __html:dish.description }} />
             </section>
 
             <section className="dish-section">
@@ -131,14 +131,15 @@ export const DishDetail = () => {
           <section className="dish-section">
             <h3 className="lexe">Cách làm</h3>
             <div className="recipe-content">
-              {steps.map((step, index) =>
+              {/* {steps.map((step, index) =>
                 step.trim() ? (
                   <p key={index} className="recipe-step">
                     <span className="step-number">{index + 1}.</span>{" "}
-                    {step}
+                    <div dangerouslySetInnerHTML={{ __html:steps }} />
                   </p>
                 ) : null
-              )}
+              )} */}
+              <div dangerouslySetInnerHTML={{ __html:steps }} />
             </div>
           </section>
         </div>

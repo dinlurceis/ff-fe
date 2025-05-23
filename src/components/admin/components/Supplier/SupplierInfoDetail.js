@@ -45,22 +45,22 @@ const SupplierInforDetail = () => {
   const handleApprove = async () => {
     try {
       await acceptSupplier(id);
-      toast.success("Author approved successfully.");
-      setTimeout(() => navigate("/admin/Suppliers/censor"), 3000);
+      //toast.success("Author approved successfully.");
+     // setTimeout(() => navigate("/admin/Suppliers/censor"), 3000);
     } catch (error) {
       console.error("Error approving Author:", error);
-      toast.error("Failed to approve Author.");
+      //toast.error("Failed to approve Author.");
     }
   };
 
   const handleReject = async () => {
     try {
       await rejectSupplier(id);
-      toast.warn("Author rejected successfully.");
-      setTimeout(() => navigate("/admin/Suppliers/censor"), 3000);
+      // toast.warn("Author rejected successfully.");
+      // setTimeout(() => navigate("/admin/Suppliers/censor"), 3000);
     } catch (error) {
       console.error("Error rejecting Author:", error);
-      toast.error("Failed to reject Author.");
+      //toast.error("Failed to reject Author.");
     }
   };
 
@@ -70,7 +70,7 @@ const SupplierInforDetail = () => {
 
   return (
     <div className="Author-info-detail">
-      <ToastContainer position="top-right" autoClose={3000} />
+      {/* <ToastContainer position="top-right" autoClose={3000} /> */}
       <div className="header-section">
         <img
           src={SupplierDetails.avatar}

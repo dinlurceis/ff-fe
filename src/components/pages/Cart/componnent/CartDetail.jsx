@@ -9,7 +9,7 @@ export const CartDetail = ({
   ingredients,
   clearCart,
   totalMoney,
-  listingredient,
+  listIngredient,
 }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const navigate = useNavigate(); // điều hướng đến trang thanh toán
@@ -232,7 +232,7 @@ export const CartDetail = ({
                       >
                         Khám phá thêm các nguyên liệu khác
                       </h3>
-                      <ViewIngredient ingredients={listingredient} />
+                      <ViewIngredient ingredients={listIngredient} />
                     </div>
                   </div>
                 </form>

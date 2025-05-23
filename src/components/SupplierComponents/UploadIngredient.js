@@ -1,56 +1,40 @@
 import { useEffect, useState } from "react";
 import { FaUpload, FaIngredient, FaTags, FaDollarSign, FaFileAlt, FaClock, FaImage } from 'react-icons/fa';
-import { listAllCategory } from "../../service/CategoryService";
 import { Select } from "antd";
 import TinyMCE from "../../utils/TinyMCE";
 import { addIngredient } from "../../service/IngredientBySupplierService";
+import { listAllIngredient } from "../../service/IngredientService";
 export const UploadIngredient = () =>{
-    const [listCategory, setListCategory] = useState([]);
-    const [categorySearch, setCategorySearch] = useState([]);
-    const [ingredientTitle,setIngredientTitle] = useState('');
-    const [ingredientIsbn,setIngredientIsbn]=useState('');
-    const [ingredientDescription,setIngredientDescription]= useState('');
-    const [ingredientPrice,setIngredientPrice] = useState("");
-    const [ingredientThumbnail,setIngredientThumbnail]=useState(null);
-    const [ingredientPdf,setIngredientPdf] = useState(null);
+
+    const [ingredientId,setIngredientId] = useState('');
+    const [stock,setStock]=useState('');
+    const [price,setPrice]=useState('');
+    const [listIngredient,setListIngredient]=useState([]);
 
     useEffect(() =>{
         document.title = "Create Ingredient By Supplier"
     })
 
-    useEffect(() => {
-            const listCategories = async () => {
-                try {
-                    const data = await listAllCategory();
-                    if (data.result && Array.isArray(data.result)) {
-                        setListCategory(data.result);
-                    }
-                } catch (error) {
-                    console.error("Error fetching favorite course:", error);
-                }
-            };
-            listCategories();
-        }, []);
-
+     const fetchIngredients = async () => {
+        try {
+          const result = await listAllIngredient();
+          if (result && result.result) {
+            setListIngredient(result.result);
+          } else {
+            setListIngredient([]);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      useEffect(() => {
+        fetchIngredients();
+      }, []);
     // Hàm reset form về giá trị mặc định
     const resetForm = () => {
-        setIngredientPdf(null);
-        setIngredientTitle('');
-        setIngredientIsbn('');
-        setIngredientDescription('');
-        setIngredientPrice('');
-        setCategorySearch([]);
-        setIngredientThumbnail(null);
-        
-        // Reset file input
-        const fileInput = document.getElementById('IngredientThumbnail');
-        if (fileInput) {
-            fileInput.value = '';
-        }
-        const fileInputIngredient = document.getElementById('IngredientPdf');
-        if (fileInput) {
-            fileInputIngredient.value = '';
-        }
+        setIngredientId(null);
+        setPrice('');
+        setStock('');
     };
 
     const handleSubmit = async (e) =>{
@@ -58,15 +42,13 @@ export const UploadIngredient = () =>{
         try {
             // Prepare Ingredient data object
             const IngredientData = {
-              title: ingredientTitle,
-              description: ingredientDescription,
-              isbn: ingredientIsbn,
-              price: ingredientPrice,
-              categoriesId: categorySearch // Assuming your API expects category IDs
+              ingredientId: ingredientId,
+              stock: stock,
+              price: price,
             };
             
             // Call the upload function with Ingredient data and thumbnail, but no PDF
-            const result = await addIngredient(IngredientData, ingredientThumbnail,ingredientPdf);
+            const result = await addIngredient(IngredientData.ingredientId,IngredientData.stock,IngredientData.price);
             
             // Reset form sau khi upload thành công
             resetForm();
@@ -89,50 +71,16 @@ export const UploadIngredient = () =>{
                                 </h3>
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-4">
-                                        <label htmlFor="ingredientTitle" className="form-label fs-5 text-dark fw-semibold">
-                                            Tên sách
-                                        </label>
-                                        <input 
-                                            type="text"
-                                            className="form-control shadow-sm"
-                                            id="ingredientTitle"
-                                            placeholder="Enter the title of the Ingredient"
-                                            value={ingredientTitle}
-                                            onChange={(e) =>setIngredientTitle(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="ingredientIsbn" className="form-label fs-5 text-dark fw-semibold">
-                                           Mã số chuẩn quốc tế
-                                        </label>
-                                        <input 
-                                            type="text"
-                                            className="form-control shadow-sm"
-                                            id="ingredientIsbn"
-                                            placeholder="Enter the isbn of the Ingredient"
-                                            value={ingredientIsbn}
-                                            onChange={(e) =>setIngredientIsbn(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="IngredientDescription" className="form-label fs-5 text-dark fw-semibold">
-                                            Mô tả sách
-                                        </label>
-                                       <TinyMCE value={ingredientDescription} onChange={setIngredientDescription}/>
-                                    </div>
-                                    
-                                    <div className="mb-4">
                                         <label htmlFor="IngredientCategory" className="form-label fs-5 text-dark fw-semibold">
-                                            Chọn danh mục
+                                            Chọn sản phẩm
                                         </label>
                                         <Select
-                                                mode="multiple"
-                                                placeholder="Select categories"
-                                                value={categorySearch}
-                                                onChange={(e) => setCategorySearch(e)}
-                                                options={listCategory.map((category) => ({
-                                                    value: `${category.id}`,
-                                                    label: `${category.name}`
+                                                placeholder="Select Ingredient"
+                                                value={ingredientId}
+                                                onChange={(e) => setIngredientId(e)}
+                                                options={listIngredient.map((ingredient) => ({
+                                                    value: `${ingredient.ingredientId}`,
+                                                    label: `${ingredient.name}`
                                                 }))}
                                                 className="form-select shadow-sm"
                                                 // className="w-100"
@@ -149,31 +97,23 @@ export const UploadIngredient = () =>{
                                             className="form-control shadow-sm"
                                             id="ingredientPrice"
                                             placeholder="Enter the price of the Ingredient"
-                                            value={ingredientPrice}
-                                            onChange={(e) => setIngredientPrice(e.target.value)}
+                                            value={price}
+                                            onChange={(e) => setPrice(e.target.value)}
                                             min="0"
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label htmlFor="ingredientThumbnail" className="form-label fs-5 text-dark fw-semibold">
-                                            Bìa sách
+                                        <label htmlFor="ingredientPrice" className="form-label fs-5 text-dark fw-semibold">
+                                            Stock (Số lượng)
                                         </label>
                                         <input 
+                                            type="number"
                                             className="form-control shadow-sm"
-                                            type="file"
-                                            id="ingredientThumbnail"
-                                            onChange={(e) => setIngredientThumbnail(e.target.files[0])}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="ingredientPdf" className="form-label fs-5 text-dark fw-semibold">
-                                            File sách (PDF)
-                                        </label>
-                                        <input 
-                                            className="form-control shadow-sm"
-                                            type="file"
-                                            id="ingredientPdf"
-                                            onChange={(e) => setIngredientPdf(e.target.files[0])}
+                                            id="ingredientPrice"
+                                            placeholder="Enter the stock of the Ingredient"
+                                            value={stock}
+                                            onChange={(e) => setStock(e.target.value)}
+                                            min="0"
                                         />
                                     </div>
                                     <div className="d-grid btn-block">

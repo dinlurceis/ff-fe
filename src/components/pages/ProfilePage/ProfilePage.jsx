@@ -29,13 +29,13 @@ export const Profile = () =>{
         .then((data) =>{
             if(data.result){
                 setProfileData({
-                    role:data.result.role||[],
+                    role:data.result.roles||[],
                     createdAt:data.result.createdAt||"",
                     email:data.result.email||"",
                     avatarUrl: data.result.avatarUrl || "",
                     fullName: data.result.fullName||"",
                     phoneNumber:data.result.phoneNumber||"",
-                    dob:data.result.birthday||"" 
+                    dob:data.result.dob||"" 
                 });
                 setSelectedImage(
                     data.result.avatarUrl ||

@@ -316,11 +316,11 @@ export const RegisterSupply = () => {
       </div>
 
       {/* Toast container to display notifications */}
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={3000}
         className="custom-toast-container"
-      />
+      /> */}
     </div>
   );
 };

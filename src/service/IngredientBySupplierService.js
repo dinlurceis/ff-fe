@@ -60,18 +60,10 @@ export const searchIngredients = async (
 
 export const addIngredient = async (ingredientId, stock, price) => {
   try {
-    const formData = new FormData();
-
-    // Thêm các trường dữ liệu
-    formData.append("ingredientId", ingredientId);
-    formData.append("stock", stock);
-    formData.append("price", price);
-
     const response = await axios.post(
       "/api/v1/ingredientBySupplier/supplierUploadIngredient",
-      formData
+      { ingredientId, stock, price } // Gửi trực tiếp object JSON
     );
-
     return response.data;
   } catch (error) {
     console.error("Error adding ingredient:", error);

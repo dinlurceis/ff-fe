@@ -15,10 +15,9 @@ const OrderManage = ()=>{
     const [orderStatus,setOrderStatus]=useState("PENDDING");
     const statusOptions = [
         { value: "PENDDING", label: "Đang xác nhận đơn hàng" },
-        { value: "CONFIRMED", label: "Xác nhận đơn hàng" },
-        { value: "PROCESSING", label: "Đang vận chuyển" },
-        { value: "CANCELED", label: "Giao hàng thất bại" },
-        { value: "COMPLETE", label: "Giao hàng thành công" },
+        { value: "CONFIRM", label: "Xác nhận đơn hàng,đang vẫn chuyển" },
+        { value: "CANCEL", label: "Giao hàng thất bại" },
+        { value: "SUCCESS", label: "Giao hàng thành công" },
       ];
       
     useEffect(() => {
@@ -36,7 +35,6 @@ const OrderManage = ()=>{
             console.error("Error fetching orders:",error)
         }
     };
-    
     const changeStatusOrder = async(orderId,orderStatus) =>{
         try{
             await changeStatus(orderId,orderStatus);
@@ -75,7 +73,7 @@ const OrderManage = ()=>{
                     </thead>
                     <tbody>
                         {orders.map((order,index) =>(
-                            <tr key={order.id}>
+                            <tr key={order.orderd}>
                                 <td>{page*rowsPerPage+index+1}</td>
                                 <td 
                                     onClick={() => handleRowClick(order.orderId)}
@@ -90,8 +88,8 @@ const OrderManage = ()=>{
                                     style={{cursor:"pointer"}}
                                 >{order.address || "Unknown"}</td>
                                 <td>
-                                    {order.createdAt 
-                                        ?new Date(order.createdAt).toLocaleString()
+                                    {order.dateTime 
+                                        ?new Date(order.dateTime).toLocaleString()
                                         :"N/A"}
                                 </td>
                                 <td>{order.paymentExpression || "Unknown"}</td>

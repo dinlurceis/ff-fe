@@ -41,7 +41,7 @@ export const Ingredients = () => {
       setLoading(false);
     }
   };
-
+  console.log(ingredients);
   useEffect(() => {
     setCurrentPage(1);
     setPageSize(12);
