@@ -51,7 +51,7 @@ export const rejectSupplier = async (supplierId) => {
   }
 };
 
-export const registerSupplier = async (requestData, avatarFile, resumeFile) => {
+export const registerSupplier = async (requestData) => {
   try {
     const formData = new FormData();
     
@@ -61,8 +61,8 @@ export const registerSupplier = async (requestData, avatarFile, resumeFile) => {
     }));
     
     // Thêm file nếu có
-    if (avatarFile) formData.append('avatarPdf', avatarFile);
-    if (resumeFile) formData.append('resumePdf', resumeFile);
+    // if (avatarFile) formData.append('avatarPdf', avatarFile);
+    // if (resumeFile) formData.append('resumePdf', resumeFile);
 
     const response = await axios.post('/api/v1/supplier/registerSupplier', formData, {
       headers: {

@@ -21,7 +21,7 @@ export const Authorization = ({children,requiredRole}) =>{
         const roles = Array.isArray(requiredRole)?requiredRole:[requiredRole];
         //kiểm tra xem requiredRole có là 1 mảng hay không,nếu có thì gán trực tiếp cho role còn nếu không thì tạo mảng chứ phần tử đó rồi gán cho role
 
-        fetch("http://localhost:8080/ApiWebManga/auth/introspect",{
+        fetch("http://localhost:8081/api/v1/auth/introspect",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",

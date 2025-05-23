@@ -10,8 +10,9 @@ const instance = axios.create({
 
 // Danh sách các endpoints không cần authentication
 const publicEndpoints = [
-  "api/v1/auth", // Tất cả các endpoint bắt đầu bằng /auth/
-  "api/v1/auth/register",
+  "/api/v1/auth", // Tất cả các endpoint bắt đầu bằng /auth/
+  "/api/v1/auth/register",
+  "/api/v1/auth/login",
   "/api/v1/category/categoryById/{categoryId}",
   "/api/v1/dish/getCommentsByIngredientSupplier/{ingredientBySupplierId}",
   "/api/v1/dish/getAllDish",
