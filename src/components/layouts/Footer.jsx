@@ -75,12 +75,12 @@ export const Footer = () => {
                         <div className="col-md-6 text-center text-md-left mb-3 mb-md-0">
                             <p className="m-0">
                                 Copyright &copy;
-                                <Link className="text-white" to="/"> Your Site Name</Link>. All Rights Reserved
+                                <Link className="text-white" to="/"> FridgeFeast</Link>. All Rights Reserved
                             </p>
                         </div>
-                        <div className="col-md-6 text-center text-md-right">
+                        {/* <div className="col-md-6 text-center text-md-right">
                             <p className="m-0">Designed by <a className="text-white" href="https://htmlcodex.com">Tiến Thịnh</a></p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

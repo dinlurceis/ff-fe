@@ -52,6 +52,10 @@
   font-family: "Lexend Peta", sans-serif;
   text-decoration: none;
 }
+.dish-link:hover,
+.dish-name:hover {
+  text-decoration: none !important;
+}
 
 /* Optional: Uncomment these if you want to show price and quantity */
 .dish-price,

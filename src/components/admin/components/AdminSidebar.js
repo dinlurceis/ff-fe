@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CIcon from "@coreui/icons-react";
 import AppSideBarNav from "./AppSidebarNav";
 import { Link } from "react-router-dom";
+import logo from "../../../img/logo1.jpg";
 
 const AdminSidebar =() =>{
     const dispatch = useDispatch();
@@ -24,8 +25,8 @@ const AdminSidebar =() =>{
             <CSidebarHeader className="border-bottom bg-white">
                 <Link to={"/"} style={{textAlign:"center",display:"flex"}}>
                     <img
-                        src="https://shirley-demo.myshopify.com/cdn/shop/files/logoshirley_300x.png?v=1613554226"
-                        alt="Shirley Logo"
+                        src={logo}
+                        alt="logo"
                         height={32}
                         className="sidebar-brand-full"
                         />
